@@ -71,11 +71,11 @@ export function SobreTab({ snapshot }: SobreTabProps) {
           <span className="sobre-fact">{`${usd(seedMc)} por geração, sempre`}</span>
         </div>
 
-        {paragraphs.map((paragraph, index) => (
+        <div className="sobre-prose">{paragraphs.map((paragraph, index) => (
           <p key={`sobre-p-${index}`} className="sobre-paragraph">
             {paragraph}
           </p>
-        ))}
+        ))}</div>
 
         <aside className="sobre-golden-rule">
           <span className="label">A regra de ouro</span>
