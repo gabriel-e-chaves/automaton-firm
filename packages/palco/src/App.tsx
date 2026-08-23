@@ -12,6 +12,8 @@ import { GeracoesTab } from "./tabs/GeracoesTab";
 import { EmpresaTab } from "./tabs/EmpresaTab";
 import { MuralTab } from "./tabs/MuralTab";
 import { SobreTab } from "./tabs/SobreTab";
+import { PesquisaTab } from "./tabs/PesquisaTab";
+import { ResearchRibbon } from "./components/ResearchRibbon";
 
 const VIRGIN_DAYS_GATE = 90;
 // Sane fallback while there's no snapshot yet — mirrors palco-data.ts's
@@ -45,7 +47,7 @@ function formatOneDecimal(n: number): string {
   return n.toFixed(1);
 }
 
-type Route = "pregao" | "leaderboard" | "empresa" | "geracoes" | "mural" | "sobre";
+type Route = "pregao" | "leaderboard" | "empresa" | "geracoes" | "mural" | "pesquisa" | "sobre";
 
 // LMArena-style ranked Leaderboard is a named product identity anchor —
 // it stays alongside Empresa's org chart (ranking vs. structure), not
@@ -56,6 +58,7 @@ const NAV_ITEMS: Array<{ route: Route; label: string }> = [
   { route: "empresa", label: "Empresa" },
   { route: "geracoes", label: "Gerações" },
   { route: "mural", label: "Mural" },
+  { route: "pesquisa", label: "Pesquisa" },
   { route: "sobre", label: "Sobre" },
 ];
 
@@ -157,6 +160,8 @@ export default function App() {
             <div className="d">de {VIRGIN_DAYS_GATE} dias</div>
           </motion.div>
         </section>
+
+        <ResearchRibbon onOpen={route === "pesquisa" ? undefined : () => setRoute("pesquisa")} />
       </header>
 
       <main className="page-content">
@@ -180,6 +185,7 @@ export default function App() {
           {route === "empresa" && <EmpresaTab snapshot={snapshot} />}
           {route === "geracoes" && <GeracoesTab snapshot={snapshot} />}
           {route === "mural" && <MuralTab snapshot={snapshot} />}
+          {route === "pesquisa" && <PesquisaTab />}
           {route === "sobre" && <SobreTab snapshot={snapshot} />}
         </motion.div>
       </main>

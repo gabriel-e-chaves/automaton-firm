@@ -1560,3 +1560,199 @@ ul.trade-feed .ts {
   font-size: 12px;
   line-height: 1.6;
 }
+
+/* ── Pesquisa tab ────────────────────────────────────────────────────────────
+ * Finished measurements, not live numbers. The layout deliberately pairs every
+ * win card with its caveat card in the same strip: the whole point of this
+ * surface is that the number and the reason it is not an edge arrive together.
+ */
+.research {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.research-head h2 {
+  font-family: var(--font-display);
+  margin: 0 0 0.5rem;
+}
+
+.research-head--second {
+  margin-top: 1rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.research-lead {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+}
+
+.research-verdict-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.75rem;
+}
+
+.rv-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-left-width: 3px;
+  border-radius: 6px;
+}
+.rv-win { border-left-color: var(--green); }
+.rv-warn { border-left-color: var(--blue); }
+.rv-loss { border-left-color: var(--red); }
+
+.rv-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-color-secondary);
+}
+.rv-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.rv-foot {
+  font-size: 0.78rem;
+  color: var(--text-color-secondary);
+}
+
+/* Wide table scrolls inside its own box; the page body never scrolls sideways.
+ * The scroll lives on the wrapper, NOT the table: `display:block` on a table
+ * makes it shrink to its content and silently ignore `width:100%`. */
+.research-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+.research-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.research-table caption {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary);
+}
+.research-table th,
+.research-table td {
+  padding: 0.55rem 0.8rem;
+  text-align: right;
+  border-bottom: 1px solid var(--border-color-fade);
+  white-space: nowrap;
+}
+.research-table thead th,
+.research-table tbody th,
+.research-table tfoot th {
+  text-align: left;
+  font-weight: 600;
+}
+.research-table thead th {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-color-secondary);
+}
+.research-table tbody tr.row-above { border-left: 3px solid var(--green); }
+.research-table tbody tr.row-below { border-left: 3px solid var(--red); }
+.research-table tfoot th,
+.research-table tfoot td {
+  border-top: 1px solid var(--border-color);
+  border-bottom: none;
+  font-weight: 600;
+}
+.research-table .end-value { font-family: var(--font-mono); }
+.research-table .pos { color: var(--green); }
+.research-table .neg { color: var(--red); }
+.research-table .muted { color: var(--text-color-secondary); }
+
+.research-caveat {
+  margin: 0;
+  max-width: 68ch;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-raised);
+  border-left: 3px solid var(--blue);
+  border-radius: 6px;
+  line-height: 1.6;
+  color: var(--text-color-secondary);
+}
+.research-caveat strong { color: var(--text-color); }
+
+/* Research ribbon — the measured result, on every screen.
+ * Quiet by design: it is a standing fact, not an alert, so it gets a hairline
+ * and muted type rather than a filled banner. The caveat clause is dimmed but
+ * never hidden, and it wraps below the win on narrow viewports instead of
+ * being truncated — a truncated caveat is a lie by layout. */
+.research-ribbon {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  /* Same horizontal inset as .hero-strip so the ribbon lines up with the cards
+   * above it instead of running to the viewport edge. */
+  margin: 12px clamp(14px, 2vw, 28px);
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+}
+
+.rr-tag {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--text-color-secondary);
+}
+
+.rr-text {
+  flex: 1 1 22rem;
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--text-color-secondary);
+}
+.rr-text strong {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--green);
+}
+.rr-sep { color: var(--border-color); }
+.rr-caveat { color: var(--text-color-secondary); opacity: 0.85; }
+
+.rr-link {
+  flex: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.78rem;
+  margin-left: auto;
+  white-space: nowrap;
+  color: var(--blue);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.rr-link:hover { color: var(--text-color); }
+
+@media (max-width: 640px) {
+  .research-ribbon { flex-direction: column; align-items: flex-start; }
+}
