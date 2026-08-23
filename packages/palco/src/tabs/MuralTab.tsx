@@ -113,6 +113,22 @@ export function MuralTab({ snapshot }: MuralTabProps) {
           </ul>
         </div>
 
+        {/* Right column: the friends grid every real Orkut profile had. Filled
+            from the leaderboard, so it is the actual roster, not decoration. */}
+        <div className="orkut-friends">
+          <h4>amigos ({(snapshot?.leaderboard ?? []).length})</h4>
+          <ul>
+            {(snapshot?.leaderboard ?? []).slice(0, 12).map((t) => (
+              <li key={t.traderId}>
+                <span className="orkut-friend-avatar" style={{ background: avatarBackground(t.name) }}>
+                  {initials(t.name)}
+                </span>
+                <span className="orkut-friend-name">{t.name.split(" ")[0]}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <ul className="orkut-scrap-list">
           {posts.map((post) => {
             const highlighted = post.memberIds.some((id) => newIds.has(id));

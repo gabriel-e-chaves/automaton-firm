@@ -360,10 +360,11 @@ footer.honesty p {
 
 .orkut-panel {
   position: relative; /* anchors .orkut-scanlines */
-  /* Orkut was a wide two-column page, not a narrow centred column: a single
-   * 860px strip left most of a large screen empty and read nothing like it. */
-  max-width: min(1240px, 96vw);
-  margin: 0 auto;
+  /* Full bleed inside the app's own inset — the centred cap left black strips
+   * on both sides of the light panel, which is the opposite of how Orkut's
+   * light page filled the browser. */
+  max-width: none;
+  margin: 12px clamp(14px, 2vw, 28px);
   border-radius: 8px;
   overflow: hidden;
   font-family: Verdana, Geneva, sans-serif;
@@ -2117,3 +2118,41 @@ html {
   padding: 1.1rem 1.2rem;
 }
 .sobre-autor .sobre-name { font-size: clamp(26px, 3vw, 40px); }
+
+
+/* Orkut friends box — third column, filled from the leaderboard. */
+.orkut-friends {
+  background: #fff;
+  border: 1px solid #b7c4dd;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+.orkut-friends h4 { margin: 0 0 8px; font-size: 11px; color: #315c99; }
+.orkut-friends ul {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 6px;
+}
+.orkut-friends li { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.orkut-friend-avatar {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  color: #fff; font-family: Verdana, Geneva, sans-serif; font-weight: 700; font-size: 14px;
+  border: 1px solid #b7c4dd; border-radius: 4px;
+}
+.orkut-friend-name {
+  font-size: 10px; color: #315c99;
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Sobre, full width: the centred 1180px container left black bands on both
+ * sides. Now it fills the app inset like every other tab; the author card
+ * keeps the reading column honest. */
+.sobre-page { max-width: none; margin: 0; }
+@media (min-width: 1000px) {
+  .sobre-page { grid-template-columns: minmax(0, 1.55fr) minmax(20rem, 1fr); gap: 2.5rem; }
+}
+@media (min-width: 1400px) {
+  .sobre-prose { columns: 2; column-gap: 2.2rem; }
+  .sobre-lead { max-width: none; }
+  .sobre-bio { max-width: none; }
+}

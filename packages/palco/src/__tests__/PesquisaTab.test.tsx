@@ -146,7 +146,8 @@ describe("PesquisaTab — o registro completo", () => {
 
   it("links the repository", () => {
     render(<PesquisaTab />);
-    const link = screen.getByRole("link", { name: /github\.com\/gabchaves\/automaton-firm/ });
+    // Derived from REPO_URL so a username rename updates data + test together.
+    const link = screen.getByRole("link", { name: REPO_URL.replace("https://", "") });
     expect(link).toHaveAttribute("href", REPO_URL);
     expect(link).toHaveAttribute("rel", expect.stringContaining("noreferrer"));
   });

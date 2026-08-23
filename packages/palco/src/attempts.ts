@@ -191,7 +191,7 @@ export const ATTEMPTS: Attempt[] = [
   },
 ];
 
-export const REPO_URL = "https://github.com/gabchaves/automaton-firm";
+export const REPO_URL = "https://github.com/gabriel-e-chaves/automaton-firm";
 
 export const CLOSING =
   "Quatro vezes, por caminhos independentes, o projeto encontrou a mesma coisa: sentar em cima do caixa, operar menos, ou re-decidir menos vezes parece competência numa simulação que pune taxa. Na quinta vez ele parou de tratar isso como armadilha e testou como hipótese — pré-registrada, em seis janelas que nunca tinha visto — e ela aguentou 6 de 6, com peak-edge nulo confirmando exatamente o que é: alocação de capital, não previsão. Nenhuma vantagem PREDITIVA foi encontrada em dados públicos de mercado, e essa segue sendo a conclusão. O que sobreviveu foi a única coisa que este aparato conseguia validar sem se enganar — e ele só chegou lá porque passou o resto do tempo provando contra si mesmo.";
