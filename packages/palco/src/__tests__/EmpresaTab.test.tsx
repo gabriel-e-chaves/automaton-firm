@@ -19,12 +19,15 @@ function cargoRowFor(name: string): HTMLElement {
 }
 
 describe("EmpresaTab", () => {
-  it("renders the RH card with the exact policy string and ciclo counters", () => {
+  // The RH card (policy blurb + three ciclo counters) was removed by request.
+  // Asserted as absent so it does not creep back in unnoticed.
+  it("no longer renders the RH card", () => {
     render(<EmpresaTab snapshot={fixtureSnapshot} />);
-    expect(screen.getByText("Recursos Humanos")).toBeInTheDocument();
-    expect(screen.getByText(fixtureSnapshot.org.hrPolicy)).toBeInTheDocument();
-    expect(screen.getByText("demissões no ciclo")).toBeInTheDocument();
-    expect(screen.getByText("promoções no ciclo")).toBeInTheDocument();
+    expect(screen.queryByText("Recursos Humanos")).toBeNull();
+    expect(screen.queryByText("demissões no ciclo")).toBeNull();
+    expect(screen.queryByText("promoções no ciclo")).toBeNull();
+    expect(screen.queryByText("rotações no ciclo")).toBeNull();
+    expect(document.querySelector(".rh-card")).toBeNull();
   });
 
   it("lists every current-generation employee once, with name and job title", () => {
