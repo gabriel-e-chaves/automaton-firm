@@ -264,3 +264,26 @@ describe("MuralTab — o mural é dos traders", () => {
     expect(document.querySelectorAll(".orkut-scrap-box").length).toBeGreaterThan(0);
   });
 });
+
+describe("MuralTab — perfil orkut", () => {
+  it("shows the profile box with the honest lucrativa meter", () => {
+    const snap = {
+      ...fixtureSnapshot,
+      cards: { ...fixtureSnapshot.cards, evolvedEquityMc: 100_137_000, genStartMc: 100_000_000 },
+    };
+    render(<MuralTab snapshot={snap} />);
+    expect(screen.getByText("A Firma")).toBeInTheDocument();
+    expect(screen.getByText("💰💰")).toBeInTheDocument();
+  });
+
+  // A fun meter that lies is still a lie: below the stake it shows 💸.
+  it("drops to 💸 when the firm is under water", () => {
+    const snap = {
+      ...fixtureSnapshot,
+      cards: { ...fixtureSnapshot.cards, evolvedEquityMc: 42_000_000, genStartMc: 100_000_000 },
+    };
+    render(<MuralTab snapshot={snap} />);
+    expect(screen.getByText("💸")).toBeInTheDocument();
+    expect(screen.queryByText("💰💰")).toBeNull();
+  });
+});

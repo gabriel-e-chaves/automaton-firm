@@ -49,7 +49,7 @@ export function SobreTab({ snapshot }: SobreTabProps) {
 
   return (
     <div className="sobre-page">
-      <section className="sobre-section">
+      <section className="sobre-section sobre-projeto">
         <h2 className="section-title">O projeto</h2>
         <p className="sobre-lead">{PROJECT_LEAD}</p>
 
@@ -87,7 +87,7 @@ export function SobreTab({ snapshot }: SobreTabProps) {
 
       <hr className="rule" />
 
-      <section className="sobre-section">
+      <section className="sobre-section sobre-autor">
         <h2 className="section-title">Quem constrói</h2>
         <h3 className="sobre-name">Gabriel Ernesto Chaves</h3>
         <span className="label sobre-role-chip">{ROLE_CHIP}</span>

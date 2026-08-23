@@ -1997,7 +1997,8 @@ html {
   }
   .orkut-visitor-counter { grid-column: 1; margin: 0 0 10px; }
   .orkut-communities { grid-column: 1; grid-row: 2; margin-bottom: 0; }
-  .orkut-scrap-list { grid-column: 2; grid-row: 1 / span 2; }
+  .orkut-profile { grid-column: 1; }
+  .orkut-scrap-list { grid-column: 2; grid-row: 1 / span 4; }
 }
 
 /* ── Cargos: compact and quieter ─────────────────────────────────────────────
@@ -2069,3 +2070,50 @@ html {
 .cast-stats dt { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .cast-stats dd { font-size: 0.84rem; white-space: nowrap; }
 @media (max-width: 560px) { .cast-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+
+/* Orkut profile box — light-surface tokens matching .orkut-communities. */
+.orkut-profile {
+  background: #fff;
+  border: 1px solid #b7c4dd;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 14px;
+}
+.orkut-profile-avatar {
+  width: 72px; height: 72px;
+  display: grid; place-items: center;
+  background: #315c99; color: #fff;
+  font-family: Verdana, Geneva, sans-serif; font-weight: 700; font-size: 26px;
+  border: 1px solid #b7c4dd; border-radius: 4px;
+  margin-bottom: 8px;
+}
+.orkut-profile-id { display: flex; flex-direction: column; gap: 1px; margin-bottom: 8px; }
+.orkut-profile-id strong { color: #315c99; font-size: 13px; }
+.orkut-profile-id span { color: #666; font-size: 10px; }
+.orkut-ratings { list-style: none; margin: 0 0 8px; padding: 0; }
+.orkut-ratings li { display: flex; justify-content: space-between; font-size: 11px; color: #444; padding: 2px 0; border-bottom: 1px dotted #dde4f0; }
+.orkut-ratings em { font-style: normal; letter-spacing: 1px; }
+.orkut-profile-since { margin: 0; font-size: 10px; color: #888; }
+
+/* Sobre: editorial two-column — project as the main read, author as a card
+ * aside. Stacked full-width sections read as two unrelated pages; side by side
+ * they read as one. */
+@media (min-width: 1000px) {
+  .sobre-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 1fr);
+    gap: 2.2rem;
+    align-items: start;
+  }
+  .sobre-prose { columns: 1; } /* the narrower main column no longer needs two */
+  .sobre-autor { position: sticky; top: 1rem; }
+}
+.sobre-autor {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-top: 2px solid var(--green);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+}
+.sobre-autor .sobre-name { font-size: clamp(26px, 3vw, 40px); }

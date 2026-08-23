@@ -79,6 +79,31 @@ export function MuralTab({ snapshot }: MuralTabProps) {
       <div className="orkut-body">
         <p className="orkut-visitor-counter">você é o visitante nº {visitorNumber(snapshot?.lastEventId ?? 0)}</p>
 
+        {/* Orkut profile box — the sidebar was one short counter and a list,
+            leaving a blank strip. The ratings are the real Orkut trio, adapted;
+            "lucrativa" is derived from the snapshot, never hardcoded, because a
+            fun meter that lies would still be a lie. */}
+        <div className="orkut-profile">
+          <div className="orkut-profile-avatar">AF</div>
+          <div className="orkut-profile-id">
+            <strong>A Firma</strong>
+            <span>trading · dinheiro de papel</span>
+          </div>
+          <ul className="orkut-ratings">
+            <li><span>confiável:</span> <em>🧊🧊🧊</em></li>
+            <li><span>legal:</span> <em>😎😎</em></li>
+            <li>
+              <span>lucrativa:</span>{" "}
+              <em>
+                {(snapshot?.cards.evolvedEquityMc ?? 0) > (snapshot?.cards.genStartMc ?? 0)
+                  ? "💰💰"
+                  : "💸"}
+              </em>
+            </li>
+          </ul>
+          <p className="orkut-profile-since">no ar desde ago/2026 · {snapshot?.leaderboard.length ?? 0} traders</p>
+        </div>
+
         <div className="orkut-communities">
           <h4>comunidades</h4>
           <ul>
