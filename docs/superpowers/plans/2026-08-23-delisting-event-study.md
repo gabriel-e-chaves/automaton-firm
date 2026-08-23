@@ -54,10 +54,11 @@ const article = (code: string, title: string, releaseDate: number) => ({
 });
 
 describe("announcement-feed", () => {
-  it("pages until a short page and returns typed announcements", async () => {
+  it("stops after a single short page", async () => {
+    // One article is fewer than PAGE_SIZE, so page 1 is already the short page
+    // and paging must terminate without a second request.
     const fetchImpl = vi.fn()
-      .mockResolvedValueOnce(page([article("a", "Binance Will Delist ICX on 2026-09-03", 1787000000000)]))
-      .mockResolvedValueOnce(page([]));
+      .mockResolvedValueOnce(page([article("a", "Binance Will Delist ICX on 2026-09-03", 1787000000000)]));
     const out = await fetchAnnouncements(CATALOG_DELISTING, 10, fetchImpl as unknown as typeof fetch);
     expect(out).toHaveLength(1);
     expect(out[0]).toEqual({
@@ -67,6 +68,16 @@ describe("announcement-feed", () => {
       body: null,
       releaseDate: 1787000000000,
     });
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it("pages past a full page and stops on the following short page", async () => {
+    const fetchImpl = vi.fn()
+      .mockResolvedValueOnce(page(Array.from({ length: 50 }, (_, i) => article(`f${i}`, "full", 1))))
+      .mockResolvedValueOnce(page([article("last", "short", 2)]));
+    const out = await fetchAnnouncements(CATALOG_DELISTING, 10, fetchImpl as unknown as typeof fetch);
+    expect(out).toHaveLength(51);
+    expect(out[50].code).toBe("last");
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
 
@@ -164,7 +175,7 @@ export async function fetchAnnouncements(
 - [ ] **Step 4: Run tests to verify they pass**
 
 Run: `pnpm exec vitest run announcement-feed && pnpm run typecheck`
-Expected: 4 passed, typecheck clean
+Expected: 5 passed, typecheck clean
 
 - [ ] **Step 5: Commit**
 
