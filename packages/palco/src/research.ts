@@ -72,7 +72,7 @@ export const DELISTING = {
 } as const;
 
 export const HONEST_VERDICT =
-  "Quatro das cinco janelas terminam acima de mil, e a mais recente também. Só que anualizada ela rende menos que USDC parado — então bate os mil e perde para não fazer nada. Isso não contradiz a pesquisa do projeto: é exatamente ela.";
+  "Quatro das cinco janelas terminam acima de mil, e a mais recente também. Só que anualizada ela rende menos que USDC dormindo numa carteira — bate os mil e perde para o nada absoluto. Isso não contradiz a pesquisa do projeto: é ela, assinada e datada.";
 
 /**
  * The pre-registered 90-day result — the headline, because it is the only
@@ -105,12 +105,12 @@ export const CFO_90D = {
 
 /** Why the firm arm was worse, in one clause — it is arithmetic, not luck. */
 export const FIRM_ARM_REASON =
-  "$1.000 divididos por 3 assentos, 30% deployados, dão $100 por assento — e com o CAPITAL_FRACTION de 0,5 do motor, $50 de notional. Funding sobre $50 arredonda para zero centavo, então dois dos três assentos não abriram um único trade. É o Experimento 4 reaparecendo: abaixo de ~$100 de book, o carry é aritmeticamente invisível.";
+  "$1.000 divididos por 3 assentos, 30% deployados, dão $100 por assento — e com o CAPITAL_FRACTION de 0,5 do motor, $50 de notional. Funding sobre $50 arredonda para zero centavo. Resultado: dois dos três traders passaram noventa dias olhando a tela sem clicar em nada, e foi a decisão certa. É o Experimento 4 voltando pela porta dos fundos: abaixo de ~$100 de book, o carry é aritmeticamente invisível.";
 
 /** The pattern the project found four separate times. */
 export const CONFOUND_COUNT = 4;
 export const CONFOUND_LESSON =
-  "Sentar em cima do caixa, operar menos, ou re-decidir menos vezes parece competência numa simulação que pune taxa — independentemente de quem ou o que decidiu fazer menos.";
+  "Sentar em cima do caixa, operar menos, ou re-decidir menos vezes parece competência numa simulação que pune taxa — e não importa quem teve a ideia: LLM, gene ou moeda, todos ficam mais espertos quando param de clicar.";
 
 /**
  * The live directional motor, measured from its own event log on 2026-08-23.

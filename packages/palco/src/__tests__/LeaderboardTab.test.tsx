@@ -58,3 +58,31 @@ describe("LeaderboardTab", () => {
     expect(screen.queryByText("Ada Faria")).not.toBeInTheDocument();
   });
 });
+
+describe("LeaderboardTab — gerações no ar", () => {
+  it("renders one card per generation with cohort, number and peak", () => {
+    const { container } = render(<LeaderboardTab snapshot={fixtureSnapshot} />);
+    const cards = container.querySelectorAll(".gen-card");
+    expect(cards).toHaveLength(fixtureSnapshot.generations.length);
+    expect(screen.getByText("Gerações no ar")).toBeInTheDocument();
+  });
+
+  // A peak equal to the stake means the cohort never got above water. Saying
+  // "acima" there would dress a flat result up as a win.
+  it("says 'no nível' when the peak never cleared the stake", () => {
+    const stake = fixtureSnapshot.cards.genStartMc;
+    const snap = {
+      ...fixtureSnapshot,
+      generations: [{ cohort: "random", genNumber: 1, peakEquityMc: stake, barsLived: 271, ended: false }],
+    };
+    render(<LeaderboardTab snapshot={snap} />);
+    expect(screen.getByText(/pico no nível do aporte/)).toBeInTheDocument();
+  });
+
+  it("renders nothing when there are no generations", () => {
+    const { container } = render(
+      <LeaderboardTab snapshot={{ ...fixtureSnapshot, generations: [] }} />,
+    );
+    expect(container.querySelector(".gens-strip")).toBeNull();
+  });
+});

@@ -3,6 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import type { PalcoSnapshot } from "../types";
+import { GenerationsStrip } from "../components/GenerationsStrip";
 import { usd } from "../format";
 import { initials, avatarBackground } from "../avatar";
 import { moodEmoji, STAKE_MC } from "../mood";
@@ -89,6 +90,8 @@ export function LeaderboardTab({ snapshot }: LeaderboardTabProps) {
   return (
     <div>
       <PodiumStrip rows={rows} stakeMc={stakeMc} />
+
+      <GenerationsStrip snapshot={snapshot} />
 
       <DataTable value={rows} dataKey="id" className="leaderboard-table">
         <Column

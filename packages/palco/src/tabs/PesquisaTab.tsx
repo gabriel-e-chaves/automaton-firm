@@ -107,7 +107,7 @@ export function PesquisaTab() {
       </table>
       </div>
 
-      <p className="research-caveat">
+      <p className="research-caveat rc-grid">
         <strong>≈{WITHOUT_BULL_ANNUALISED_PCT.toFixed(2)}%/ano sem o bull de 2021.</strong> {HONEST_VERDICT}
       </p>
 
@@ -143,7 +143,7 @@ export function PesquisaTab() {
         </div>
       </div>
 
-      <p className="research-caveat">
+      <p className="research-caveat rc-grid">
         <strong>
           {LIVE_MOTOR.tradesOpened} trades → {money(LIVE_MOTOR.netPnlUsd)}.{" "}
           {CARRY_CONTRAST.trades} trades → {money(CARRY_CONTRAST.finalUsd - 1000)}.
@@ -210,7 +210,7 @@ export function PesquisaTab() {
       </table>
       </div>
 
-      <p className="research-caveat">
+      <p className="research-caveat rc-grid">
         <strong>A janela não tinha o dinheiro.</strong> Noventa dias de funding pagaram{" "}
         {money(CFO_90D.fundingCollectedUsd)} brutos contra {money(CFO_90D.feesPaidUsd)} de
         taxas — sobram 46 centavos de margem no total. Nenhum arranjo de RH, geração ou
@@ -218,12 +218,11 @@ export function PesquisaTab() {
         queda de {money(CFO_90D.unbrakedDrawdownUsd)} para {money(CFO_90D.brakedDrawdownUsd)}.
       </p>
 
-      <p className="research-caveat">
-        <strong>Por que adicionar a firma piorou.</strong> {FIRM_ARM_REASON}{" "}
-        {CFO_90D.firmSeatsWithZeroTrades} dos 3 assentos não abriram um único trade.
+      <p className="research-caveat rc-grid">
+        <strong>Por que adicionar a firma piorou.</strong> {FIRM_ARM_REASON}
       </p>
 
-      <p className="research-caveat">
+      <p className="research-caveat rc-grid">
         <strong>O mesmo confound, {CONFOUND_COUNT} vezes.</strong> {CONFOUND_LESSON} Apareceu
         no Experimento 5, no conserto do controle aleatório, na camada executiva CEO/RH/CFO —
         e agora no freio. Quatro rotas diferentes, um só achado: o projeto não encontrou
@@ -231,7 +230,7 @@ export function PesquisaTab() {
         longe.
       </p>
 
-      <p className="research-caveat">
+      <p className="research-caveat rc-grid">
         <strong>{CFO_90D.annualisedPct.toFixed(2)}%/ano.</strong> É isso que dois centavos em
         noventa dias significam anualizados, contra 4–8% que uma stablecoin parada paga. O
         número passa o gate e perde para não fazer nada — as duas coisas são verdade ao mesmo
@@ -271,7 +270,7 @@ export function PesquisaTab() {
         </div>
       </div>
 
-      <p className="research-caveat">
+      <p className="research-caveat rc-grid">
         O sinal existe e é enorme. Só que shortar o perp de um token morrendo faz você{" "}
         <em>pagar</em> funding — a multidão toda está do mesmo lado — e em{" "}
         {DELISTING.trades} trades o funding levou {money(Math.abs(DELISTING.fundingPaidUsd))} de
