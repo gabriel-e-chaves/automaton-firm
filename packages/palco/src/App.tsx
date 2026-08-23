@@ -60,7 +60,7 @@ const NAV_ITEMS: Array<{ route: Route; label: string }> = [
 ];
 
 export default function App() {
-  const { snapshot, connected } = useSnapshot();
+  const { snapshot, connected, isStatic } = useSnapshot();
   const cards = snapshot?.cards;
   const [route, setRoute] = useState<Route>("pregao");
   // The run describes itself: seedNote is written by whatever produced the db.
@@ -104,8 +104,10 @@ export default function App() {
           </nav>
 
           <div className="nav-live">
-            <span className={`live-dot ${connected ? "connected" : "disconnected"}`} />
-            <span className="label">{connected ? "ao vivo" : "reconectando…"}</span>
+            <span className={`live-dot ${isStatic ? "static" : connected ? "connected" : "disconnected"}`} />
+            <span className="label">
+              {isStatic ? "replay estático" : connected ? "ao vivo" : "reconectando…"}
+            </span>
           </div>
         </div>
 

@@ -84,3 +84,34 @@ describe("useSnapshot", () => {
     expect(source.closed).toBe(true);
   });
 });
+
+describe("useSnapshot — fallback estático", () => {
+  beforeEach(() => {
+    StubEventSource.instances = [];
+    vi.stubGlobal("EventSource", StubEventSource as unknown as typeof EventSource);
+  });
+  afterEach(() => { vi.unstubAllGlobals(); });
+
+  it("reads the baked snapshot and reports isStatic when there is no server", async () => {
+    const fetchMock = vi.fn((url: string) =>
+      url.includes("/api/snapshot")
+        ? Promise.resolve({ ok: false, status: 404, json: () => Promise.reject(new Error("no")) })
+        : Promise.resolve({ ok: true, json: () => Promise.resolve(fixtureSnapshot) }),
+    );
+    vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch);
+
+    const { result } = renderHook(() => useSnapshot());
+    await waitFor(() => expect(result.current.isStatic).toBe(true));
+    expect(result.current.snapshot).toEqual(fixtureSnapshot);
+    expect(fetchMock.mock.calls.some(([u]) => String(u).endsWith("snapshot.json"))).toBe(true);
+  });
+
+  it("stays non-static when the server answers", async () => {
+    vi.stubGlobal("fetch", vi.fn(() =>
+      Promise.resolve({ ok: true, json: () => Promise.resolve(fixtureSnapshot) }),
+    ) as unknown as typeof fetch);
+    const { result } = renderHook(() => useSnapshot());
+    await waitFor(() => expect(result.current.snapshot).toEqual(fixtureSnapshot));
+    expect(result.current.isStatic).toBe(false);
+  });
+});

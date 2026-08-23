@@ -1938,3 +1938,58 @@ ul.trade-feed .ts {
   .research > .research-repo { grid-column: 1 / -1; }
   .research > .rc-grid { margin: 0; }
 }
+
+/* ── Typographic polish pass ─────────────────────────────────────────────────
+ * Two gaps the whole stylesheet had: no font smoothing at the root, and no
+ * text-wrap anywhere. Both are alignment problems in practice — an orphaned
+ * last word in a heading, or a one-word final line in a caption, reads as a
+ * layout mistake even when the box is correct.
+ */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings and short titles: balance the line lengths so a two-line heading
+ * does not leave a single orphan word on line two. */
+.section-title,
+.research-head h2,
+.research-head h3,
+.mural-title,
+.att-title,
+.sobre-lead,
+.gen-cohort,
+.line-label {
+  text-wrap: balance;
+}
+
+/* Short-to-medium body text: avoid a final line with one word. Deliberately
+ * NOT applied to .sobre-prose paragraphs (long prose) or to code. */
+.research-lead,
+.research-caveat,
+.research-scope,
+.research-repo,
+.att-q,
+.att-lesson,
+.att-meta dd,
+.cast-note,
+.cargo-papel,
+.line-sub,
+.gen-peak-l,
+.gen-foot,
+.mural-body,
+.org-explainer,
+.period-partial {
+  text-wrap: pretty;
+}
+
+/* Dates and counters in the record: keep columns from shuffling as digits change. */
+.att-date,
+.att-n,
+.cast-stats dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A static build is not an error state: the dot goes neutral rather than the
+ * disconnected colour, so a frozen replay does not look like a broken feed. */
+.live-dot.static { background: var(--text-color-secondary); box-shadow: none; }

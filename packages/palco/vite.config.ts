@@ -13,6 +13,10 @@ import tailwindcss from "@tailwindcss/vite";
 // Magic-UI-style components only (v3.2 plan) — theme.css's hand-authored
 // pxpush identity rules are untouched.
 export default defineConfig({
+  // GitHub Pages serves a project site under /<repo>/, so the built asset URLs
+  // need that prefix. Set PALCO_BASE in the Pages workflow; local dev and the
+  // palco-server both keep "/".
+  base: process.env.PALCO_BASE ?? "/",
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
