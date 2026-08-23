@@ -1479,13 +1479,6 @@ ul.trade-feed .ts {
   margin: 0 auto;
 }
 
-@media (min-width: 1200px) {
-  .sobre-prose {
-    columns: 2;
-    column-gap: 2.5rem;
-  }
-  .sobre-prose > p { break-inside: avoid; }
-}
 
 .sobre-section {
   padding: 12px 0 36px;
@@ -2115,7 +2108,6 @@ html {
     gap: 2.2rem;
     align-items: start;
   }
-  .sobre-prose { columns: 1; } /* the narrower main column no longer needs two */
   .sobre-autor { position: sticky; top: 1rem; }
 }
 .sobre-autor {
@@ -2165,8 +2157,14 @@ html {
   .sobre-projeto { grid-column: 1; grid-row: 1; }
   .sobre-autor { grid-column: 2; grid-row: 1; }
 }
-@media (min-width: 1400px) {
-  .sobre-prose { columns: 2; column-gap: 2.2rem; }
-  .sobre-lead { max-width: none; }
-  .sobre-bio { max-width: none; }
-}
+
+
+/* Sobre prose: one column, capped measure. Three paragraphs split across two
+ * CSS columns always land lopsided (one tall, one short) and the ragged bottom
+ * reads as misalignment — a single well-measured column does not. */
+.sobre-prose { columns: 1; max-width: 68ch; }
+.sobre-prose > p { break-inside: auto; }
+
+/* Breathing room between the equity chart and the period table that moved in
+ * under it. */
+.pregao-chart-panel .period-panel { margin-top: 1.5rem; }

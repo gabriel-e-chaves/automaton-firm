@@ -150,9 +150,6 @@ export function MuralTab({ snapshot }: MuralTabProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: SLIDE_DOWN_DURATION_S, ease: "easeOut" }}
               >
-                <div className="orkut-avatar" style={{ background: avatarBackground(post.author.name) }}>
-                  {initials(post.author.name)}
-                </div>
 
                 <div className="orkut-scrap-main">
                   <div className="orkut-scrap-header">
