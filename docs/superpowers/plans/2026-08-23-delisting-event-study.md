@@ -875,8 +875,17 @@ describe("event-study", () => {
   });
 
   it("is reproducible for a given seed and differs across seeds", () => {
+    // The control draw only depends on the seed if different windows actually
+    // yield different returns, so the fixture must vary bar to bar. A flat
+    // series makes every control median 0 and the seed unobservable.
+    // Strictly increasing with growing increments: the 30-bar forward return
+    // is distinct for every entry index, so the median moves with the seed.
+    const varied = Array.from({ length: 300 }, (_, i) => ({
+      ts: T0 + i * HOUR,
+      closeCents: 10_000 + i * i,
+    }));
     const events = Array.from({ length: 5 }, (_, i) => ev("CCC", 10 + i, 40 + i));
-    const s = new Map([["CCCUSDT", series(300, T0 + 100 * HOUR, 0.1)]]);
+    const s = new Map([["CCCUSDT", varied]]);
     const mk = (seed: number) => runEventStudy({ events, series: s, universe: ["CCCUSDT"], seed }).primary.medianControlBps;
     expect(mk(1)).toBe(mk(1));
     expect(mk(1)).not.toBe(mk(2));
