@@ -59,3 +59,38 @@ $1,000 became more than $1,000 over 90 days of virgin data, delta-neutral,
 net of fees — and the annualised figure must be printed beside the 4-8% a
 stablecoin pays for doing nothing, because that comparison is what decides
 whether the number means anything.
+
+---
+
+# Addendum — firm + HR arm (PRE-REGISTERED 2026-08-23, before any result)
+
+The arm above was a single strategy. This adds the roster and the HR, which is
+a **different configuration**, so it gets its own rule rather than reusing the
+first one — otherwise this is configuration-sweeping until one arm prints
+$1,001, which this project's own rules forbid.
+
+**Arm:** the same 90-day BTCUSDT window and the same $1,000 total. Three seats
+(`CARRY_ARCHETYPES`: conservador / moderado / agressivo) at $333.33 each, each
+seat's capital passed through the CFO brake at `deployFraction = 0.3`. HR
+judges each seat against a **random-carry-params baseline** on the identical
+bars (median net of 50 seeded random parameter draws inside the archetype
+bounds) — the carry analogue of `hr-baseline.ts`, because that file's baseline
+is directional and would be the wrong comparison here.
+
+**Success requires ALL of:**
+- (D) total final equity **strictly above $1,000.00**
+- (E) total **at or above** the do-nothing floor of $1,000.00
+- (F) at least one seat rated `outperform` against the random-params baseline,
+      clear of the noise band — otherwise the seats are indistinguishable from
+      random parameters and the roster added nothing
+
+**Explicitly not success:** a total above $1,000 driven entirely by idle cash
+the brake held back. If the deployed slice lost money and the total is only
+above $1,000 because 70% of it never traded, that is the do-nothing floor
+wearing a firm's clothes, and it gets reported as such.
+
+**Declared in advance:** the expected magnitude is cents, not dollars. The
+unbraked single-strategy arm made $0.34 over this window; three seats sharing
+the same $1,000 and deploying 30% each cannot mechanically produce more gross
+funding than one seat deploying 100% of it. If this arm prints more than ~$1,
+that is a signal to look for a bug, not a win.
