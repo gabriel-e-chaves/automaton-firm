@@ -82,6 +82,39 @@ describe("SobreTab", () => {
     expect(screen.queryByText("Geração no ar")).toBeNull();
   });
 
+  it("carries the 2026-08-21 validated finding in its own green callout, visually distinct from the blue golden-rule promise", () => {
+    render(<SobreTab snapshot={fixtureSnapshot} />);
+
+    expect(screen.getByText("O que testamos")).toBeInTheDocument();
+    expect(screen.getByText(/CEO, um RH e um CFO/)).toBeInTheDocument();
+
+    const finding = document.querySelector(".sobre-finding");
+    expect(finding).toBeInTheDocument();
+    expect(finding).toHaveTextContent(/8,8% de equity final/);
+    // Distinct from .sobre-golden-rule, which stays blue — this callout is
+    // a past, already-shipped result, not the forward-looking promise.
+    expect(document.querySelector(".sobre-golden-rule")).toBeInTheDocument();
+    expect(finding).not.toHaveClass("sobre-golden-rule");
+  });
+
+  it("backs the validated finding with a real 12-window firm-vs-control table (2026-08-22), not just prose", () => {
+    render(<SobreTab snapshot={fixtureSnapshot} />);
+
+    const table = document.querySelector(".sobre-compare-table");
+    expect(table).toBeInTheDocument();
+    // Oldest and newest of the 12 disjoint windows, spot-checked against
+    // the session's actual backtest output (.backtest/before-after-vs-random.mjs).
+    expect(table).toHaveTextContent("W11");
+    expect(table).toHaveTextContent("+33,09%");
+    expect(table).toHaveTextContent("+50,07%");
+    expect(table).toHaveTextContent("W0");
+    expect(table).toHaveTextContent("+43,98%");
+    expect(table).toHaveTextContent("+54,51%");
+    // Mean row: matches the +8,8% claimed in .sobre-finding above it.
+    expect(table).toHaveTextContent("+40,58%");
+    expect(table).toHaveTextContent("+49,39%");
+  });
+
   it("is scale-invariant: the governance paragraph names the exact seedMc amount, not a hardcoded $100/$10", () => {
     render(<SobreTab snapshot={fixtureSnapshot} />);
     // Fixture's cards.genStartMc = 1_000_000 -> $10.00, named in the

@@ -14,7 +14,21 @@ interface SobreTabProps {
  * "Motor → RH → Recorde" chip strip visualizes the loop, and the author
  * gets a big initials avatar (avatar.ts) instead of a bare text block. The
  * "regra de ouro" mora aqui desde a rodada anterior e o banner azul fica
- * como está — já resolvido. Só os números do fact-strip são vivos. */
+ * como está — já resolvido. Só os números do fact-strip são vivos.
+ *
+ * 2026-08-21: nova subsection "O que testamos" + aside `.sobre-finding`
+ * (verde, não azul — reserva o azul pra promessa/regra de ouro e usa o
+ * verde já semântico de "lucro/ao vivo" pra um achado validado e já
+ * shippado: docs/TRADING-RESEARCH.md, "Daily-cadence check + shipped"). Os
+ * números do texto são estáticos (a validação é um evento de pesquisa
+ * pontual, não algo que o snapshot recalcula) — atualizar à mão se o
+ * achado for revisto.
+ *
+ * 2026-08-22: "O que testamos" ganhou a tabela por trás do achado
+ * (`DeployFractionTable`) — as 12 janelas retroativas reais (firma antes
+ * vs depois, sempre expresso como vantagem sobre o controle aleatório),
+ * não só o resumo em prosa. Mesmos números do `.sobre-finding` logo
+ * abaixo; se o achado for revisto, atualizar os dois juntos. */
 
 const PROJECT_LEAD =
   "Uma firma de trading onde ninguém é humano. Traders nascem de um genoma, operam dinheiro de papel em dados reais da Binance, são avaliados por um RH que só demite com evidência — e quando a geração quebra, a próxima herda os melhores genes. É darwinismo com CNPJ imaginário.";
@@ -24,6 +38,97 @@ const COMO_FUNCIONA_1 =
 
 const STACK_TEXT =
   "TypeScript, SQLite, React, SSE — e nenhuma chamada de IA no caminho crítico, porque evolução que precisa de ajuda não é evolução. A pesquisa anterior do projeto mediu e enterrou vários 'edges' ilusórios; este front existe pra tornar o velório assistível. E bonito.";
+
+const ACHADO_TEXT =
+  "Em agosto de 2026 demos à firma um CEO, um RH e um CFO — agentes de IA de verdade, decidindo com dinheiro de mentira. Pareceu funcionar: a versão com IA bateu a mecânica por +10,7 pontos percentuais, sempre. Só que não era julgamento nenhum — era o CFO segurando caixa parado, e um controle mecânico de graça, sem IA nenhuma, reproduziu quase tudo sozinho.";
+
+const ACHADO_VALIDADO =
+  "RH que não recontrata com pressa gasta menos taxa: +8,8% de equity final, validado em janelas que ele nunca tinha visto, no ar na firma desde hoje.";
+
+/** 2026-08-22: the retroactive-simulation numbers behind ACHADO_VALIDADO,
+ * shown as real per-window data instead of only prose — same 12 disjoint
+ * 90-day windows from the deployFraction validation (6 discovery + 6
+ * out-of-sample), reused verbatim from the session's backtests
+ * (.backtest/before-after-vs-random.mjs output). "antes"/"depois" is
+ * always the firm's final-equity edge over the random control in that same
+ * window (positive = firm beat control) — never raw equity — so every
+ * number in this table already IS a firm-vs-control comparison. */
+interface DeployFractionWindow {
+  window: string;
+  period: string;
+  beforePct: number;
+  afterPct: number;
+}
+
+const DEPLOY_FRACTION_WINDOWS: DeployFractionWindow[] = [
+  { window: "W11", period: "set/23 – dez/23", beforePct: 33.09, afterPct: 50.07 },
+  { window: "W10", period: "dez/23 – mar/24", beforePct: 46.18, afterPct: 56.74 },
+  { window: "W9", period: "mar/24 – jun/24", beforePct: 35.29, afterPct: 42.64 },
+  { window: "W8", period: "jun/24 – ago/24", beforePct: 44.12, afterPct: 54.48 },
+  { window: "W7", period: "ago/24 – nov/24", beforePct: 39.74, afterPct: 52.0 },
+  { window: "W6", period: "nov/24 – fev/25", beforePct: 33.59, afterPct: 47.92 },
+  { window: "W5", period: "fev/25 – mai/25", beforePct: 44.31, afterPct: 41.05 },
+  { window: "W4", period: "mai/25 – ago/25", beforePct: 37.87, afterPct: 46.85 },
+  { window: "W3", period: "ago/25 – nov/25", beforePct: 40.21, afterPct: 52.56 },
+  { window: "W2", period: "nov/25 – fev/26", beforePct: 48.16, afterPct: 48.2 },
+  { window: "W1", period: "fev/26 – mai/26", beforePct: 40.44, afterPct: 45.68 },
+  { window: "W0", period: "mai/26 – ago/26", beforePct: 43.98, afterPct: 54.51 },
+];
+
+function pctBr(value: number): string {
+  const sign = value >= 0 ? "+" : "";
+  return `${sign}${value.toFixed(2).replace(".", ",")}%`;
+}
+
+/** Reuses PregaoTab's established firma(verde)/controle(cinza) chart
+ * language for a table instead of a line chart — the retroactive data is
+ * one comparison per window, not a time series, so a table reads cleaner
+ * than 12 flat line segments. */
+function DeployFractionTable() {
+  const meanBefore = DEPLOY_FRACTION_WINDOWS.reduce((sum, w) => sum + w.beforePct, 0) / DEPLOY_FRACTION_WINDOWS.length;
+  const meanAfter = DEPLOY_FRACTION_WINDOWS.reduce((sum, w) => sum + w.afterPct, 0) / DEPLOY_FRACTION_WINDOWS.length;
+  const wins = DEPLOY_FRACTION_WINDOWS.filter((w) => w.afterPct > w.beforePct).length;
+
+  return (
+    <div className="sobre-compare">
+      <div className="sobre-compare-scroll">
+        <table className="sobre-compare-table">
+          <caption>vantagem da firma sobre o controle aleatório, equity final, por janela de 90 dias</caption>
+          <thead>
+            <tr>
+              <th scope="col">janela</th>
+              <th scope="col">antes (100% do caixa)</th>
+              <th scope="col">depois (30% do caixa, ao vivo)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {DEPLOY_FRACTION_WINDOWS.map((w) => (
+              <tr key={w.window}>
+                <th scope="row">
+                  {w.window}
+                  <span className="sobre-compare-period">{w.period}</span>
+                </th>
+                <td className="sobre-compare-before">{pctBr(w.beforePct)}</td>
+                <td className="sobre-compare-after">{pctBr(w.afterPct)}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">média (12 janelas)</th>
+              <td className="sobre-compare-before">{pctBr(meanBefore)}</td>
+              <td className="sobre-compare-after">{pctBr(meanAfter)}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <p className="sobre-compare-caption">
+        {wins} de {DEPLOY_FRACTION_WINDOWS.length} janelas melhoraram — a única exceção (fev/25 – mai/25) segue batendo o controle, só que por
+        margem menor. Janelas disjuntas de ~3 anos de dados, nunca usadas pra desenhar a regra.
+      </p>
+    </div>
+  );
+}
 
 /** The "Como funciona" governance paragraph names the per-generation seed
  * amount ("... novinhos"), so unlike the other subsections it's built
@@ -111,6 +216,16 @@ export function SobreTab({ snapshot }: SobreTabProps) {
         <SobreSubsection title="Stack">
           <p className="sobre-paragraph">{STACK_TEXT}</p>
         </SobreSubsection>
+
+        <SobreSubsection title="O que testamos">
+          <p className="sobre-paragraph">{ACHADO_TEXT}</p>
+          <DeployFractionTable />
+        </SobreSubsection>
+
+        <aside className="sobre-finding">
+          <span className="label">O que sobreviveu ao teste</span>
+          <p>{ACHADO_VALIDADO}</p>
+        </aside>
 
         <aside className="sobre-golden-rule">
           <span className="label">A regra de ouro</span>

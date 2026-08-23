@@ -1898,3 +1898,122 @@ ul.trade-feed .ts {
   color: var(--ink);
   opacity: 0.3;
 }
+
+/* Validated-finding callout (2026-08-21) — same pull-quote treatment as
+ * `.sobre-golden-rule`, deliberately a DIFFERENT color so the two never
+ * read as the same kind of claim: blue stays the forward-looking honesty
+ * promise, green is the site's already-established "profit / live" tint
+ * (rank-chip, hero-card deltas, etc.) — here it marks a past result that
+ * already happened and is already shipped. Green fill pairs with --black
+ * text everywhere else in this file (see .rank-chip); --ink (light grey)
+ * would fail contrast on the saturated terminal green. The `.label` chip
+ * inside needs no override — it already carries its own grey/blue
+ * background independent of the parent, same as in `.sobre-golden-rule`. */
+.sobre-finding {
+  margin: 26px 0 18px;
+  background: var(--green);
+  padding: 20px 22px 22px;
+  max-width: 72ch;
+}
+.sobre-finding p {
+  position: relative;
+  margin: 10px 0 0;
+  padding-left: 30px;
+  color: var(--black);
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2.1vw, 23px);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+.sobre-finding p::before {
+  content: "\201C";
+  position: absolute;
+  top: -10px;
+  left: -4px;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--black);
+  opacity: 0.3;
+}
+
+/* Firm-vs-control retroactive simulation table (2026-08-22) — the 12
+ * disjoint 90-day windows behind the .sobre-finding claim above, as real
+ * numbers instead of only prose. Reuses PregaoTab's established
+ * firma(verde)/controle(cinza) chart language: "depois" (what the firm
+ * actually runs now) in --green like the live equity line, "antes" in
+ * --lightgrey like the muted control line, so this reads with the same
+ * visual grammar as the Pregão chart instead of inventing a new one. */
+.sobre-compare {
+  margin: 18px 0 8px;
+  max-width: 72ch;
+}
+.sobre-compare-scroll {
+  overflow-x: auto;
+  border: var(--border-fade);
+}
+.sobre-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.sobre-compare-table caption {
+  caption-side: top;
+  text-align: left;
+  padding: 10px 12px;
+  color: var(--lightgrey);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: var(--border-fade);
+}
+.sobre-compare-table th,
+.sobre-compare-table td {
+  padding: 7px 12px;
+  text-align: right;
+  white-space: nowrap;
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.12);
+}
+.sobre-compare-table thead th {
+  color: var(--lightgrey);
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.sobre-compare-table th[scope="row"] {
+  text-align: left;
+  color: var(--ink);
+  font-weight: normal;
+}
+.sobre-compare-table thead th:first-child {
+  text-align: left;
+}
+.sobre-compare-period {
+  display: block;
+  color: var(--lightgrey);
+  font-size: 11px;
+}
+.sobre-compare-before {
+  color: var(--lightgrey);
+}
+.sobre-compare-after {
+  color: var(--green);
+  font-weight: bold;
+}
+.sobre-compare-table tfoot th,
+.sobre-compare-table tfoot td {
+  border-bottom: none;
+  border-top: var(--border-fade);
+  padding-top: 10px;
+  font-weight: bold;
+}
+.sobre-compare-table tfoot th {
+  color: var(--ink);
+}
+.sobre-compare-caption {
+  margin: 10px 0 0;
+  color: var(--lightgrey);
+  font-size: 13px;
+  line-height: 1.5;
+}
