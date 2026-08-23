@@ -13,7 +13,12 @@ export interface ClosedBar {
   closeCents: number;
 }
 
-const MAX_PAGES = 30;
+// Generous safety backstop against a runaway loop, not a real limit on
+// window length: 800 pages * 1000 bars = 800k bars =~ 7.6 years of 5m
+// candles. (Measured bug, 2026-08-22: this used to be 30 pages =~ 104
+// days, and a longer window silently truncated instead of erroring —
+// a 400-day backtest quietly returned only its first 104 days.)
+const MAX_PAGES = 800;
 const PAGE_LIMIT = 1000;
 
 const KlineRow = z.array(z.union([z.string(), z.number()])).min(7);
@@ -53,6 +58,14 @@ export async function fetchClosedBars(
 
     if (rows.length < PAGE_LIMIT || lastOpenTime === null) break;
     startTime = lastOpenTime + BAR_MS;
+
+    if (page === MAX_PAGES - 1) {
+      throw new Error(
+        `feed: hit the ${MAX_PAGES}-page safety cap for ${symbol} before reaching nowMs — ` +
+        `the window is asking for more data than the cap allows, raise MAX_PAGES instead of ` +
+        `silently truncating the backtest`,
+      );
+    }
   }
 
   return bars;

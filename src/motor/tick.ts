@@ -277,7 +277,7 @@ function ensureInitialized(db: MotorDb, firstBarTs: number | null, llmDeps: LlmD
   });
 }
 
-function handleGenerationEnd(
+export function handleGenerationEnd(
   db: MotorDb,
   deadRuntime: CohortRuntime,
   ts: number,

@@ -41,4 +41,22 @@ describe("fetchClosedBars", () => {
     const bad = (async () => new Response("nope", { status: 429 })) as typeof fetch;
     await expect(fetchClosedBars("BTCUSDT", 0, BAR_MS * 10, bad)).rejects.toThrow("429");
   });
+
+  // Measured bug (2026-08-22): a window longer than the old 30-page cap
+  // (~104 days) silently truncated instead of erroring — a 400-day
+  // backtest quietly ran on only its first 104 days with no warning.
+  // Guards that the cap now fails loud instead of truncating silently.
+  test("throws instead of silently truncating when the page cap is hit", async () => {
+    let call = 0;
+    const alwaysFullPage: typeof fetch = (async () => {
+      const openTime = (call + 1) * 1000 * BAR_MS;
+      call++;
+      const page = Array.from({ length: 1000 }, (_, i) => kline(openTime + i * BAR_MS, "100"));
+      return new Response(JSON.stringify(page), { status: 200 });
+    }) as typeof fetch;
+
+    await expect(fetchClosedBars("BTCUSDT", 0, Number.MAX_SAFE_INTEGER, alwaysFullPage)).rejects.toThrow(
+      /safety cap/,
+    );
+  });
 });
