@@ -51,12 +51,14 @@ interface Seat {
   id: string; name: string; slot: number; params: CarryParams;
   state: ReturnType<typeof initCarryState>; cash: number; peak: number;
   realized: number; trades: number; openPrice: number;
+  funding: number; firstFunding: boolean; bestHold: number;
 }
 const mkSeats = (cohort: string, params: CarryParams[]): Seat[] =>
   params.map((p, i) => ({
     id: `${cohort}-s${i}`, name: traderName(20260823 + i * 7919 + (cohort === "random" ? 101 : 0)),
     slot: i, params: p, state: initCarryState(), cash: SEAT_CENTS,
     peak: SEAT_CENTS, realized: 0, trades: 0, openPrice: 0,
+    funding: 0, firstFunding: false, bestHold: 0,
   }));
 
 const dbPath = path.join(process.env.HOME ?? os.homedir(), ".automaton", "carry-replay.db");
@@ -112,6 +114,14 @@ for (let t = 0; t < bars.length; t++) {
       const r = stepCarry(s.state, bar, s.params, { barIndex: t, equityCents: s.cash });
       s.state = r.state;
       s.cash += r.fundingCents - r.feesCents + r.realizedBasisCents;
+      s.funding += r.fundingCents;
+      if (s.state.heldBars > s.bestHold) s.bestHold = s.state.heldBars;
+      if (!s.firstFunding && r.fundingCents > 0) {
+        s.firstFunding = true;
+        db.insertEvent({ ts: bar.time, type: "achievement", traderId: s.id, generationId: c.genId,
+          payloadJson: JSON.stringify({ key: "primeiro-funding", name: s.name,
+            label: `coletou o primeiro funding da carreira: ${(r.fundingCents / 100).toFixed(2)} dólares por ficar quieto` }) });
+      }
       if (!wasIn && s.state.inPosition) {
         s.openPrice = bar.spotCents;
         db.insertEvent({ ts: bar.time, type: "trade_opened", traderId: s.id, generationId: c.genId,
@@ -162,6 +172,52 @@ for (const c of cohorts) {
         realizedPnlMc: toMc(net), feeMc: toMc(exitFee), liquidated: false }) });
     s.state = initCarryState();
   }
+}
+
+// Achievements and the HR review, all from numbers the run actually produced.
+// The mural needs event types the bar loop never emits, and `achievement` is the
+// only schema with a `name` field — so it is also the only way a trader's name
+// reaches the feed at all. Every label below is a fact, not flavour.
+for (const c of cohorts) {
+  for (const s of c.seats) {
+    const net = s.cash - SEAT_CENTS;
+    if (s.trades === 0) {
+      db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
+        payloadJson: JSON.stringify({ key: "nunca-girou", name: s.name,
+          label: "atravessou 90 dias sem abrir uma única posição e terminou com o aporte intacto — zero taxa paga" }) });
+    }
+    if (net > 0) {
+      db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
+        payloadJson: JSON.stringify({ key: "acima-do-aporte", name: s.name,
+          label: `fechou acima do aporte: +${(net / 100).toFixed(2)} dólares em ${s.trades} trade(s), com ${(s.funding / 100).toFixed(2)} de funding coletado` }) });
+    }
+    if (net < 0) {
+      db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
+        payloadJson: JSON.stringify({ key: "pagou-pedagio", name: s.name,
+          label: `girou ${s.trades} vezes e terminou ${(net / 100).toFixed(2)} — a corretagem levou mais do que o funding trouxe` }) });
+    }
+    if (s.bestHold >= 20) {
+      db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
+        payloadJson: JSON.stringify({ key: "paciencia", name: s.name,
+          label: `segurou uma posição por ${s.bestHold} janelas de funding sem se mexer` }) });
+    }
+  }
+}
+
+const evolvedFinal = cohorts[0].seats.reduce((sum, s) => sum + s.cash, 0);
+const randomFinal = cohorts[1].seats.reduce((sum, s) => sum + s.cash, 0);
+if (evolvedFinal > SEAT_CENTS * SEATS) {
+  db.insertEvent({ ts: lastBar.time, type: "record_broken", traderId: null, generationId: cohorts[0].genId,
+    payloadJson: JSON.stringify({ cohort: "evolved", genNumber: 1,
+      peakEquityMc: toMc(evolvedFinal), previousRecordMc: toMc(SEAT_CENTS * SEATS) }) });
+}
+{
+  const promoted = cohorts[0].seats.filter((s) => s.cash > SEAT_CENTS).length;
+  const held = cohorts[0].seats.length - promoted;
+  db.insertEvent({ ts: lastBar.time, type: "hr_review", traderId: null, generationId: cohorts[0].genId,
+    payloadJson: JSON.stringify({ reviewed: cohorts[0].seats.length, fired: 0, promoted, held,
+      // The benchmark is the control cohort's own result on identical bars.
+      benchmarkCents: randomFinal }) });
 }
 
 // Equity snapshot AFTER the close-out, or the cards keep reading the pre-close
