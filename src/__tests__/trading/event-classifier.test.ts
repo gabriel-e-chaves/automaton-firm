@@ -66,4 +66,28 @@ describe("event-classifier", () => {
     expect(ok).toBe(false);
     expect(event.kind).toBe("other");
   });
+
+  it("uppercases symbols the model returned in lower case", async () => {
+    const inference = scripted(JSON.stringify({
+      kind: "spot_delist", symbols: ["icx", "sCrT"],
+      effectiveTime: "2026-09-03T00:00:00Z", confidence: 0.9,
+    }));
+    const { event, ok } = await classifyAnnouncement({
+      inference, model: "test", announcement: ann("Binance Will Delist icx, sCrT on 2026-09-03"),
+    });
+    expect(ok).toBe(true);
+    expect(event.symbols).toEqual(["ICX", "SCRT"]);
+  });
+
+  it("falls back when effectiveTime is not a parseable date", async () => {
+    const inference = scripted(JSON.stringify({
+      kind: "spot_delist", symbols: ["ICX"],
+      effectiveTime: "sometime next quarter", confidence: 0.9,
+    }));
+    const { event, ok } = await classifyAnnouncement({ inference, model: "test", announcement: ann("t") });
+    expect(ok).toBe(false);
+    expect(event).toEqual({
+      code: "c1", kind: "other", symbols: [], effectiveTime: 0, confidence: 0, model: "test",
+    });
+  });
 });
