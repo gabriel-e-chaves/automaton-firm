@@ -1760,3 +1760,88 @@ ul.trade-feed .ts {
 @media (max-width: 640px) {
   .research-ribbon { flex-direction: column; align-items: flex-start; }
 }
+
+/* Equity lines — real per-bar curves, three windows. */
+.lines-grid { display: flex; flex-direction: column; gap: 1rem; }
+.line-card {
+  margin: 0;
+  padding: 0.85rem 1rem 0.6rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  max-width: 54rem;
+}
+.line-card figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.line-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-color-secondary);
+}
+.line-card figcaption strong {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+.line-sub { flex: 1 1 18rem; font-size: 0.76rem; color: var(--text-color-secondary); }
+.line-card svg { display: block; width: 100%; height: auto; }
+.line-floor { stroke: var(--text-color-secondary); stroke-width: 1; stroke-dasharray: 3 4; opacity: 0.55; }
+.line-free { fill: none; stroke: var(--green); stroke-width: 2; }
+.line-braked { fill: none; stroke: var(--text-color-secondary); stroke-width: 1.4; stroke-dasharray: 4 3; opacity: 0.8; }
+
+/* Cast + mural */
+.cast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  max-width: 54rem;
+}
+.cast-card {
+  padding: 0.85rem 1rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+}
+.cast-card.cast-idle { border-left-color: var(--text-color-secondary); }
+.cast-head { display: flex; flex-direction: column; gap: 0.1rem; margin-bottom: 0.5rem; }
+.cast-name { font-size: 1rem; }
+.cast-role { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-color-secondary); }
+.cast-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.6rem; margin: 0 0 0.5rem; }
+.cast-stats div { display: flex; justify-content: space-between; gap: 0.4rem; }
+.cast-stats dt { font-size: 0.72rem; color: var(--text-color-secondary); }
+.cast-stats dd { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.cast-note { margin: 0; font-size: 0.78rem; line-height: 1.5; color: var(--text-color-secondary); }
+
+.mural-title { font-family: var(--font-display); margin: 0; }
+.mural-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; max-width: 54rem; }
+.mural-post {
+  display: flex; gap: 0.7rem; align-items: baseline;
+  padding: 0.55rem 0.8rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.mural-post.mural-loss { border-left-color: var(--red); }
+.mural-post.mural-quiet { border-left-color: var(--blue); color: var(--text-color-secondary); }
+.mural-badge {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--text-color-secondary);
+}
+.mural-body { flex: 1 1 auto; }

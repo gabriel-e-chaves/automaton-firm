@@ -45,7 +45,8 @@ describe("PesquisaTab", () => {
   it("reports the delisting strategy ending at zero beside its positive excess", () => {
     render(<PesquisaTab />);
     expect(screen.getByText("+922 bps")).toBeInTheDocument();
-    expect(screen.getByText("$0.00")).toBeInTheDocument();
+    // Scoped: the cast section also renders $0.00 net for the idle seats.
+    expect(screen.getAllByText("$0.00").length).toBeGreaterThan(0);
     expect(screen.getByText(/funding pago: \u2212\$966\.45/)).toBeInTheDocument();
   });
 });
@@ -75,5 +76,29 @@ describe("PesquisaTab — a aula (90 dias, pré-registrado)", () => {
   it("explains why the firm arm was worse, arithmetically", () => {
     render(<PesquisaTab />);
     expect(screen.getByText(/aritmeticamente invisível/)).toBeInTheDocument();
+  });
+});
+
+describe("PesquisaTab — elenco da firma", () => {
+  it("shows every agent by name with their trade count", () => {
+    render(<PesquisaTab />);
+    for (const n of ["João Esteves", "Diego Silveira", "Zeca Teixeira"]) {
+      expect(screen.getByText(n)).toBeInTheDocument();
+    }
+  });
+
+  // A best-window cast is illustrative, never evidence. If this label ever
+  // disappears the page starts claiming a post-hoc pick as a finding.
+  it("labels the best window as post-hoc, beside the numbers", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText("post-hoc")).toBeInTheDocument();
+    expect(screen.getByText(/não é evidência, é ilustração/)).toBeInTheDocument();
+    expect(screen.getByText(/erro da LUNA no Experimento 3/)).toBeInTheDocument();
+  });
+
+  it("renders the three 90-day equity lines as real svg paths", () => {
+    const { container } = render(<PesquisaTab />);
+    expect(container.querySelectorAll("figure.line-card svg")).toHaveLength(3);
+    expect(container.querySelectorAll("path.line-free").length).toBe(3);
   });
 });

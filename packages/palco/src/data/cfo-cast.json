@@ -1,0 +1,153 @@
+{
+  "window": {
+    "label": "2021 (melhor janela medida)",
+    "startTs": 1610668800000,
+    "endTs": 1618444800000,
+    "days": 90,
+    "symbol": "BTCUSDT",
+    "bars": 270
+  },
+  "deployFraction": 0.3,
+  "headline": {
+    "startUsd": 1000,
+    "finalUsd": 1021.43,
+    "deployedUsd": 300,
+    "idleUsd": 700,
+    "trades": 3,
+    "fundingUsd": 23.32,
+    "feesUsd": 1.4,
+    "drawdownUsd": 0.51,
+    "cycles": [
+      {
+        "openTime": 1610668800002,
+        "closeTime": 1613260800013,
+        "barsHeld": 90,
+        "netUsd": 8.08,
+        "fundingUsd": 8.92,
+        "feesUsd": 0.46
+      },
+      {
+        "openTime": 1613347200000,
+        "closeTime": 1615939200010,
+        "barsHeld": 90,
+        "netUsd": 7.07,
+        "fundingUsd": 7.57,
+        "feesUsd": 0.46
+      },
+      {
+        "openTime": 1616025600001,
+        "closeTime": 1618416000012,
+        "barsHeld": 83,
+        "netUsd": 6.28,
+        "fundingUsd": 6.83,
+        "feesUsd": 0.48
+      }
+    ]
+  },
+  "seats": [
+    {
+      "name": "João Esteves",
+      "archetype": "conservador",
+      "startUsd": 333.33,
+      "finalUsd": 340.75,
+      "netUsd": 7.42,
+      "deployedUsd": 100,
+      "idleUsd": 233.33,
+      "trades": 3,
+      "fundingUsd": 7.93,
+      "feesUsd": 0.48,
+      "enterFundingBps": 3,
+      "maxHoldBars": 120,
+      "cycles": [
+        {
+          "openTime": 1610668800002,
+          "closeTime": 1614124800012,
+          "barsHeld": 120,
+          "netUsd": 4.34,
+          "fundingUsd": 4.54,
+          "feesUsd": 0.16
+        },
+        {
+          "openTime": 1614384000001,
+          "closeTime": 1617840000013,
+          "barsHeld": 120,
+          "netUsd": 2.51,
+          "fundingUsd": 2.68,
+          "feesUsd": 0.16
+        },
+        {
+          "openTime": 1618041600005,
+          "closeTime": 1618416000012,
+          "barsHeld": 13,
+          "netUsd": 0.57,
+          "fundingUsd": 0.71,
+          "feesUsd": 0.16
+        }
+      ]
+    },
+    {
+      "name": "Diego Silveira",
+      "archetype": "moderado",
+      "startUsd": 333.33,
+      "finalUsd": 341.11,
+      "netUsd": 7.78,
+      "deployedUsd": 100,
+      "idleUsd": 233.33,
+      "trades": 2,
+      "fundingUsd": 8.12,
+      "feesUsd": 0.32,
+      "enterFundingBps": 1.5,
+      "maxHoldBars": 180,
+      "cycles": [
+        {
+          "openTime": 1610668800002,
+          "closeTime": 1615852800005,
+          "barsHeld": 180,
+          "netUsd": 5.58,
+          "fundingUsd": 5.73,
+          "feesUsd": 0.16
+        },
+        {
+          "openTime": 1615939200010,
+          "closeTime": 1618416000012,
+          "barsHeld": 86,
+          "netUsd": 2.2,
+          "fundingUsd": 2.39,
+          "feesUsd": 0.16
+        }
+      ]
+    },
+    {
+      "name": "Zeca Teixeira",
+      "archetype": "agressivo",
+      "startUsd": 333.33,
+      "finalUsd": 341.04,
+      "netUsd": 7.71,
+      "deployedUsd": 100,
+      "idleUsd": 233.33,
+      "trades": 2,
+      "fundingUsd": 8.11,
+      "feesUsd": 0.32,
+      "enterFundingBps": 0.5,
+      "maxHoldBars": 252,
+      "cycles": [
+        {
+          "openTime": 1610668800002,
+          "closeTime": 1617926400000,
+          "barsHeld": 252,
+          "netUsd": 7.07,
+          "fundingUsd": 7.29,
+          "feesUsd": 0.16
+        },
+        {
+          "openTime": 1617955200004,
+          "closeTime": 1618416000012,
+          "barsHeld": 16,
+          "netUsd": 0.64,
+          "fundingUsd": 0.82,
+          "feesUsd": 0.16
+        }
+      ]
+    }
+  ]
+}

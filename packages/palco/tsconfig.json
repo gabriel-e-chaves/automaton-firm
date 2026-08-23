@@ -20,5 +20,5 @@
     "tsBuildInfoFile": "dist-types/.tsbuildinfo",
     "types": ["vite/client"]
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "src/**/*.json", "vite.config.ts"]
 }

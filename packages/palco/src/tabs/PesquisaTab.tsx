@@ -1,3 +1,5 @@
+import { CfoCast } from "../components/CfoCast";
+import { EquityLines } from "../components/EquityLines";
 import {
   CFO_90D,
   FIRM_ARM_REASON,
@@ -184,6 +186,10 @@ export function PesquisaTab() {
         tempo, e uma página que mostrasse só a primeira seria a única superfície desonesta
         deste repositório.
       </p>
+
+      <EquityLines />
+
+      <CfoCast />
 
       <header className="research-head research-head--second">
         <h2>O achado mais interessante não é a tabela</h2>
