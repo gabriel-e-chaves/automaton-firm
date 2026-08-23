@@ -13,10 +13,9 @@ const article = (code: string, title: string, releaseDate: number) => ({
 });
 
 describe("announcement-feed", () => {
-  it("pages until a short page and returns typed announcements", async () => {
+  it("stops after a single short page and returns typed announcements", async () => {
     const fetchImpl = vi.fn()
-      .mockResolvedValueOnce(page([article("a", "Binance Will Delist ICX on 2026-09-03", 1787000000000)]))
-      .mockResolvedValueOnce(page([]));
+      .mockResolvedValueOnce(page([article("a", "Binance Will Delist ICX on 2026-09-03", 1787000000000)]));
     const out = await fetchAnnouncements(CATALOG_DELISTING, 10, fetchImpl as unknown as typeof fetch);
     expect(out).toHaveLength(1);
     expect(out[0]).toEqual({
@@ -26,6 +25,15 @@ describe("announcement-feed", () => {
       body: null,
       releaseDate: 1787000000000,
     });
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it("pages past a full page and stops on the following short page", async () => {
+    const fetchImpl = vi.fn()
+      .mockResolvedValueOnce(page(Array.from({ length: 50 }, (_, i) => article(`a${i}`, "Delist", 1787000000000 + i))))
+      .mockResolvedValueOnce(page([article("b", "Binance Will Delist ICX on 2026-09-03", 1787000000100)]));
+    const out = await fetchAnnouncements(CATALOG_DELISTING, 10, fetchImpl as unknown as typeof fetch);
+    expect(out).toHaveLength(51);
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
 
