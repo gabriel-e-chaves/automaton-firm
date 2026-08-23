@@ -1,7 +1,7 @@
 import type { PalcoSnapshot } from "../types";
 import { relativeTime } from "../format";
 import { STAKE_MC } from "../mood";
-import { OrgGraph } from "./OrgGraph";
+import { cargoForEmployee } from "../cargo";
 
 interface EmpresaTabProps {
   snapshot: PalcoSnapshot | null;
@@ -68,22 +68,27 @@ export function EmpresaTab({ snapshot }: EmpresaTabProps) {
         </div>
       </section>
 
-      <h2 className="section-title">Organograma</h2>
+      <h2 className="section-title">Cargos</h2>
       <p className="org-explainer">
-        Como a firma se organiza: o RH avalia todo mundo semanalmente contra o benchmark. Sêniores herdam genomas de
-        elite; trainees são apostas do RH no meio do ciclo; o grupo de controle joga moeda — e nos mantém honestos.
+        Quem faz o quê. O cargo é derivado do próprio registro do funcionário — coorte, genoma herdado, mesa e
+        alavancagem — não atribuído à mão.
       </p>
       {employees.length === 0 ? (
         <p className="empty-state">Sem funcionários ainda.</p>
       ) : (
-        <OrgGraph
-          employees={employees}
-          hrPolicy={org?.hrPolicy ?? ""}
-          leaderboard={snapshot?.leaderboard ?? []}
-          demissoes={demissoes}
-          promocoes={promocoes}
-          stakeMc={stakeMc}
-        />
+        <ul className="cargo-list">
+          {employees.map((emp) => {
+            const entry = (snapshot?.leaderboard ?? []).find((l) => l.traderId === emp.traderId) ?? null;
+            const cargo = cargoForEmployee(emp, entry);
+            return (
+              <li key={emp.traderId} className={emp.status === "live" ? "cargo-row" : "cargo-row cargo-gone"}>
+                <span className="cargo-titulo">{cargo.titulo}</span>
+                <span className="cargo-nome">{emp.name}</span>
+                <span className="cargo-papel">{cargo.papel}</span>
+              </li>
+            );
+          })}
+        </ul>
       )}
 
       <section className="org-history">

@@ -1871,3 +1871,43 @@ ul.trade-feed .ts {
   color: var(--text-color-secondary);
 }
 .research-scope strong { color: var(--text-color); }
+
+/* Cargos list — replaces the org graph. Title, person, role, one row each. */
+.cargo-list { list-style: none; margin: 0 0 1.25rem; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.cargo-row {
+  display: grid;
+  grid-template-columns: minmax(7rem, auto) minmax(9rem, auto) 1fr;
+  gap: 0.3rem 0.9rem;
+  align-items: baseline;
+  padding: 0.55rem 0.8rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+}
+.cargo-row.cargo-gone { border-left-color: var(--text-color-secondary); opacity: 0.65; }
+.cargo-titulo {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-color-secondary);
+}
+.cargo-nome { font-weight: 600; }
+.cargo-papel { font-size: 0.8rem; line-height: 1.5; color: var(--text-color-secondary); }
+@media (max-width: 700px) { .cargo-row { grid-template-columns: 1fr; } }
+
+/* Lucro por período */
+.period-panel { margin-bottom: 0.9rem; }
+.period-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.period-table th, .period-table td { padding: 0.42rem 0.6rem; text-align: right; border-bottom: 1px solid var(--border-color-fade); }
+.period-table thead th { text-align: left; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-color-secondary); }
+.period-table tbody th { text-align: left; font-weight: 600; }
+.period-table tr.pos-row td { color: var(--green); }
+.period-table tr.neg-row td { color: var(--red); }
+.period-partial { font-size: 0.68rem; color: var(--text-color-secondary); font-weight: 400; }
+
+/* Trade feed: who did it, and wins stand out */
+.trade-who {
+  margin: 0 0.35rem 0 0; padding: 0.05rem 0.35rem;
+  font-size: 0.7rem; border: 1px solid var(--border-color); border-radius: 3px;
+  color: var(--text-color-secondary);
+}
+.trade-feed li.trade-win { border-left: 3px solid var(--green); padding-left: 0.5rem; }

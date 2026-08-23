@@ -8,7 +8,6 @@ import { ShineBorder } from "./components/ShineBorder";
 import { Confetti } from "./components/Confetti";
 import { PregaoTab } from "./tabs/PregaoTab";
 import { LeaderboardTab } from "./tabs/LeaderboardTab";
-import { GeracoesTab } from "./tabs/GeracoesTab";
 import { EmpresaTab } from "./tabs/EmpresaTab";
 import { MuralTab } from "./tabs/MuralTab";
 import { SobreTab } from "./tabs/SobreTab";
@@ -46,7 +45,7 @@ function formatOneDecimal(n: number): string {
   return n.toFixed(1);
 }
 
-type Route = "pregao" | "leaderboard" | "empresa" | "geracoes" | "mural" | "pesquisa" | "sobre";
+type Route = "pregao" | "leaderboard" | "empresa" | "mural" | "pesquisa" | "sobre";
 
 // LMArena-style ranked Leaderboard is a named product identity anchor —
 // it stays alongside Empresa's org chart (ranking vs. structure), not
@@ -55,7 +54,6 @@ const NAV_ITEMS: Array<{ route: Route; label: string }> = [
   { route: "pregao", label: "Pregão" },
   { route: "leaderboard", label: "Leaderboard" },
   { route: "empresa", label: "Empresa" },
-  { route: "geracoes", label: "Gerações" },
   { route: "mural", label: "Mural" },
   { route: "pesquisa", label: "Pesquisa" },
   { route: "sobre", label: "Sobre" },
@@ -189,7 +187,6 @@ export default function App() {
           {route === "pregao" && <PregaoTab snapshot={snapshot} />}
           {route === "leaderboard" && <LeaderboardTab snapshot={snapshot} />}
           {route === "empresa" && <EmpresaTab snapshot={snapshot} />}
-          {route === "geracoes" && <GeracoesTab snapshot={snapshot} />}
           {route === "mural" && <MuralTab snapshot={snapshot} />}
           {route === "pesquisa" && <PesquisaTab />}
           {route === "sobre" && <SobreTab snapshot={snapshot} />}

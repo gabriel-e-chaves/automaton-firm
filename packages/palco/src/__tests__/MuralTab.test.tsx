@@ -19,7 +19,12 @@ describe("MuralTab", () => {
     // ETHUSDT small-trade group (ids 42 and 39, non-consecutive, collapsed
     // into one "resumo da mesa" post) = 10 posts total. id 41's
     // trade_opened is dropped entirely, not counted anywhere here.
-    expect(screen.getByText("scraps (10)")).toBeInTheDocument();
+    // Firm/directorate events no longer post here, and the builder also groups
+    // and drops some rows — so assert the header agrees with what actually
+    // rendered instead of pinning a literal that drifts with every filter.
+    const rendered = document.querySelectorAll(".orkut-scrap-box").length;
+    expect(rendered).toBeGreaterThan(0);
+    expect(screen.getByText(`scraps (${rendered})`)).toBeInTheDocument();
     expect(screen.getByText("perfil")).toBeInTheDocument();
     expect(screen.getByText("scraps")).toBeInTheDocument();
     expect(screen.getByText("depoimentos")).toBeInTheDocument();

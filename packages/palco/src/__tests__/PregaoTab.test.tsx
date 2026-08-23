@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { PregaoTab } from "../tabs/PregaoTab";
 import { fixtureSnapshot } from "./fixtures";
+import { computePeriodPnl } from "../periodPnl";
 
 // jsdom has no real <canvas> 2D context or layout engine, which chart.js's
 // responsive-resize plumbing depends on; it throws when mounted under
@@ -63,5 +64,33 @@ describe("PregaoTab", () => {
 
     expect(screen.getByText("ninguém posicionado — a firma espera sinal.")).toBeInTheDocument();
     expect(screen.getByText("Sem trades ainda.")).toBeInTheDocument();
+  });
+});
+
+describe("PregaoTab — lucro por período", () => {
+  it("uses the stake as the base when the window is shorter than the period", () => {
+    // 10 days of series, stake 100_000_000: the "semestre" row must measure from
+    // the stake, not from the first snapshot (which is already post-fee).
+    const DAY = 86_400_000;
+    const series: [number, number][] = [
+      [DAY * 10, 99_900_000],
+      [DAY * 20, 100_137_000],
+    ];
+    const rows = computePeriodPnl(series, 100_000_000);
+    const semestre = rows.find((r) => r.label === "semestre")!;
+    expect(semestre.covered).toBe(false);
+    expect(semestre.pnlMc).toBe(137_000);
+  });
+
+  it("measures from the series when the period IS covered", () => {
+    const DAY = 86_400_000;
+    const series: [number, number][] = [
+      [DAY * 0, 100_000_000],
+      [DAY * 100, 100_500_000],
+      [DAY * 200, 101_000_000],
+    ];
+    const semana = computePeriodPnl(series, 100_000_000).find((r) => r.label === "semana")!;
+    expect(semana.covered).toBe(true);
+    expect(semana.pnlMc).toBe(500_000);
   });
 });

@@ -40,6 +40,9 @@ const FORMATTERS: Record<string, (p: Payload) => string> = {
   trade_closed: (p) =>
     `fechou ${str(p, "symbol")} · P&L ${usd(p, "realizedPnlMc")}${p.liquidated ? " · LIQUIDADO" : ""}`,
 
+  funding_paid: (p) =>
+    `recebeu funding ${usd(p, "amountMc")} em ${str(p, "symbol")} · ${num(p, "barsHeld")} janelas segurando`,
+
   trader_hired: (p) =>
     `🤝 <strong>${str(p, "name")}</strong> contratado(a) · slot ${num(p, "slot")} · stake ${usd(p, "stakeMc")}`,
 

@@ -53,6 +53,13 @@ export interface MuralPost {
 const DEFAULT_GEN_START_MC = 100_000_000; // sane fallback, mirrors palco-data.ts's GEN_START_MC
 const SMALL_TRADE_DIVISOR = 100;
 
+const FIRM_POST_TYPES = new Set([
+  "record_broken",
+  "gen_started",
+  "gen_ended",
+  "hr_review",
+]);
+
 function num(payload: Record<string, unknown>, key: string, fallback = 0): number {
   const value = payload[key];
   return typeof value === "number" ? value : fallback;
@@ -279,6 +286,10 @@ export function buildMuralPosts(feed: FeedItem[], genStartMc: number = DEFAULT_G
 
   for (const item of feed) {
     if (item.type === "trade_opened") continue;
+    // Firm/directorate posts are out by request: the mural is the traders'
+    // wall, not the company's. Records, generation notices and review cycles
+    // still exist in the event log and on the Pregão — they just do not post here.
+    if (FIRM_POST_TYPES.has(item.type)) continue;
     if (item.type === "hr_review" && !hasHrActions(item.payload)) continue;
 
     if (item.type === "trade_closed" && isSmallTrade(item, smallTradeThresholdMc)) {

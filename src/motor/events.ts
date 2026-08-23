@@ -113,6 +113,18 @@ export const EVENT_PAYLOAD_SCHEMAS = {
     benchmarkCents: z.number().int(),
   }),
 
+  /**
+   * Funding collected on a carry leg. Every closed round trip in a carry loses
+   * on fees + basis; the profit is the funding paid while the position was
+   * open. Without this type the event log shows only the losing half and the
+   * source of the P&L is invisible in the feed.
+   */
+  funding_paid: z.strictObject({
+    symbol: z.string(),
+    amountMc: z.number().int(),
+    barsHeld: z.number().int(),
+  }),
+
   achievement: z.strictObject({
     key: z.string(),
     name: z.string(),

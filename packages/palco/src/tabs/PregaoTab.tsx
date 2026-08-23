@@ -9,6 +9,7 @@ import {
 import { Line } from "react-chartjs-2";
 import type { PalcoSnapshot } from "../types";
 import { dateShort, usd, centsToUsd } from "../format";
+import { computePeriodPnl } from "../periodPnl";
 import { initials, avatarBackground } from "../avatar";
 import { moodEmoji, STAKE_MC } from "../mood";
 
@@ -163,9 +164,22 @@ export function PregaoTab({ snapshot }: PregaoTabProps) {
     },
   };
 
-  const trades = (snapshot?.feed ?? []).filter(
-    (item) => item.type === "trade_opened" || item.type === "trade_closed",
-  );
+  // funding_paid is included because in a carry it IS the profit — every closed
+  // round trip loses on fees + basis, and the money arrives as funding while the
+  // leg is held. A feed of closes alone shows only the losing half.
+  const TRADE_TYPES = new Set(["trade_opened", "trade_closed", "funding_paid"]);
+  const allTrades = (snapshot?.feed ?? []).filter((item) => TRADE_TYPES.has(item.type));
+  const gain = (item: (typeof allTrades)[number]): number => {
+    if (item.type === "funding_paid") return Number(item.payload.amountMc ?? 0);
+    if (item.type === "trade_closed") return Number(item.payload.realizedPnlMc ?? 0);
+    return 0;
+  };
+  // Profitable first, then the rest — newest within each group.
+  const trades = [...allTrades].sort((a, b) => {
+    const ga = gain(a) > 0 ? 1 : 0, gb = gain(b) > 0 ? 1 : 0;
+    return gb - ga || b.ts - a.ts;
+  });
+  const periods = computePeriodPnl(snapshot?.equitySeries?.evolved ?? [], snapshot?.cards?.genStartMc);
   const positions = (snapshot?.leaderboard ?? []).filter((trader) => trader.inPosition);
 
   return (
@@ -180,13 +194,35 @@ export function PregaoTab({ snapshot }: PregaoTabProps) {
       <div className="pregao-side">
         <OpenPositionsPanel positions={positions} stakeMc={stakeMc} />
 
+        <section className="period-panel">
+          <h2 className="section-title">Lucro por período</h2>
+          <table className="period-table">
+            <thead>
+              <tr><th scope="col">Período</th><th scope="col">P&L</th><th scope="col">%</th></tr>
+            </thead>
+            <tbody>
+              {periods.map((p) => (
+                <tr key={p.label} className={p.pnlMc > 0 ? "pos-row" : p.pnlMc < 0 ? "neg-row" : ""}>
+                  <th scope="row">
+                    {p.label}
+                    {!p.covered && <span className="period-partial"> · janela mais curta</span>}
+                  </th>
+                  <td>{p.covered || p.pnlMc !== 0 ? usd(p.pnlMc) : "—"}</td>
+                  <td>{p.covered || p.pnlMc !== 0 ? `${p.pctFromStart >= 0 ? "+" : ""}${p.pctFromStart.toFixed(2)}%` : "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
         <section className="trades-panel">
           <h2 className="section-title">Últimos trades</h2>
           <ul className="trade-feed">
             {trades.length === 0 && <li>Sem trades ainda.</li>}
             {trades.slice(0, MAX_TRADE_ITEMS).map((item) => (
-              <li key={item.id} className={pnlRowClass(item)}>
+              <li key={item.id} className={gain(item) > 0 ? "trade-win" : pnlRowClass(item)}>
                 <span className="ts">{dateShort(item.ts)}</span>
+                {item.traderName && <span className="trade-who">{item.traderName}</span>}
                 {/*
                   Safe: item.html is produced server-side by
                   src/motor/palco-format.ts's formatEventPt, which escapes every

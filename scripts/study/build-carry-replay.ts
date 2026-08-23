@@ -130,6 +130,11 @@ for (let t = 0; t < bars.length; t++) {
       }
       if (r.closedCycle) {
         s.trades += 1; s.realized += r.closedCycle.netCents;
+        if (r.closedCycle.fundingCents > 0) {
+          db.insertEvent({ ts: bar.time, type: "funding_paid", traderId: s.id, generationId: c.genId,
+            payloadJson: JSON.stringify({ symbol: SYMBOL, amountMc: toMc(r.closedCycle.fundingCents),
+              barsHeld: r.closedCycle.barsHeld }) });
+        }
         db.insertEvent({ ts: bar.time, type: "trade_closed", traderId: s.id, generationId: c.genId,
           payloadJson: JSON.stringify({ symbol: SYMBOL, priceCents: bar.spotCents,
             realizedPnlMc: toMc(r.closedCycle.netCents), feeMc: toMc(r.closedCycle.feesCents), liquidated: false }) });

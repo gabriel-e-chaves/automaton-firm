@@ -33,13 +33,13 @@ describe("App", () => {
     vi.unstubAllGlobals();
   });
 
-  it("renders the wordmark, kicker, and the 6-link site nav", async () => {
+  it("renders the wordmark, kicker, and the site nav (Gerações removed by request)", async () => {
     render(<App />);
 
     expect(await screen.findByText("A Firma")).toBeInTheDocument();
     expect(screen.getByText(/Automaton · pesquisa de trading/i)).toBeInTheDocument();
 
-    for (const label of ["Pregão", "Leaderboard", "Empresa", "Gerações", "Mural", "Sobre"]) {
+    for (const label of ["Pregão", "Leaderboard", "Empresa", "Mural", "Pesquisa", "Sobre"]) {
       expect(screen.getByRole("button", { name: label })).toBeInTheDocument();
     }
   });

@@ -40,7 +40,7 @@ export interface PalcoSnapshot {
     inPosition: boolean;
     entryPriceCents: number | null;
   }>; // labels, from achievement events
-  feed: Array<{ id: number; ts: number; type: string; html: string; payload: Record<string, unknown> }>; // 40 newest, html pre-formatted+escaped
+  feed: Array<{ id: number; ts: number; type: string; html: string; traderName: string | null; payload: Record<string, unknown> }>; // 40 newest, html pre-formatted+escaped
   org: {
     hrPolicy: string; // fixed PT string, see HR_POLICY_PT
     employees: Array<{
@@ -261,15 +261,18 @@ function computeLeaderboard(raw: BetterSqlite3.Database): PalcoSnapshot["leaderb
 function computeFeed(raw: BetterSqlite3.Database): PalcoSnapshot["feed"] {
   const rows = raw
     .prepare(
-      `SELECT id, ts, type, payload_json FROM events
-       WHERE type NOT IN ('motor_started', 'motor_stopped')
-       ORDER BY id DESC LIMIT ?`,
+      `SELECT e.id AS id, e.ts AS ts, e.type AS type, e.payload_json AS payload_json,
+              t.name AS trader_name
+       FROM events e
+       LEFT JOIN traders t ON t.id = e.trader_id
+       WHERE e.type NOT IN ('motor_started', 'motor_stopped')
+       ORDER BY e.id DESC LIMIT ?`,
     )
-    .all(FEED_LIMIT) as { id: number; ts: number; type: string; payload_json: string }[];
+    .all(FEED_LIMIT) as { id: number; ts: number; type: string; payload_json: string; trader_name: string | null }[];
 
   return rows.map((row) => {
     const payload = JSON.parse(row.payload_json) as Record<string, unknown>;
-    return { id: row.id, ts: row.ts, type: row.type, html: formatEventPt(row.type, payload), payload };
+    return { id: row.id, ts: row.ts, type: row.type, html: formatEventPt(row.type, payload), traderName: row.trader_name, payload };
   });
 }
 
