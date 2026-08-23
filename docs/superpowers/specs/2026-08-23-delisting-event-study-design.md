@@ -35,13 +35,27 @@ coincide. No new success criterion had to be invented.
 ## 2. Honest scope
 
 This is the first trade in the project where **fees are not expected to be the
-dominant term**. Every prior null was cost eating signal: 10 bps spot + 5 bps
-perp per leg, 20 bps round trip, against a signal worth basis points. A
-delisting decline is measured in tens of percent. The ratio inverts.
+dominant term**. Every prior null was cost eating signal. A delisting decline is
+measured in tens of percent. The ratio inverts.
+
+**Position structure and its exact cost.** The position is an **unhedged short
+of the dying token's USDⓈ-M perp** — one leg, not the two-leg delta-neutral
+carry. So the round trip is `PERP_TAKER_BPS` twice: **5 + 5 = 10 bps**, not the
+30 bps a spot+perp carry pays. Both figures come from the same engine constants
+in `carry-engine.ts`; using the carry's 30 bps here, or splitting the difference
+at 20, would misstate the bar the effect has to clear.
+
+The position is **directional, not market-neutral** — shorting a dying token
+carries short beta to crypto broadly. That is accepted rather than hedged: a
+BTC-perp hedge would double the fee load and add basis risk for a $1,000 account
+chasing a $1 result. Market drift is instead controlled **statistically**, by
+the random-timestamp control cohort (§10) — if the market fell across the
+sample, the control fell with it, and only the excess survives. The control does
+the hedge's job for free, which is the better trade at this size.
 
 What this can show: whether a text-classified, forced-flow event carries a
-forward return that beats a random-timestamp control by more than the round
-trip, out-of-sample, with a consistent sign across disjoint calendar periods.
+forward return that beats a random-timestamp control by more than the 10 bps
+round trip, out-of-sample, with a consistent sign across disjoint calendar periods.
 
 What this cannot show: that the effect survives at size (it will not — this is
 explicitly a small-capital trade), that it persists into the future, or that it
@@ -260,14 +274,15 @@ An effect is **demonstrated** only if all four hold, at the primary horizon:
 
 1. **Sample:** at least 50 harvestable Class A events.
 2. **Excess:** median forward return beats the control cohort's median by more
-   than **20 bps** (the modeled round trip).
+   than **10 bps** (the modeled round trip: `PERP_TAKER_BPS` on entry and exit —
+   see §2).
 3. **Sign stability:** the excess keeps its sign in **two disjoint calendar
    periods** — no pooling a dead period with a live one.
 4. **Beats doing nothing:** the strategy's terminal equity exceeds the
    untouched $1,000. Experiment 5's lesson is binding: beating a bad benchmark
    is not an edge, and the benchmark is `max(control, doing nothing)`.
 
-A median excess inside **±20 bps** is reported as noise, not as a weak positive.
+A median excess inside **±10 bps** is reported as noise, not as a weak positive.
 
 ## 10. Honesty guardrails
 
