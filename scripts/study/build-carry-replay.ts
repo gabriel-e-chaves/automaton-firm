@@ -137,12 +137,56 @@ for (let t = 0; t < bars.length; t++) {
   }
 }
 
+// Close out every position still open on the last bar, paying the exit fee.
+// Without this the replay keeps the funding a seat collected and never charges
+// the leg it is still holding — that inflated the firm total by $0.64 and made
+// every closed cycle in the mural look like a loss while the profit hid inside
+// an un-liquidated position. EXIT_FEE_BPS is spot taker (10) + perp taker (5),
+// the same constants runCarryBacktest uses; the assert below proves it matches.
+const EXIT_FEE_BPS = 15;
+const lastBar = bars[bars.length - 1];
+for (const c of cohorts) {
+  for (const s of c.seats) {
+    if (!s.state.inPosition) continue;
+    const notional = s.state.notionalCents;
+    const exitFee = Math.round((notional * EXIT_FEE_BPS) / 10_000);
+    const basis = Math.round(
+      s.state.qty * ((s.state.entryMarkCents - s.state.entrySpotCents) - (lastBar.markCents - lastBar.spotCents)),
+    );
+    const net = basis - exitFee;
+    s.cash += net;
+    s.trades += 1;
+    s.realized += net;
+    db.insertEvent({ ts: lastBar.time, type: "trade_closed", traderId: s.id, generationId: c.genId,
+      payloadJson: JSON.stringify({ symbol: SYMBOL, priceCents: lastBar.spotCents,
+        realizedPnlMc: toMc(net), feeMc: toMc(exitFee), liquidated: false }) });
+    s.state = initCarryState();
+  }
+}
+
+// Equity snapshot AFTER the close-out, or the cards keep reading the pre-close
+// figure and disagree with the leaderboard by exactly the unpaid exit fees.
+for (const c of cohorts) {
+  const settled = c.seats.reduce((sum, s) => sum + s.cash, 0);
+  db.insertEquitySnapshot(lastBar.time + 1, c.name, toMc(settled));
+  for (const s of c.seats) db.insertTraderSnapshot(lastBar.time + 1, s.id, toMc(s.cash));
+  const gen = db.getLiveGeneration(c.name);
+  if (gen && toMc(settled) > gen.peakEquityMc) {
+    db.updateGeneration(gen.id, { peakEquityMc: toMc(settled), peakAt: lastBar.time + 1 });
+  }
+}
+
 // Final trader state + one HR review, using the same evidence shape the motor uses.
 for (const c of cohorts) {
   for (const s of c.seats) {
     db.updateTrader(s.id, {
       bookMc: toMc(s.cash), peakBookMc: toMc(s.peak),
-      realizedPnlMc: toMc(s.realized), tradesCount: s.trades,
+      // Realized P&L is cash minus the stake, NOT the sum of closed-cycle nets.
+      // Carry funding is paid into cash every 8h, so it is realized the moment
+      // it lands — a seat still holding an open leg has already banked every
+      // funding payment it collected. Summing closed cycles instead reported a
+      // book of $200.97 next to a P&L of -$0.06, which cannot both be true.
+      realizedPnlMc: toMc(s.cash - SEAT_CENTS), tradesCount: s.trades,
       status: s.cash > 0 ? "live" : "dead",
     });
   }
