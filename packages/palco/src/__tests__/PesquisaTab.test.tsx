@@ -123,7 +123,7 @@ describe("PesquisaTab — 676 trades contra 3", () => {
   });
 });
 
-describe("PesquisaTab — as doze tentativas", () => {
+describe("PesquisaTab — o registro completo", () => {
   it("lists every attempt with its model and result", () => {
     const { container } = render(<PesquisaTab />);
     expect(container.querySelectorAll(".att-card")).toHaveLength(ATTEMPTS.length);
@@ -136,9 +136,12 @@ describe("PesquisaTab — as doze tentativas", () => {
   // a record that only listed the win would not be a record.
   it("shows the failures, not only the arm that passed", () => {
     render(<PesquisaTab />);
-    expect(screen.getAllByText("resultado nulo").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("confound encontrado").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("passou o gate").length).toBe(1);
+    const count = (v: string) => ATTEMPTS.filter((a) => a.verdict === v).length;
+    expect(screen.getAllByText("resultado nulo").length).toBe(count("nulo"));
+    expect(screen.getAllByText("confound encontrado").length).toBe(count("confound"));
+    expect(screen.getAllByText("passou o gate").length).toBe(count("passou"));
+    // The record must contain more failures than passes, or it is a highlight reel.
+    expect(count("nulo") + count("confound")).toBeGreaterThan(count("passou"));
   });
 
   it("links the repository", () => {

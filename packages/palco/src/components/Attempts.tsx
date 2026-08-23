@@ -20,12 +20,13 @@ export function Attempts() {
   return (
     <>
       <header className="research-head research-head--second">
-        <h2>As doze tentativas</h2>
+        <h2>As {ATTEMPTS.length} tentativas</h2>
         <p className="research-lead">
           Tudo que foi tentado, o modelo usado em cada uma, o número que saiu e se ele
           sobreviveu aos próprios critérios do projeto. Em ordem cronológica, porque o
           interessante é ver o <strong>mesmo confound ser encontrado {confounds} vezes</strong> por
-          caminhos independentes.
+          caminhos independentes — até o projeto parar de tratá-lo como armadilha e testá-lo
+          como hipótese.
         </p>
       </header>
 

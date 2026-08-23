@@ -53,11 +53,20 @@ export interface MuralPost {
 const DEFAULT_GEN_START_MC = 100_000_000; // sane fallback, mirrors palco-data.ts's GEN_START_MC
 const SMALL_TRADE_DIVISOR = 100;
 
+/**
+ * Firm/directorate event types. The mural is the traders' wall, so anything the
+ * COMPANY says — records, generation notices, review cycles, catch-up and gap
+ * notes — stays out. They remain in the event log and on the Pregão.
+ */
 const FIRM_POST_TYPES = new Set([
   "record_broken",
   "gen_started",
   "gen_ended",
   "hr_review",
+  "catch_up",
+  "gap",
+  "motor_started",
+  "motor_stopped",
 ]);
 
 function num(payload: Record<string, unknown>, key: string, fallback = 0): number {

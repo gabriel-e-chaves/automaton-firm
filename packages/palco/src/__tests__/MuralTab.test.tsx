@@ -168,10 +168,18 @@ describe("MuralTab", () => {
     expect(screen.getByText("Sem eventos ainda.")).toBeInTheDocument();
   });
 
-  it("falls back to the pre-escaped html for an event type it doesn't model as a post", () => {
-    render(<MuralTab snapshot={fixtureSnapshot} />);
-    // "catch_up" has no headline mapping in mural-posts.ts.
-    expect(screen.getByText("⏪ catch-up de 12 barras")).toBeInTheDocument();
+  it("falls back to the pre-escaped html for a TRADER event type it doesn't model", () => {
+    // The fallback still exists; it just cannot be demonstrated with catch_up
+    // any more, because firm/directorate events no longer post here at all.
+    const feed = [
+      {
+        id: 9001, ts: 1_700_000_000_000, type: "funding_paid", traderName: "Ada Faria",
+        html: "recebeu funding $0.39 em BTCUSDT · 60 janelas segurando",
+        payload: { symbol: "BTCUSDT", amountMc: 39_000, barsHeld: 60 },
+      },
+    ];
+    render(<MuralTab snapshot={{ ...fixtureSnapshot, feed }} />);
+    expect(screen.getByText("recebeu funding $0.39 em BTCUSDT · 60 janelas segurando")).toBeInTheDocument();
   });
 
   it("renders the same post body deterministically across two separate renders (same feed, same joke)", () => {
@@ -240,5 +248,19 @@ describe("MuralTab — rotação de cadeira", () => {
     // contains the word, so scope the check to the post headline itself.
     expect(screen.queryByText("📦 Desligamento")).toBeNull();
     expect(screen.getByText(/sem trades suficientes pra julgar|sem histórico/)).toBeInTheDocument();
+  });
+});
+
+describe("MuralTab — o mural é dos traders", () => {
+  it("never posts firm/directorate events", () => {
+    render(<MuralTab snapshot={fixtureSnapshot} />);
+    for (const t of ["Atualização", "Recorde da firma", "Comunicado da diretoria", "Ciclo de avaliação"]) {
+      expect(screen.queryByText(new RegExp(t))).toBeNull();
+    }
+  });
+
+  it("still posts trader events", () => {
+    render(<MuralTab snapshot={fixtureSnapshot} />);
+    expect(document.querySelectorAll(".orkut-scrap-box").length).toBeGreaterThan(0);
   });
 });

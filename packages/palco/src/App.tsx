@@ -63,6 +63,9 @@ export default function App() {
   const { snapshot, connected } = useSnapshot();
   const cards = snapshot?.cards;
   const [route, setRoute] = useState<Route>("pregao");
+  // The run describes itself: seedNote is written by whatever produced the db.
+  const liveBandLabel =
+    snapshot?.org.employees[0]?.seedNote?.trim() || "motor ao vivo";
 
   // Every generation's starting bankroll — the front's single source of
   // truth for the "Não fazer nada" baseline, equity-ticker fallbacks, and
@@ -106,15 +109,20 @@ export default function App() {
           </div>
         </div>
 
-        {route !== "pesquisa" && <TickerTape feed={snapshot?.feed ?? []} />}
+        {route === "pregao" && <TickerTape feed={snapshot?.feed ?? []} />}
 
         {/* Live motor state. Hidden on the research route: those cards read
             the directional motor's motor.db, and sitting them above historical
             carry measurements made two unrelated engines look like one number. */}
-        {route !== "pesquisa" && (
-        <div className="live-band-label">motor ao vivo · direcional · alavancado</div>
+        {/* Only on Pregão: these cards are the live run's state, and they were
+            being read as research numbers when they sat above other tabs. The
+            label is derived from the run's own seed note, never hardcoded — the
+            server can be pointed at a different db (directional motor vs carry
+            replay) and a fixed string would then describe the wrong engine. */}
+        {route === "pregao" && (
+        <div className="live-band-label">{liveBandLabel}</div>
         )}
-        {route !== "pesquisa" && (
+        {route === "pregao" && (
         <section className="hero-strip">
           <motion.div className="hero-card" {...heroCardMotionProps(0)}>
             <div className="label">Equity da firma</div>
