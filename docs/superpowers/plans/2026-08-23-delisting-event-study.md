@@ -781,12 +781,44 @@ git commit -m "feat(trading): audit the classifier against exchangeInfo ground t
 ### Task 5: Event study with control cohort
 
 **Files:**
+- Create: `src/trading/bars.ts`
 - Create: `src/trading/event-study.ts`
 - Test: `src/__tests__/trading/event-study.test.ts`
 
+**Decision (human ruling, pre-flight):** `Bar` and the two bar-lookup helpers live in their own unit `src/trading/bars.ts`, imported by both `event-study.ts` and `delist-strategy.ts`. They are bar-lookup logic and belong to neither consumer. Write this file first:
+
+```ts
+// src/trading/bars.ts
+/**
+ * Bar lookup shared by the delisting study and its strategy.
+ * Kept separate because both consumers need identical semantics: entry takes
+ * the first bar at or after a timestamp, exit the last bar at or before it.
+ */
+export interface Bar {
+  ts: number;
+  closeCents: number;
+}
+
+export function closeAtOrAfter(bars: Bar[], ts: number): number | null {
+  for (const b of bars) if (b.ts >= ts) return b.closeCents;
+  return null;
+}
+
+export function closeAtOrBefore(bars: Bar[], ts: number): number | null {
+  let out: number | null = null;
+  for (const b of bars) {
+    if (b.ts > ts) break;
+    out = b.closeCents;
+  }
+  return out;
+}
+```
+
+Add `src/__tests__/trading/bars.test.ts` asserting: first-at-or-after on an exact hit and on a gap, last-at-or-before on an exact hit and on a gap, and `null` on an empty array for both.
+
 **Interfaces:**
 - Consumes: `DelistEvent` (Task 2); `mulberry32` from `src/trading/deciders.js`.
-- Produces: `interface Bar { ts: number; closeCents: number }`; `interface EventWithRelease extends DelistEvent { releaseDate: number }`; `interface StudyInput { events: EventWithRelease[]; series: Map<string, Bar[]>; universe: string[]; seed: number }`; `interface StudyResult { horizonLabel: string; sampleSize: number; medianEventBps: number; medianControlBps: number; excessBps: number; exceedsFees: boolean }`; `interface StudyReport { primary: StudyResult; exploratory: StudyResult[]; excludedNoInstrument: string[]; verdict: string; passesGate: boolean }`; `const ROUND_TRIP_BPS = 10`; `const MIN_EVENTS = 50`; `function runEventStudy(input: StudyInput): StudyReport`.
+- Produces: `src/trading/bars.ts` exporting `interface Bar { ts: number; closeCents: number }`, `closeAtOrAfter`, `closeAtOrBefore` (re-exported as a type by event-study); `interface EventWithRelease extends DelistEvent { releaseDate: number }`; `interface StudyInput { events: EventWithRelease[]; series: Map<string, Bar[]>; universe: string[]; seed: number }`; `interface StudyResult { horizonLabel: string; sampleSize: number; medianEventBps: number; medianControlBps: number; excessBps: number; exceedsFees: boolean }`; `interface StudyReport { primary: StudyResult; exploratory: StudyResult[]; excludedNoInstrument: string[]; verdict: string; passesGate: boolean }`; `const ROUND_TRIP_BPS = 10`; `const MIN_EVENTS = 50`; `function runEventStudy(input: StudyInput): StudyReport`.
 
 Reuses `mulberry32` for the seeded control draw, matching how `resilience-lab.ts` derives reproducible randomness.
 
@@ -888,6 +920,7 @@ Expected: FAIL — module not found
  * positive number of bps. Fees are the engine's, not this file's.
  */
 import { mulberry32 } from "./deciders.js";
+import { closeAtOrAfter, closeAtOrBefore, type Bar } from "./bars.js";
 import type { DelistEvent } from "./delist-db.js";
 
 /** Single-leg perp short: PERP_TAKER_BPS (5) on entry and on exit. */
@@ -903,10 +936,7 @@ const EXPLORATORY: { label: string; ms: number }[] = [
   { label: "3d", ms: 72 * HOUR },
 ];
 
-export interface Bar {
-  ts: number;
-  closeCents: number;
-}
+export type { Bar } from "./bars.js";
 
 export interface EventWithRelease extends DelistEvent {
   releaseDate: number;
@@ -941,20 +971,6 @@ function median(xs: number[]): number {
   const s = [...xs].sort((a, b) => a - b);
   const m = s.length >> 1;
   return s.length % 2 === 0 ? (s[m - 1] + s[m]) / 2 : s[m];
-}
-
-function closeAtOrAfter(bars: Bar[], ts: number): number | null {
-  for (const b of bars) if (b.ts >= ts) return b.closeCents;
-  return null;
-}
-
-function closeAtOrBefore(bars: Bar[], ts: number): number | null {
-  let out: number | null = null;
-  for (const b of bars) {
-    if (b.ts > ts) break;
-    out = b.closeCents;
-  }
-  return out;
 }
 
 /** Short return in bps: a decline is positive. */
@@ -1119,7 +1135,7 @@ Expected: FAIL — module not found
  */
 import { z } from "zod";
 import type { GroundTruthSymbol } from "./classifier-audit.js";
-import type { Bar } from "./event-study.js";
+import type { Bar } from "./bars.js";
 
 const FUT = "https://fapi.binance.com";
 const MAX_PAGES = 60;
@@ -1639,24 +1655,12 @@ Expected: FAIL — module not found
  *     A symbol with no funding series is SKIPPED and named — never treated as
  *     zero funding, which would silently flatter the result.
  */
-import type { Bar, EventWithRelease } from "./event-study.js";
+import { closeAtOrAfter, closeAtOrBefore, type Bar } from "./bars.js";
+import type { EventWithRelease } from "./event-study.js";
 import type { CarryBar } from "./carry-types.js";
 
 const PERP_TAKER_BPS = 5;      // mirrors carry-engine.ts; never tunable
 const CAPITAL_FRACTION = 0.5;  // same convention as carry-engine.ts
-
-function closeAtOrAfter(bars: Bar[], ts: number): number | null {
-  for (const b of bars) if (b.ts >= ts) return b.closeCents;
-  return null;
-}
-function closeAtOrBefore(bars: Bar[], ts: number): number | null {
-  let out: number | null = null;
-  for (const b of bars) {
-    if (b.ts > ts) break;
-    out = b.closeCents;
-  }
-  return out;
-}
 
 /**
  * Net funding to a SHORT over [from, to], in cents.
