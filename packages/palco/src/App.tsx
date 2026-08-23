@@ -13,7 +13,6 @@ import { EmpresaTab } from "./tabs/EmpresaTab";
 import { MuralTab } from "./tabs/MuralTab";
 import { SobreTab } from "./tabs/SobreTab";
 import { PesquisaTab } from "./tabs/PesquisaTab";
-import { ResearchRibbon } from "./components/ResearchRibbon";
 
 const VIRGIN_DAYS_GATE = 90;
 // Sane fallback while there's no snapshot yet — mirrors palco-data.ts's
@@ -169,7 +168,6 @@ export default function App() {
         </section>
         )}
 
-        <ResearchRibbon onOpen={route === "pesquisa" ? undefined : () => setRoute("pesquisa")} />
       </header>
 
       <main className="page-content">

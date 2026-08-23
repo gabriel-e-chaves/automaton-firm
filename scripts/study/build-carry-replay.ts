@@ -212,10 +212,15 @@ if (evolvedFinal > SEAT_CENTS * SEATS) {
       peakEquityMc: toMc(evolvedFinal), previousRecordMc: toMc(SEAT_CENTS * SEATS) }) });
 }
 {
-  const promoted = cohorts[0].seats.filter((s) => s.cash > SEAT_CENTS).length;
-  const held = cohorts[0].seats.length - promoted;
+  // Nobody is promoted or fired: with 0-3 closed trades per seat the
+  // evidence-based HR rates every one `insufficient_evidence`, which never
+  // promotes and never retires. Counting seats-above-stake as "promoted" was my
+  // own inconsistency — it claimed 3 promotions while emitting zero
+  // trader_promoted events, so the Empresa tab correctly showed 0 and
+  // disagreed with this review.
   db.insertEvent({ ts: lastBar.time, type: "hr_review", traderId: null, generationId: cohorts[0].genId,
-    payloadJson: JSON.stringify({ reviewed: cohorts[0].seats.length, fired: 0, promoted, held,
+    payloadJson: JSON.stringify({ reviewed: cohorts[0].seats.length, fired: 0, promoted: 0,
+      held: cohorts[0].seats.length,
       // The benchmark is the control cohort's own result on identical bars.
       benchmarkCents: randomFinal }) });
 }
