@@ -1,8 +1,14 @@
 /** Client-side money/date helpers. Mirrors the $X.XX convention used across
  * the Motor's dashboard and server (mc = milli-cents; /100_000 => dollars). */
 
+/**
+ * Money from milli-cents. The minus sign goes BEFORE the currency symbol —
+ * "$-0.17" reads as a broken string, and a negative that looks like a typo
+ * undermines the number next to it.
+ */
 export function usd(mc: number): string {
-  return `$${(mc / 100_000).toFixed(2)}`;
+  const v = mc / 100_000;
+  return v < 0 ? `\u2212$${Math.abs(v).toFixed(2)}` : `$${v.toFixed(2)}`;
 }
 
 /** Formats a raw price-in-cents field (e.g. `entryPriceCents`, matching the

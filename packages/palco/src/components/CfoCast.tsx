@@ -81,7 +81,7 @@ export function CfoCast() {
               <div><dt>book</dt><dd>{usd(s.finalUsd)}</dd></div>
               <div><dt>net</dt><dd className={s.netUsd > 0 ? "pos" : s.netUsd < 0 ? "neg" : "muted"}>{usd(s.netUsd)}</dd></div>
               <div><dt>trades</dt><dd>{s.trades}</dd></div>
-              <div><dt>operou</dt><dd className="muted">{usd(s.deployedUsd)} de {usd(s.startUsd)}</dd></div>
+              <div><dt>operou</dt><dd className="muted">{usd(s.deployedUsd)}</dd></div>
             </dl>
             <p className="cast-note">
               {s.trades === 0

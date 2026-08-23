@@ -19,7 +19,10 @@ export function escapeHtml(s: string): string {
 }
 
 export function usdFromMc(mc: number): string {
-  return `$${(mc / 100_000).toFixed(2)}`;
+  // Sign before the symbol, matching the front's format.ts — the feed html is
+  // pre-formatted here, so a mismatch would show two money styles on one page.
+  const v = mc / 100_000;
+  return v < 0 ? `\u2212$${Math.abs(v).toFixed(2)}` : `$${v.toFixed(2)}`;
 }
 
 function str(p: Payload, key: string): string {

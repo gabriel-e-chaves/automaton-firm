@@ -189,11 +189,6 @@ export function PregaoTab({ snapshot }: PregaoTabProps) {
         <div className="chart-frame">
           <Line data={data} options={options} />
         </div>
-      </section>
-
-      <div className="pregao-side">
-        <OpenPositionsPanel positions={positions} stakeMc={stakeMc} />
-
         <section className="period-panel">
           <h2 className="section-title">Lucro por período</h2>
           <table className="period-table">
@@ -214,6 +209,12 @@ export function PregaoTab({ snapshot }: PregaoTabProps) {
             </tbody>
           </table>
         </section>
+
+      </section>
+
+      <div className="pregao-side">
+        <OpenPositionsPanel positions={positions} stakeMc={stakeMc} />
+
 
         <section className="trades-panel">
           <h2 className="section-title">Últimos trades</h2>
