@@ -109,8 +109,15 @@ export default function App() {
           </div>
         </div>
 
-        <TickerTape feed={snapshot?.feed ?? []} />
+        {route !== "pesquisa" && <TickerTape feed={snapshot?.feed ?? []} />}
 
+        {/* Live motor state. Hidden on the research route: those cards read
+            the directional motor's motor.db, and sitting them above historical
+            carry measurements made two unrelated engines look like one number. */}
+        {route !== "pesquisa" && (
+        <div className="live-band-label">motor ao vivo · direcional · alavancado</div>
+        )}
+        {route !== "pesquisa" && (
         <section className="hero-strip">
           <motion.div className="hero-card" {...heroCardMotionProps(0)}>
             <div className="label">Equity da firma</div>
@@ -160,6 +167,7 @@ export default function App() {
             <div className="d">de {VIRGIN_DAYS_GATE} dias</div>
           </motion.div>
         </section>
+        )}
 
         <ResearchRibbon onOpen={route === "pesquisa" ? undefined : () => setRoute("pesquisa")} />
       </header>

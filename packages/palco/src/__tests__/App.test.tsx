@@ -89,3 +89,21 @@ describe("App", () => {
     expect(screen.queryByText(/Dinheiro real só entra em discussão/)).toBeNull();
   });
 });
+
+describe("App — os dois motores nao se misturam", () => {
+  beforeEach(() => {
+    vi.stubGlobal("EventSource", StubEventSource as unknown as typeof EventSource);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: () => Promise.resolve(fixtureSnapshot) }));
+  });
+  afterEach(() => { vi.unstubAllGlobals(); });
+
+  it("hides the live motor cards on the research route", () => {
+    const { container } = render(<App />);
+    const nav = [...container.querySelectorAll("nav button")];
+    const pesquisa = nav.find((b) => b.textContent?.trim().toUpperCase() === "PESQUISA")!;
+    expect(container.querySelector(".hero-strip")).not.toBeNull();
+    fireEvent.click(pesquisa);
+    expect(container.querySelector(".hero-strip")).toBeNull();
+    expect(container.querySelector(".research-scope")).not.toBeNull();
+  });
+});

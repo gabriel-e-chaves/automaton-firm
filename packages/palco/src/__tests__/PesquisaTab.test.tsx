@@ -102,3 +102,20 @@ describe("PesquisaTab — elenco da firma", () => {
     expect(container.querySelectorAll("path.line-free").length).toBe(3);
   });
 });
+
+describe("PesquisaTab — 676 trades contra 3", () => {
+  it("shows gross positive alongside the fee bill that ate it", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText("+$330.05")).toBeInTheDocument();
+    expect(screen.getByText("−$351.84")).toBeInTheDocument();
+    expect(screen.getByText("−$21.79")).toBeInTheDocument();
+  });
+
+  // The $420.86 on the other tabs is the single most misread number in this
+  // app. The page must say what it actually is.
+  it("explains the $420.86 as surviving books, not a crash", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText(/não são um crash/)).toBeInTheDocument();
+    expect(screen.getByText(/sem uma única liquidação/)).toBeInTheDocument();
+  });
+});

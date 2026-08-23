@@ -1845,3 +1845,29 @@ ul.trade-feed .ts {
   color: var(--text-color-secondary);
 }
 .mural-body { flex: 1 1 auto; }
+
+/* Names the live band for what it is. Two engines live in this app — the
+ * directional motor (live, leveraged) and the funding carry (historical,
+ * delta-neutral) — and an unlabelled row of live cards above historical
+ * measurements reads as one number. It is not. */
+.live-band-label {
+  padding: 6px clamp(14px, 2vw, 28px) 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-color-secondary);
+}
+
+.research-scope {
+  margin: 0;
+  max-width: 62ch;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg-raised);
+  border-left: 3px solid var(--blue);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-color-secondary);
+}
+.research-scope strong { color: var(--text-color); }

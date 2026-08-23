@@ -111,3 +111,31 @@ export const FIRM_ARM_REASON =
 export const CONFOUND_COUNT = 4;
 export const CONFOUND_LESSON =
   "Sentar em cima do caixa, operar menos, ou re-decidir menos vezes parece competência numa simulação que pune taxa — independentemente de quem ou o que decidiu fazer menos.";
+
+/**
+ * The live directional motor, measured from its own event log on 2026-08-23.
+ *
+ * This is the comparison the whole project was built to make, and it finally
+ * came out clean: the traders were RIGHT — gross realized PnL is positive —
+ * and the fee bill was larger than the edge. Zero liquidations: nothing blew
+ * up, it bled out one taker fee at a time.
+ */
+export const LIVE_MOTOR = {
+  days: 8,
+  tradesOpened: 676,
+  tradesClosed: 670,
+  liquidations: 0,
+  feesPaidUsd: 351.84,
+  grossPnlUsd: 330.05,
+  netPnlUsd: -21.79,
+  firmEquityUsd: 420.86,
+  seatsAlive: 2,
+  seatsTotal: 5,
+} as const;
+
+/** The carry, same question, opposite activity level. */
+export const CARRY_CONTRAST = {
+  days: 90,
+  trades: 3,
+  finalUsd: 1001.09,
+} as const;

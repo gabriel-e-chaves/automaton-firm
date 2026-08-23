@@ -1,6 +1,8 @@
 import { CfoCast } from "../components/CfoCast";
 import { EquityLines } from "../components/EquityLines";
 import {
+  LIVE_MOTOR,
+  CARRY_CONTRAST,
   CFO_90D,
   FIRM_ARM_REASON,
   CONFOUND_COUNT,
@@ -37,6 +39,11 @@ const signed = (n: number) => `${n >= 0 ? "+" : "−"}$${Math.abs(n).toFixed(2)}
 export function PesquisaTab() {
   return (
     <section className="research">
+      <p className="research-scope">
+        Tudo nesta página é <strong>medição histórica do carry de funding</strong> —
+        delta-neutro, sem alavancagem. Não é o motor ao vivo das outras abas, que é
+        direcional e alavancado e tem outro número. Dois motores, dois resultados.
+      </p>
       <header className="research-head">
         <h2>A pergunta que a firma existe pra responder</h2>
         <p className="research-lead">
@@ -103,6 +110,50 @@ export function PesquisaTab() {
         <strong>≈{WITHOUT_BULL_ANNUALISED_PCT.toFixed(2)}%/ano sem o bull de 2021.</strong> {HONEST_VERDICT}
       </p>
 
+
+
+      <header className="research-head research-head--second">
+        <h2>676 trades contra 3</h2>
+        <p className="research-lead">
+          O motor direcional ao vivo rodou {LIVE_MOTOR.days} dias e abriu{" "}
+          {LIVE_MOTOR.tradesOpened} posições. Zero liquidações — nada explodiu. Os traders
+          acertaram: o PnL bruto realizado foi positivo. E a conta de corretagem foi maior
+          que o acerto.
+        </p>
+      </header>
+
+      <div className="research-verdict-strip">
+        <div className="rv-card rv-win">
+          <span className="rv-label">PnL bruto, {LIVE_MOTOR.tradesOpened} trades</span>
+          <strong className="rv-value">+{money(LIVE_MOTOR.grossPnlUsd)}</strong>
+          <span className="rv-foot">eles estavam certos</span>
+        </div>
+        <div className="rv-card rv-loss">
+          <span className="rv-label">Taxas pagas</span>
+          <strong className="rv-value">{money(-LIVE_MOTOR.feesPaidUsd)}</strong>
+          <span className="rv-foot">35% da conta em {LIVE_MOTOR.days} dias</span>
+        </div>
+        <div className="rv-card rv-loss">
+          <span className="rv-label">Líquido</span>
+          <strong className="rv-value">{money(LIVE_MOTOR.netPnlUsd)}</strong>
+          <span className="rv-foot">
+            {LIVE_MOTOR.seatsAlive} de {LIVE_MOTOR.seatsTotal} assentos sobraram
+          </span>
+        </div>
+      </div>
+
+      <p className="research-caveat">
+        <strong>
+          {LIVE_MOTOR.tradesOpened} trades → {money(LIVE_MOTOR.netPnlUsd)}.{" "}
+          {CARRY_CONTRAST.trades} trades → {money(CARRY_CONTRAST.finalUsd - 1000)}.
+        </strong>{" "}
+        O carry passou {CARRY_CONTRAST.days} dias praticamente parado e terminou acima de
+        mil. O motor direcional girou {LIVE_MOTOR.tradesOpened} vezes, acertou a direção na
+        média, e perdeu de qualquer jeito. Os {money(LIVE_MOTOR.firmEquityUsd)} que aparecem
+        nas outras abas não são um crash — são a soma dos {LIVE_MOTOR.seatsAlive} books que
+        sobreviveram, e os dois estão no lucro. Os outros três sangraram até zero pagando
+        pedágio, sem uma única liquidação.
+      </p>
 
       <header className="research-head research-head--second">
         <h2>A aula: quanto custa um número honesto</h2>
