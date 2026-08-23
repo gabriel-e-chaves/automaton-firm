@@ -1911,3 +1911,39 @@ ul.trade-feed .ts {
   color: var(--text-color-secondary);
 }
 .trade-feed li.trade-win { border-left: 3px solid var(--green); padding-left: 0.5rem; }
+
+/* The twelve attempts — the full record. */
+.att-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; max-width: 54rem; counter-reset: att; }
+.att-card {
+  padding: 0.85rem 1rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--border-color);
+  border-radius: 6px;
+}
+.att-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.6rem; margin-bottom: 0.4rem; }
+.att-n { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-color-secondary); }
+.att-title { flex: 1 1 16rem; }
+.att-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-color-secondary); }
+.att-chip {
+  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.12rem 0.42rem; border: 1px solid var(--border-color); border-radius: 3px;
+  color: var(--text-color-secondary); white-space: nowrap;
+}
+.att-chip.att-pass { border-color: var(--green); color: var(--green); }
+.att-chip.att-partial { border-color: var(--blue); color: var(--blue); }
+.att-chip.att-confound { border-color: var(--text-color-secondary); }
+.att-chip.att-null { border-color: var(--red); color: var(--red); }
+.att-q { margin: 0 0 0.5rem; font-size: 0.84rem; color: var(--text-color-secondary); font-style: italic; }
+.att-meta { display: flex; flex-direction: column; gap: 0.2rem; margin: 0 0 0.5rem; }
+.att-meta div { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.att-meta dt { flex: none; min-width: 5.5rem; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-color-secondary); }
+.att-meta dd { margin: 0; font-size: 0.82rem; }
+.att-lesson { margin: 0; font-size: 0.84rem; line-height: 1.55; }
+
+.research-repo {
+  margin: 0; max-width: 62ch; padding: 0.8rem 1rem;
+  background: var(--bg-raised); border: 1px solid var(--border-color); border-radius: 6px;
+  font-size: 0.82rem; line-height: 1.6; color: var(--text-color-secondary);
+}
+.research-repo a { color: var(--blue); }

@@ -1,4 +1,5 @@
 import { CfoCast } from "../components/CfoCast";
+import { Attempts } from "../components/Attempts";
 import { EquityLines } from "../components/EquityLines";
 import {
   LIVE_MOTOR,
@@ -278,6 +279,8 @@ export function PesquisaTab() {
         corretagem. Não falta sinal: o mercado cobra na porta exatamente o que tem lá dentro.
         Esse é um resultado melhor que um nulo, porque é um mecanismo.
       </p>
+      <Attempts />
+
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { PesquisaTab } from "../tabs/PesquisaTab";
+import { ATTEMPTS, REPO_URL } from "../attempts";
 import { CARRY_WINDOWS, onThousand, CARRY_TOTAL_USD } from "../research";
 
 describe("PesquisaTab", () => {
@@ -75,7 +76,9 @@ describe("PesquisaTab — a aula (90 dias, pré-registrado)", () => {
 
   it("explains why the firm arm was worse, arithmetically", () => {
     render(<PesquisaTab />);
-    expect(screen.getByText(/aritmeticamente invisível/)).toBeInTheDocument();
+    // The phrase appears in the arms caveat AND in attempt #4's lesson — both
+    // are correct, so assert at least one rather than exactly one.
+    expect(screen.getAllByText(/aritmeticamente invisível/).length).toBeGreaterThan(0);
   });
 });
 
@@ -117,5 +120,31 @@ describe("PesquisaTab — 676 trades contra 3", () => {
     render(<PesquisaTab />);
     expect(screen.getByText(/não são um crash/)).toBeInTheDocument();
     expect(screen.getByText(/sem uma única liquidação/)).toBeInTheDocument();
+  });
+});
+
+describe("PesquisaTab — as doze tentativas", () => {
+  it("lists every attempt with its model and result", () => {
+    const { container } = render(<PesquisaTab />);
+    expect(container.querySelectorAll(".att-card")).toHaveLength(ATTEMPTS.length);
+    for (const a of ATTEMPTS) {
+      expect(screen.getByText(a.title)).toBeInTheDocument();
+    }
+  });
+
+  // The nulls and confounds must be as visible as the one arm that passed —
+  // a record that only listed the win would not be a record.
+  it("shows the failures, not only the arm that passed", () => {
+    render(<PesquisaTab />);
+    expect(screen.getAllByText("resultado nulo").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("confound encontrado").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("passou o gate").length).toBe(1);
+  });
+
+  it("links the repository", () => {
+    render(<PesquisaTab />);
+    const link = screen.getByRole("link", { name: /github\.com\/gabchaves\/automaton-firm/ });
+    expect(link).toHaveAttribute("href", REPO_URL);
+    expect(link).toHaveAttribute("rel", expect.stringContaining("noreferrer"));
   });
 });
