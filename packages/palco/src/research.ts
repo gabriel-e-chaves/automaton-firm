@@ -73,3 +73,41 @@ export const DELISTING = {
 
 export const HONEST_VERDICT =
   "Quatro das cinco janelas terminam acima de mil, e a mais recente também. Só que anualizada ela rende menos que USDC parado — então bate os mil e perde para não fazer nada. Isso não contradiz a pesquisa do projeto: é exatamente ela.";
+
+/**
+ * The pre-registered 90-day result — the headline, because it is the only
+ * number here whose decision rule was committed to git BEFORE the measurement
+ * existed (docs/superpowers/specs/2026-08-23-cfo-brake-on-carry-prereg.md).
+ *
+ * It is two cents. That is the point, not a disclaimer: the lesson this project
+ * bought with seven experiments is how small an honest number is once every
+ * route to a flattering one has been closed off.
+ */
+export const CFO_90D = {
+  windowDays: 90,
+  symbol: "BTCUSDT",
+  startUsd: 1000,
+  /** Single strategy, capital fully deployed. */
+  unbrakedUsd: 1000.34,
+  unbrakedDrawdownUsd: 1.62,
+  /** Single strategy, CFO holding 70% of the book in idle cash earning nothing. */
+  brakedUsd: 1000.02,
+  brakedDrawdownUsd: 0.48,
+  doingNothingUsd: 1000.0,
+  /** Three archetype seats + evidence-based HR + the same brake. */
+  firmUsd: 999.75,
+  firmSeatsWithZeroTrades: 2,
+  fundingCollectedUsd: 4.96,
+  feesPaidUsd: 4.5,
+  annualisedPct: 0.01,
+  gatePassed: true,
+} as const;
+
+/** Why the firm arm was worse, in one clause — it is arithmetic, not luck. */
+export const FIRM_ARM_REASON =
+  "$1.000 divididos por 3 assentos, 30% deployados, dão $100 por assento — e com o CAPITAL_FRACTION de 0,5 do motor, $50 de notional. Funding sobre $50 arredonda para zero centavo, então dois dos três assentos não abriram um único trade. É o Experimento 4 reaparecendo: abaixo de ~$100 de book, o carry é aritmeticamente invisível.";
+
+/** The pattern the project found four separate times. */
+export const CONFOUND_COUNT = 4;
+export const CONFOUND_LESSON =
+  "Sentar em cima do caixa, operar menos, ou re-decidir menos vezes parece competência numa simulação que pune taxa — independentemente de quem ou o que decidiu fazer menos.";

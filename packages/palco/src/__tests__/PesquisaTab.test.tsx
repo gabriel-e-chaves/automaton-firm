@@ -19,8 +19,11 @@ describe("PesquisaTab", () => {
 
   it("marks the losing window as below and the winners as above", () => {
     const { container } = render(<PesquisaTab />);
-    const above = container.querySelectorAll("tbody tr.row-above");
-    const below = container.querySelectorAll("tbody tr.row-below");
+    // Scoped to the carry table: the page now has a second table (the 90-day
+    // arms) that also uses row-above/row-below.
+    const carry = container.querySelector('[data-table="carry"]')!;
+    const above = carry.querySelectorAll("tbody tr.row-above");
+    const below = carry.querySelectorAll("tbody tr.row-below");
     expect(above).toHaveLength(CARRY_WINDOWS.filter((w) => onThousand(w.pnlUsd) > 1000).length);
     expect(below).toHaveLength(CARRY_WINDOWS.filter((w) => onThousand(w.pnlUsd) <= 1000).length);
   });
@@ -44,5 +47,33 @@ describe("PesquisaTab", () => {
     expect(screen.getByText("+922 bps")).toBeInTheDocument();
     expect(screen.getByText("$0.00")).toBeInTheDocument();
     expect(screen.getByText(/funding pago: \u2212\$966\.45/)).toBeInTheDocument();
+  });
+});
+
+describe("PesquisaTab — a aula (90 dias, pré-registrado)", () => {
+  it("shows all four arms including the losing firm arm", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText("$1000.34")).toBeInTheDocument();
+    expect(screen.getByText("$1000.02")).toBeInTheDocument();
+    expect(screen.getByText("$999.75")).toBeInTheDocument();
+    expect(screen.getByRole("rowheader", { name: /Fazer nada/ })).toBeInTheDocument();
+  });
+
+  it("shows the failing gate verdict, not only the passing one", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText("passa nos 3 critérios")).toBeInTheDocument();
+    expect(screen.getByText("reprova nos 3")).toBeInTheDocument();
+  });
+
+  // The lesson only lands if the annualised comparison is on the page.
+  it("prints the annualised figure beside what idle cash pays", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText(/0\.01%\/ano/)).toBeInTheDocument();
+    expect(screen.getByText(/4–8% que uma stablecoin parada paga/)).toBeInTheDocument();
+  });
+
+  it("explains why the firm arm was worse, arithmetically", () => {
+    render(<PesquisaTab />);
+    expect(screen.getByText(/aritmeticamente invisível/)).toBeInTheDocument();
   });
 });

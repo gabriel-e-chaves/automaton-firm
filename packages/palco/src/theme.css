@@ -1635,7 +1635,11 @@ ul.trade-feed .ts {
   width: 100%;
 }
 .research-table {
+  /* Capped, not stretched: a four-column numeric table spread across a 1900px
+   * viewport puts the label at one edge and its number at the other, which is
+   * harder to read than a compact table with whitespace beside it. */
   width: 100%;
+  max-width: 54rem;
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
 }

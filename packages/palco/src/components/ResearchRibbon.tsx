@@ -1,12 +1,4 @@
-import {
-  CARRY_TOTAL_USD,
-  PROFITABLE_WINDOWS,
-  CARRY_WINDOWS,
-  RECENT_6M_ANNUALISED_PCT,
-  RISK_FREE_LOW_PCT,
-  RISK_FREE_HIGH_PCT,
-  onThousand,
-} from "../research";
+import { CFO_90D, RISK_FREE_LOW_PCT, RISK_FREE_HIGH_PCT } from "../research";
 
 /**
  * The measured result, on every screen.
@@ -21,17 +13,18 @@ import {
  * would be the single dishonest surface in an otherwise honest repo.
  */
 export function ResearchRibbon({ onOpen }: { onOpen?: () => void }) {
-  const aggregate = onThousand(CARRY_TOTAL_USD);
   return (
     <aside className="research-ribbon" aria-label="Resultado medido da pesquisa">
-      <span className="rr-tag">medido</span>
+      <span className="rr-tag">pré-registrado</span>
       <p className="rr-text">
-        <strong>$1.000 → ${aggregate.toFixed(2)}</strong> no walk-forward de carry,{" "}
-        {PROFITABLE_WINDOWS} de {CARRY_WINDOWS.length} janelas acima de mil
+        <strong>
+          $1.000 → ${CFO_90D.brakedUsd.toFixed(2)}
+        </strong>{" "}
+        em {CFO_90D.windowDays} dias virgens, regra escrita antes do resultado
         <span className="rr-sep"> · </span>
         <span className="rr-caveat">
-          mas {RECENT_6M_ANNUALISED_PCT.toFixed(2)}%/ano na janela recente perde para USDC
-          parado ({RISK_FREE_LOW_PCT}–{RISK_FREE_HIGH_PCT}%)
+          são {CFO_90D.annualisedPct.toFixed(2)}%/ano, e USDC parado paga{" "}
+          {RISK_FREE_LOW_PCT}–{RISK_FREE_HIGH_PCT}%
         </span>
       </p>
       {onOpen && (

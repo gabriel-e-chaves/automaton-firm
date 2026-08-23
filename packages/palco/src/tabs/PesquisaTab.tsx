@@ -1,4 +1,8 @@
 import {
+  CFO_90D,
+  FIRM_ARM_REASON,
+  CONFOUND_COUNT,
+  CONFOUND_LESSON,
   CARRY_WINDOWS,
   CARRY_CAPITAL_USD,
   CARRY_TOTAL_USD,
@@ -59,7 +63,7 @@ export function PesquisaTab() {
       </div>
 
       <div className="research-scroll">
-      <table className="research-table">
+      <table className="research-table" data-table="carry">
         <caption>Carry de funding · cada janela sobre o mesmo book de {money(CARRY_CAPITAL_USD)}</caption>
         <thead>
           <tr>
@@ -95,6 +99,90 @@ export function PesquisaTab() {
 
       <p className="research-caveat">
         <strong>≈{WITHOUT_BULL_ANNUALISED_PCT.toFixed(2)}%/ano sem o bull de 2021.</strong> {HONEST_VERDICT}
+      </p>
+
+
+      <header className="research-head research-head--second">
+        <h2>A aula: quanto custa um número honesto</h2>
+        <p className="research-lead">
+          Noventa dias de dados virgens, $1.000, carry delta-neutro em BTC. A regra de
+          sucesso foi escrita e commitada <em>antes</em> da medição existir — é o único
+          número desta página com essa propriedade, e é por isso que ele é a manchete
+          mesmo sendo o menor.
+        </p>
+      </header>
+
+      <div className="research-scroll">
+      <table className="research-table" data-table="arms">
+        <caption>Quatro configurações, mesma janela, mesmas barras, mesmas taxas</caption>
+        <thead>
+          <tr>
+            <th scope="col">Configuração</th>
+            <th scope="col">Final</th>
+            <th scope="col">Pior queda</th>
+            <th scope="col">Gate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="row-above">
+            <th scope="row">Estratégia única, sem freio</th>
+            <td className="end-value">{money(CFO_90D.unbrakedUsd)}</td>
+            <td className="muted">{money(CFO_90D.unbrakedDrawdownUsd)}</td>
+            <td className="muted">não pré-registrado</td>
+          </tr>
+          <tr className="row-above">
+            <th scope="row">
+              Estratégia única + CFO 30%
+              <br />
+              <span className="muted">o freio segurando 70% em caixa</span>
+            </th>
+            <td className="end-value">{money(CFO_90D.brakedUsd)}</td>
+            <td className="muted">{money(CFO_90D.brakedDrawdownUsd)}</td>
+            <td className="pos">passa nos 3 critérios</td>
+          </tr>
+          <tr className="row-below">
+            <th scope="row">Firma (3 assentos) + RH + CFO</th>
+            <td className="end-value">{money(CFO_90D.firmUsd)}</td>
+            <td className="muted">—</td>
+            <td className="neg">reprova nos 3</td>
+          </tr>
+          <tr className="row-below">
+            <th scope="row">Fazer nada</th>
+            <td className="end-value">{money(CFO_90D.doingNothingUsd)}</td>
+            <td className="muted">—</td>
+            <td className="muted">o piso honesto</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p className="research-caveat">
+        <strong>A janela não tinha o dinheiro.</strong> Noventa dias de funding pagaram{" "}
+        {money(CFO_90D.fundingCollectedUsd)} brutos contra {money(CFO_90D.feesPaidUsd)} de
+        taxas — sobram 46 centavos de margem no total. Nenhum arranjo de RH, geração ou
+        freio transforma 46 centavos em um dólar. E o freio freou de verdade: cortou a pior
+        queda de {money(CFO_90D.unbrakedDrawdownUsd)} para {money(CFO_90D.brakedDrawdownUsd)}.
+      </p>
+
+      <p className="research-caveat">
+        <strong>Por que adicionar a firma piorou.</strong> {FIRM_ARM_REASON}{" "}
+        {CFO_90D.firmSeatsWithZeroTrades} dos 3 assentos não abriram um único trade.
+      </p>
+
+      <p className="research-caveat">
+        <strong>O mesmo confound, {CONFOUND_COUNT} vezes.</strong> {CONFOUND_LESSON} Apareceu
+        no Experimento 5, no conserto do controle aleatório, na camada executiva CEO/RH/CFO —
+        e agora no freio. Quatro rotas diferentes, um só achado: o projeto não encontrou
+        vantagem, encontrou o próprio jeito de se enganar, e aprendeu a reconhecê-lo de
+        longe.
+      </p>
+
+      <p className="research-caveat">
+        <strong>{CFO_90D.annualisedPct.toFixed(2)}%/ano.</strong> É isso que dois centavos em
+        noventa dias significam anualizados, contra 4–8% que uma stablecoin parada paga. O
+        número passa o gate e perde para não fazer nada — as duas coisas são verdade ao mesmo
+        tempo, e uma página que mostrasse só a primeira seria a única superfície desonesta
+        deste repositório.
       </p>
 
       <header className="research-head research-head--second">

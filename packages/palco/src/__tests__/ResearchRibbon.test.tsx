@@ -1,13 +1,13 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ResearchRibbon } from "../components/ResearchRibbon";
-import { onThousand, CARRY_TOTAL_USD } from "../research";
+import { CFO_90D } from "../research";
 
 describe("ResearchRibbon", () => {
-  it("shows the aggregate result", () => {
+  it("shows the pre-registered result as the headline", () => {
     render(<ResearchRibbon />);
     expect(
-      screen.getByText(`$1.000 → $${onThousand(CARRY_TOTAL_USD).toFixed(2)}`),
+      screen.getByText(`$1.000 → $${CFO_90D.brakedUsd.toFixed(2)}`),
     ).toBeInTheDocument();
   });
 
@@ -15,7 +15,7 @@ describe("ResearchRibbon", () => {
   // number appears, the caveat must appear with it.
   it("never shows the win without the risk-free caveat", () => {
     render(<ResearchRibbon />);
-    expect(screen.getByText(/perde para USDC\s+parado/)).toBeInTheDocument();
+    expect(screen.getByText(/USDC parado paga/)).toBeInTheDocument();
   });
 
   it("offers a way into the research tab and calls back", async () => {
