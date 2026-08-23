@@ -1,0 +1,10 @@
+import { chromium } from "playwright-core";
+const [route, out, width] = process.argv.slice(2);
+const browser = await chromium.launch({ channel: "chrome", headless: true });
+const page = await browser.newPage({ viewport: { width: Number(width ?? 1470), height: 940 } });
+await page.goto("http://localhost:4322/", { waitUntil: "networkidle" });
+if (route) await page.click(`nav button:has-text("${route}")`);
+await page.waitForTimeout(400);
+await page.screenshot({ path: out, fullPage: process.env.FULL === "1" });
+await browser.close();
+console.log("shot:", out);

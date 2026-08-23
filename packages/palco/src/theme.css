@@ -1990,16 +1990,24 @@ html {
  * scraps, which is how the real thing was laid out. Collapses to one column
  * on narrow screens, sidebar first. */
 @media (min-width: 900px) {
+  /* Real columns, no row spans. The span version stretched every implicit row
+   * to a quarter of the scrap list's height, scattering the sidebar boxes
+   * ~700px apart — the empty-mural bug. Sidebar items now live inside
+   * .orkut-left/.orkut-right wrappers, so the grid only ever sees columns. */
   .orkut-body {
     display: grid;
     grid-template-columns: 218px minmax(0, 1fr);
     gap: 14px;
     align-items: start;
   }
-  .orkut-visitor-counter { grid-column: 1; margin: 0 0 10px; }
-  .orkut-communities { grid-column: 1; grid-row: 2; margin-bottom: 0; }
-  .orkut-profile { grid-column: 1; }
-  .orkut-scrap-list { grid-column: 2; grid-row: 1 / span 4; }
+  .orkut-left, .orkut-right { display: flex; flex-direction: column; gap: 14px; }
+  .orkut-left > *, .orkut-right > * { margin: 0; }
+}
+@media (min-width: 1150px) {
+  .orkut-body { grid-template-columns: 218px minmax(0, 1fr) 210px; }
+  .orkut-left { grid-column: 1; grid-row: 1; }
+  .orkut-scrap-list { grid-column: 2; grid-row: 1; }
+  .orkut-right { grid-column: 3; grid-row: 1; }
 }
 
 /* ── Cargos: compact and quieter ─────────────────────────────────────────────
@@ -2150,6 +2158,12 @@ html {
 .sobre-page { max-width: none; margin: 0; }
 @media (min-width: 1000px) {
   .sobre-page { grid-template-columns: minmax(0, 1.55fr) minmax(20rem, 1fr); gap: 2.5rem; }
+  /* The divider between the stacked sections becomes a stray grid item in the
+   * two-column layout — it was landing in column 2, shoving the author card
+   * under column 1 and leaving the whole right side black. */
+  .sobre-page > .rule { display: none; }
+  .sobre-projeto { grid-column: 1; grid-row: 1; }
+  .sobre-autor { grid-column: 2; grid-row: 1; }
 }
 @media (min-width: 1400px) {
   .sobre-prose { columns: 2; column-gap: 2.2rem; }

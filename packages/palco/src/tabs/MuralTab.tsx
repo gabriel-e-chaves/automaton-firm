@@ -77,6 +77,7 @@ export function MuralTab({ snapshot }: MuralTabProps) {
       </div>
 
       <div className="orkut-body">
+        <aside className="orkut-left">
         <p className="orkut-visitor-counter">você é o visitante nº {visitorNumber(snapshot?.lastEventId ?? 0)}</p>
 
         {/* Orkut profile box — the sidebar was one short counter and a list,
@@ -113,8 +114,11 @@ export function MuralTab({ snapshot }: MuralTabProps) {
           </ul>
         </div>
 
+        </aside>
+
         {/* Right column: the friends grid every real Orkut profile had. Filled
             from the leaderboard, so it is the actual roster, not decoration. */}
+        <aside className="orkut-right">
         <div className="orkut-friends">
           <h4>amigos ({(snapshot?.leaderboard ?? []).length})</h4>
           <ul>
@@ -128,6 +132,7 @@ export function MuralTab({ snapshot }: MuralTabProps) {
             ))}
           </ul>
         </div>
+        </aside>
 
         <ul className="orkut-scrap-list">
           {posts.map((post) => {
