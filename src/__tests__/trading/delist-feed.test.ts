@@ -29,6 +29,6 @@ describe("delist-feed", () => {
       .mockResolvedValueOnce(ok([[1000, "1.0", "1.0", "1.0", "2.5", "10"]]))
       .mockResolvedValueOnce(ok([]));
     const bars = await fetchPerpBars("OMGUSDT", 0, 10_000, fetchImpl as unknown as typeof fetch);
-    expect(bars).toEqual([{ ts: 1000, closeCents: 250 }]);
+    expect(bars).toEqual([{ ts: 1000, closeE8: 250000000 }]);
   });
 });

@@ -2,9 +2,9 @@ import { describe, it, expect } from "vitest";
 import { closeAtOrAfter, closeAtOrBefore, type Bar } from "../../trading/bars.js";
 
 const bars: Bar[] = [
-  { ts: 100, closeCents: 10 },
-  { ts: 200, closeCents: 20 },
-  { ts: 400, closeCents: 40 },
+  { ts: 100, closeE8: 10 },
+  { ts: 200, closeE8: 20 },
+  { ts: 400, closeE8: 40 },
 ];
 
 describe("bars", () => {

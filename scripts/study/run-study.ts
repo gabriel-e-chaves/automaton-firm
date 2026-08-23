@@ -76,7 +76,7 @@ console.log(`series fetched=${series.size} noBars=${noBars.length} ${noBars.slic
 // ---- 5. study ----
 const SEED = 20260823;
 const report = runEventStudy({ events: classA, series, universe: [...series.keys()], seed: SEED });
-console.log(`\nPRIMARY (${report.primary.horizonLabel}) n=${report.primary.sampleSize} event=${report.primary.medianEventBps.toFixed(1)}bps control=${report.primary.medianControlBps.toFixed(1)}bps EXCESS=${report.primary.excessBps.toFixed(1)}bps clears10bps=${report.primary.exceedsFees}`);
+console.log(`\nPRIMARY (${report.primary.horizonLabel}) n=${report.primary.sampleSize} unusable=${report.primary.unusablePrices} event=${report.primary.medianEventBps.toFixed(1)}bps control=${report.primary.medianControlBps.toFixed(1)}bps EXCESS=${report.primary.excessBps.toFixed(1)}bps clears10bps=${report.primary.exceedsFees}`);
 for (const e of report.exploratory) console.log(`  [exploratory] ${e.horizonLabel}: excess=${e.excessBps.toFixed(1)}bps n=${e.sampleSize}`);
 
 // ---- 6. gate condition 3: sign stability over two disjoint halves ----

@@ -47,6 +47,8 @@ export interface StudyInput {
 
 export interface StudyResult {
   horizonLabel: string;
+  /** Events dropped because the price data could not produce a return. Reported, never hidden. */
+  unusablePrices: number;
   sampleSize: number;
   medianEventBps: number;
   medianControlBps: number;
@@ -69,9 +71,15 @@ function median(xs: number[]): number {
   return s.length % 2 === 0 ? (s[m - 1] + s[m]) / 2 : s[m];
 }
 
-/** Short return in bps: a decline is positive. */
-function shortBps(entry: number, exit: number): number {
-  if (entry <= 0) return 0;
+/**
+ * Short return in bps: a decline is positive.
+ * Returns null when the entry price is unusable. It must NEVER return 0 for
+ * bad data — a fabricated 0 is indistinguishable from a real flat return and
+ * would drag the median toward "no effect" while looking like a measurement.
+ */
+function shortBps(entry: number, exit: number): number | null {
+  if (!Number.isFinite(entry) || entry <= 0) return null;
+  if (!Number.isFinite(exit) || exit < 0) return null;
   return ((entry - exit) / entry) * 10_000;
 }
 
@@ -81,6 +89,7 @@ function measure(
   exitFor: (ev: EventWithRelease) => number,
 ): StudyResult {
   const eventBps: number[] = [];
+  let unusable = 0;
   for (const ev of input.events) {
     const symbol = `${ev.symbols[0]}USDT`;
     const bars = input.series.get(symbol);
@@ -88,7 +97,9 @@ function measure(
     const entry = closeAtOrAfter(bars, ev.releaseDate);
     const exit = closeAtOrBefore(bars, exitFor(ev));
     if (entry === null || exit === null) continue;
-    eventBps.push(shortBps(entry, exit));
+    const bps = shortBps(entry, exit);
+    if (bps === null) { unusable++; continue; }
+    eventBps.push(bps);
   }
 
   // Control: same symbol universe, random entry timestamps, identical holding
@@ -109,7 +120,9 @@ function measure(
       const entry = closeAtOrAfter(bars, entryTs);
       const exit = closeAtOrBefore(bars, entryTs + hold);
       if (entry === null || exit === null) continue;
-      controlBps.push(shortBps(entry, exit));
+      const cbps = shortBps(entry, exit);
+      if (cbps === null) continue;
+      controlBps.push(cbps);
     }
   }
 
@@ -118,6 +131,7 @@ function measure(
   const excessBps = medianEventBps - medianControlBps;
   return {
     horizonLabel,
+    unusablePrices: unusable,
     sampleSize: eventBps.length,
     medianEventBps,
     medianControlBps,

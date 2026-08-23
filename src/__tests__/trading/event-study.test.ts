@@ -6,11 +6,11 @@ const HOUR = 3_600_000;
 const T0 = Date.parse("2026-01-01T00:00:00Z");
 
 /** Flat series with an optional planted decline starting at `dropAt`. */
-function series(bars: number, dropAt: number | null, dropFrac: number): { ts: number; closeCents: number }[] {
+function series(bars: number, dropAt: number | null, dropFrac: number): { ts: number; closeE8: number }[] {
   return Array.from({ length: bars }, (_, i) => {
     const ts = T0 + i * HOUR;
     const dropped = dropAt !== null && ts >= dropAt;
-    return { ts, closeCents: Math.round(10_000 * (dropped ? 1 - dropFrac : 1)) };
+    return { ts, closeE8: Math.round(10_000 * (dropped ? 1 - dropFrac : 1)) };
   });
 }
 
@@ -44,7 +44,7 @@ describe("event-study", () => {
     // is distinct for every entry index, so the median moves with the seed.
     const varied = Array.from({ length: 300 }, (_, i) => ({
       ts: T0 + i * HOUR,
-      closeCents: 10_000 + i * i,
+      closeE8: 10_000 + i * i,
     }));
     const events = Array.from({ length: 5 }, (_, i) => ev("CCC", 10 + i, 40 + i));
     const s = new Map([["CCCUSDT", varied]]);

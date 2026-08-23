@@ -56,7 +56,7 @@ export async function fetchPerpBars(
     const batch = KlineSchema.parse(await getJson(url, fetchImpl, `klines ${symbol}`));
     if (batch.length === 0) break;
     for (const k of batch) {
-      bars.push({ ts: k[0] as number, closeCents: Math.round(parseFloat(k[4] as string) * 100) });
+      bars.push({ ts: k[0] as number, closeE8: Math.round(parseFloat(k[4] as string) * 1e8) });
     }
     const last = batch[batch.length - 1][0] as number;
     if (batch.length < 1000 || last >= endTime) break;
