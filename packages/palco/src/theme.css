@@ -2170,36 +2170,35 @@ html {
 .pregao-chart-panel .period-panel { margin-top: 1.5rem; }
 
 
-/* CRT refresh band, the moving white stripe the owner remembered. It never
- * existed in any branch (the scanlines were always deliberately static); built
- * now by request. One slow, faint sweep down the viewport every 9s, under the
- * grain, over the content, never intercepting the pointer. Killed entirely for
- * reduced-motion users. */
-@keyframes crt-sweep {
-  0% { transform: translateY(-12%); }
-  100% { transform: translateY(112%); }
+
+/* pxpush about-page lines. The reference draws crisp 2px white rules across
+ * the page (.marqueeText:before/:after: width 94vw, scaleX(0->1) from the
+ * left). The owner remembered these as "white stripes passing"; the earlier
+ * soft glow band read as haze, so it is replaced by the real thing: two lines
+ * that draw themselves across, staggered, then fade and start again. */
+@keyframes line-draw {
+  0% { transform: scaleX(0); opacity: 1; }
+  55% { transform: scaleX(1); opacity: 1; }
+  75% { transform: scaleX(1); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 0; }
 }
-/* body::after, NOT .page::after: .page's two pseudo-elements are taken (static
- * scanlines on ::before, grain on ::after) and a later same-specificity rule
- * would have silently replaced the grain. */
+body::before,
 body::after {
   content: "";
   position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 9vh;
+  left: 3vw;
+  width: 94vw;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.5);
   z-index: 49;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.045) 50%,
-    transparent
-  );
-  animation: crt-sweep 9s linear infinite;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: line-draw 7.5s ease-in-out infinite;
 }
+body::before { top: 22vh; }
+body::after { top: 70vh; animation-delay: 3.75s; }
 @media (prefers-reduced-motion: reduce) {
-  body::after { animation: none; content: none; }
+  body::before, body::after { content: none; animation: none; }
 }
 
