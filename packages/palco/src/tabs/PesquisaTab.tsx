@@ -40,11 +40,6 @@ const signed = (n: number) => `${n >= 0 ? "+" : "−"}$${Math.abs(n).toFixed(2)}
 export function PesquisaTab() {
   return (
     <section className="research">
-      <p className="research-scope">
-        Tudo nesta página é <strong>medição histórica do carry de funding</strong>,
-        delta-neutro, sem alavancagem. Não é o motor ao vivo das outras abas, que é
-        direcional e alavancado e tem outro número. Dois motores, dois resultados.
-      </p>
       <header className="research-head">
         <h2>A pergunta que a firma existe pra responder</h2>
         <p className="research-lead">

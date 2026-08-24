@@ -104,6 +104,5 @@ describe("App, os dois motores nao se misturam", () => {
     expect(container.querySelector(".hero-strip")).not.toBeNull();
     fireEvent.click(pesquisa);
     expect(container.querySelector(".hero-strip")).toBeNull();
-    expect(container.querySelector(".research-scope")).not.toBeNull();
   });
 });
