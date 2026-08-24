@@ -31,8 +31,10 @@ const GOLDEN_RULE =
 
 const ROLE_CHIP = "Legal Operations · Automação · IA";
 
-const BIO =
-  "Advogado com anos de prática em escritórios nas áreas de Direito Civil, Empresarial e Falimentar, e um interesse especial por Direito Contratual e pela aplicação de tecnologia aos processos jurídicos. Hoje sou Analista em Legal Operations na Reasset, automatizando e estruturando fluxos jurídicos com Python, n8n e React: tratamento e análise de dados, apoio à análise processual em recuperação judicial e gestão de contratos, com foco em eficiência operacional.";
+const BIO_PARAGRAPHS = [
+  "Advogado com experiência em escritórios nas áreas de Direito Civil, Empresarial e Falimentar, com especial interesse na aplicação de tecnologia e dados à prática jurídica.",
+  "Atualmente, atuo como Analista de Legal Operations na Reasset, onde trabalho na estruturação e automação de fluxos jurídicos, tratamento e análise de dados e apoio à análise processual em processos de recuperação judicial, com foco em eficiência, padronização e otimização das operações jurídicas.",
+];
 
 const SKILLS = ["Claude API", "MCP", "Prompt Engineering", "Python", "n8n", "Make", "RPA", "Power BI", "AWS", "Scrum"];
 
@@ -88,7 +90,9 @@ export function SobreTab({ snapshot }: SobreTabProps) {
         <h2 className="section-title">Quem constrói</h2>
         <h3 className="sobre-name">Gabriel Ernesto Chaves</h3>
         <span className="label sobre-role-chip">{ROLE_CHIP}</span>
-        <p className="sobre-bio">{BIO}</p>
+        {BIO_PARAGRAPHS.map((par, i) => (
+          <p key={`bio-${i}`} className="sobre-bio">{par}</p>
+        ))}
         <div className="genome-chips">
           {SKILLS.map((skill) => (
             <span className="chip" key={skill}>

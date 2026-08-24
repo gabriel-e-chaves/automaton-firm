@@ -106,7 +106,9 @@ export default function App() {
           <div className="nav-live">
             <span className={`live-dot ${isStatic ? "static" : connected ? "connected" : "disconnected"}`} />
             <span className="label">
-              {isStatic ? "replay estático" : connected ? "ao vivo" : "reconectando…"}
+              {isStatic
+                ? `replay diário · ${new Date(snapshot?.generatedAt ?? 0).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" })}`
+                : connected ? "ao vivo" : "reconectando…"}
             </span>
           </div>
         </div>

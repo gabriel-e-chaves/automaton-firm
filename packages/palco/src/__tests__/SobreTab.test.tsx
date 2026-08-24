@@ -9,7 +9,7 @@ describe("SobreTab", () => {
     render(<SobreTab snapshot={fixtureSnapshot} />);
 
     expect(screen.getByText("Gabriel Ernesto Chaves")).toBeInTheDocument();
-    expect(screen.getByText(/Advogado com anos de prática/)).toBeInTheDocument();
+    expect(screen.getByText(/Advogado com experiência em escritórios/)).toBeInTheDocument();
     // Privacy ruling: no phone number is published anywhere on this page.
     expect(screen.queryByText(/98186/)).not.toBeInTheDocument();
   });

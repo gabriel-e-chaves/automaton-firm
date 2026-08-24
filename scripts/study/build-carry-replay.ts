@@ -23,7 +23,9 @@ import { openMotorDb } from "../../src/motor/db.js";
 import type { CarryBar, CarryParams } from "../../src/trading/carry-types.js";
 
 const DAY = 86_400_000;
-const END = Date.parse("2026-08-23T00:00:00Z");
+// Rolling daily window: midnight UTC today, so a daily cron re-running this
+// always replays the most recent 90 days and the number moves with the market.
+const END = new Date(new Date().toISOString().slice(0, 10) + "T00:00:00Z").getTime();
 const START = END - 90 * DAY;
 const SEATS = 5;
 const SEAT_CENTS = 20_000;              // $200, motor's TRADER_START_MC
