@@ -2168,3 +2168,37 @@ html {
 /* Breathing room between the equity chart and the period table that moved in
  * under it. */
 .pregao-chart-panel .period-panel { margin-top: 1.5rem; }
+
+
+/* CRT refresh band, the moving white stripe the owner remembered. It never
+ * existed in any branch (the scanlines were always deliberately static); built
+ * now by request. One slow, faint sweep down the viewport every 9s, under the
+ * grain, over the content, never intercepting the pointer. Killed entirely for
+ * reduced-motion users. */
+@keyframes crt-sweep {
+  0% { transform: translateY(-12%); }
+  100% { transform: translateY(112%); }
+}
+/* body::after, NOT .page::after: .page's two pseudo-elements are taken (static
+ * scanlines on ::before, grain on ::after) and a later same-specificity rule
+ * would have silently replaced the grain. */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 9vh;
+  z-index: 49;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.045) 50%,
+    transparent
+  );
+  animation: crt-sweep 9s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; content: none; }
+}

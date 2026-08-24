@@ -32,7 +32,7 @@ const GOLDEN_RULE =
 const ROLE_CHIP = "Legal Operations · Automação · IA";
 
 const BIO =
-  "Advogado com anos de prática em escritórios nas áreas de Direito Civil, Empresarial e Falimentar, e um interesse especial por Direito Contratual e pela aplicação de tecnologia aos processos jurídicos. Hoje sou Analista em Legal Operations na Reasset, automatizando e estruturando fluxos jurídicos com Python, n8n e React: tratamento e análise de dados, apoio à análise processual em recuperação judicial e gestão de contratos, com foco em eficiência operacional. Tenho forte interesse em Legal Operations, LegalTech e automação jurídica, e busco conexões na interseção entre Direito, tecnologia e operações. Vamos conversar.";
+  "Advogado com anos de prática em escritórios nas áreas de Direito Civil, Empresarial e Falimentar, e um interesse especial por Direito Contratual e pela aplicação de tecnologia aos processos jurídicos. Hoje sou Analista em Legal Operations na Reasset, automatizando e estruturando fluxos jurídicos com Python, n8n e React: tratamento e análise de dados, apoio à análise processual em recuperação judicial e gestão de contratos, com foco em eficiência operacional.";
 
 const SKILLS = ["Claude API", "MCP", "Prompt Engineering", "Python", "n8n", "Make", "RPA", "Power BI", "AWS", "Scrum"];
 
