@@ -108,6 +108,8 @@ export function PesquisaTab() {
 
 
 
+      <Attempts />
+
       <header className="research-head research-head--second">
         <h2>676 trades contra 3</h2>
         <p className="research-lead">
@@ -273,8 +275,6 @@ export function PesquisaTab() {
         corretagem. Não falta sinal: o mercado cobra na porta exatamente o que tem lá dentro.
         Esse é um resultado melhor que um nulo, porque é um mecanismo.
       </p>
-      <Attempts />
-
     </section>
   );
 }
