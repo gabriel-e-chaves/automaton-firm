@@ -29,12 +29,10 @@ function projectParagraph2(seedMc: number): string {
 const GOLDEN_RULE =
   "Dinheiro real só entra em discussão se a linhagem evoluída vencer o controle aleatório E o não-fazer-nada por ≥ 3 meses de dados virgens ao vivo, fora da banda de ruído.";
 
-const FOOTER_CHIP = "status: procurando o primeiro recorde honesto";
-
 const ROLE_CHIP = "Legal Operations · Automação · IA";
 
 const BIO =
-  "Advogado que aprendeu a programar pra nunca mais fazer a mesma tarefa duas vezes. De dia, Legal Operations na Reasset Capital — transformo processo jurídico em software que funciona. De noite, chefe de uma firma de robôs que operam dinheiro de mentira com seriedade de gente grande. Aprovado na OAB, viciado em automação, e dono do único pregão onde o RH demite por estatística. Este site é o meu laboratório — e o velório dos meus edges ilusórios, com transmissão ao vivo.";
+  "Advogado, aprovado no Exame da Ordem, com anos de prática em escritórios nas áreas de Direito Civil, Empresarial e Falimentar — e um interesse especial por Direito Contratual e pela aplicação de tecnologia aos processos jurídicos. Hoje sou Analista em Legal Operations na Reasset, automatizando e estruturando fluxos jurídicos com Python, n8n e Airtable: tratamento e análise de dados, apoio à análise processual em recuperação judicial e gestão de contratos, com foco em eficiência operacional. Tenho forte interesse em Legal Operations, LegalTech e automação jurídica, e busco conexões na interseção entre Direito, tecnologia e operações — vamos conversar.";
 
 const SKILLS = ["Claude API", "MCP", "Prompt Engineering", "Python", "n8n", "Make", "RPA", "Power BI", "AWS", "Scrum"];
 
@@ -82,7 +80,6 @@ export function SobreTab({ snapshot }: SobreTabProps) {
           <p>{GOLDEN_RULE}</p>
         </aside>
 
-        <span className="label sobre-footer-chip">{FOOTER_CHIP}</span>
       </section>
 
       <hr className="rule" />
