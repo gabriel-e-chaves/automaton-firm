@@ -11,6 +11,7 @@ import { LeaderboardTab } from "./tabs/LeaderboardTab";
 import { EmpresaTab } from "./tabs/EmpresaTab";
 import { MuralTab } from "./tabs/MuralTab";
 import { SobreTab } from "./tabs/SobreTab";
+import { GiantMarquee } from "./components/GiantMarquee";
 import { PesquisaTab } from "./tabs/PesquisaTab";
 
 const VIRGIN_DAYS_GATE = 90;
@@ -80,6 +81,7 @@ export default function App() {
 
   return (
     <div className="page">
+      <GiantMarquee />
       <Confetti feed={snapshot?.feed ?? []} />
 
       <header className="site-header">
