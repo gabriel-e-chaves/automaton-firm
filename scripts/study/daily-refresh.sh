@@ -7,7 +7,12 @@
 # did not change (weekend gaps, API hiccups already logged by the build).
 set -euo pipefail
 cd "$(dirname "$0")/../.."
-export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH"
+# Self-update when running from the dedicated refresh clone (always on main).
+# Dev worktrees sit on feature branches, so this never fires there.
+if [ "$(git branch --show-current)" = "main" ]; then
+  git pull --ff-only origin main >/dev/null 2>&1 || true
+fi
 node_modules/.bin/tsx scripts/study/build-carry-replay.ts
 node_modules/.bin/tsx scripts/study/export-snapshot.ts
 if git diff --quiet packages/palco/public/snapshot.json; then
