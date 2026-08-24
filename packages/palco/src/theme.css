@@ -1900,7 +1900,9 @@ ul.trade-feed .ts {
 }
 .gen-card {
   padding: 0.8rem 0.95rem;
-  background: var(--bg-raised);
+  /* Same surface as the leaderboard table rows (--black), so the generation
+   * cards read as part of the same panel instead of floating lighter. */
+  background: var(--black);
   border: 1px solid var(--border-color);
   border-left: 3px solid var(--green);
   border-radius: 6px;
