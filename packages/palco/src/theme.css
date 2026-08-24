@@ -2176,11 +2176,14 @@ html {
  * left). The owner remembered these as "white stripes passing"; the earlier
  * soft glow band read as haze, so it is replaced by the real thing: two lines
  * that draw themselves across, staggered, then fade and start again. */
+/* The line FINISHES its pass: draws in from the left, then retracts toward
+ * the right and leaves. The transform-origin swap happens at scaleX(1), where
+ * origin has no visual effect, so the switch is invisible. */
 @keyframes line-draw {
-  0% { transform: scaleX(0); opacity: 1; }
-  55% { transform: scaleX(1); opacity: 1; }
-  75% { transform: scaleX(1); opacity: 0; }
-  100% { transform: scaleX(1); opacity: 0; }
+  0% { transform: scaleX(0); transform-origin: left center; }
+  46% { transform: scaleX(1); transform-origin: left center; }
+  54% { transform: scaleX(1); transform-origin: right center; }
+  100% { transform: scaleX(0); transform-origin: right center; }
 }
 body::before,
 body::after {
@@ -2192,7 +2195,6 @@ body::after {
   background: rgba(255, 255, 255, 0.5);
   z-index: 49;
   pointer-events: none;
-  transform-origin: left center;
   transform: scaleX(0);
   animation: line-draw 7.5s ease-in-out infinite;
 }
