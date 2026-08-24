@@ -3,11 +3,6 @@ name: Deploy Palco to Pages
 on:
   push:
     branches: [delisting-event-study, main]
-  schedule:
-    # Daily at 06:00 UTC (03:00 America/Sao_Paulo), after the 00:00 UTC funding
-    # settlement, so the replayed window always ends on a settled day.
-    # NOTE: GitHub only fires `schedule` from the DEFAULT branch's workflow file.
-    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -34,10 +29,10 @@ jobs:
       # produced by the motor's own buildSnapshot rather than hand-written JSON.
       - run: pnpm run typecheck
       - run: pnpm --filter @conway/palco test
-      - name: Rebuild the 90-day replay from fresh Binance data
-        run: node_modules/.bin/tsx scripts/study/build-carry-replay.ts
-      - name: Bake the snapshot into the build
-        run: node_modules/.bin/tsx scripts/study/export-snapshot.ts
+      # The snapshot is COMMITTED, not fetched here: Binance answers 451
+      # (geo-block) to GitHub's US runners, so the daily refresh runs wherever
+      # Binance is reachable and pushes snapshot.json; this workflow only
+      # builds and publishes what is in the repo.
       - name: Build Palco for the project Pages path
         run: pnpm --filter @conway/palco exec vite build
         env:
