@@ -9,7 +9,7 @@ describe("SobreTab", () => {
     render(<SobreTab snapshot={fixtureSnapshot} />);
 
     expect(screen.getByText("Gabriel Ernesto Chaves")).toBeInTheDocument();
-    expect(screen.getByText(/Analista em Legal Operations na Reasset Capital/)).toBeInTheDocument();
+    expect(screen.getByText(/Advogado que aprendeu a programar/)).toBeInTheDocument();
     // Privacy ruling: no phone number is published anywhere on this page.
     expect(screen.queryByText(/98186/)).not.toBeInTheDocument();
   });
@@ -60,5 +60,14 @@ describe("SobreTab", () => {
     expect(screen.getByText(/\$1000\.00 por geração, sempre/)).toBeInTheDocument();
     expect(screen.queryByText(/\$10\.00 por geração, sempre/)).not.toBeInTheDocument();
     expect(screen.queryByText(/\$100 por geração, sempre/)).not.toBeInTheDocument();
+  });
+});
+
+describe("SobreTab — contato", () => {
+  it("links the LinkedIn profile", () => {
+    render(<SobreTab snapshot={fixtureSnapshot} />);
+    const link = screen.getByRole("link", { name: "LinkedIn" });
+    expect(link).toHaveAttribute("href", "https://www.linkedin.com/in/gabriel-chaves2/?locale=en");
+    expect(link).toHaveAttribute("rel", expect.stringContaining("noreferrer"));
   });
 });

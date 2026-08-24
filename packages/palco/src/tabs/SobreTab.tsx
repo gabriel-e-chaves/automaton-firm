@@ -34,7 +34,7 @@ const FOOTER_CHIP = "status: procurando o primeiro recorde honesto";
 const ROLE_CHIP = "Legal Operations · Automação · IA";
 
 const BIO =
-  "Analista em Legal Operations na Reasset Capital (São José dos Campos, SP). Formação jurídica, aprovado na OAB, pós em Compliance Contratual em andamento — e uma obsessão por transformar processo em software. De dia, traduzo dores de negócio em automação com ROI de verdade; de noite, administro uma firma de robôs que me deixam orgulhoso e falido em dinheiro de mentira. Este projeto é o meu laboratório: agentes de IA, evolução e honestidade estatística no mesmo pregão.";
+  "Advogado que aprendeu a programar pra nunca mais fazer a mesma tarefa duas vezes. De dia, Legal Operations na Reasset Capital — transformo processo jurídico em software que funciona. De noite, chefe de uma firma de robôs que operam dinheiro de mentira com seriedade de gente grande. Aprovado na OAB, viciado em automação, e dono do único pregão onde o RH demite por estatística. Este site é o meu laboratório — e o velório dos meus edges ilusórios, com transmissão ao vivo.";
 
 const SKILLS = ["Claude API", "MCP", "Prompt Engineering", "Python", "n8n", "Make", "RPA", "Power BI", "AWS", "Scrum"];
 
@@ -100,7 +100,10 @@ export function SobreTab({ snapshot }: SobreTabProps) {
           ))}
         </div>
         <p className="sobre-contact">
-          <a href="mailto:gabchaves2@gmail.com">gabchaves2@gmail.com</a> · LinkedIn
+          <a href="mailto:gabchaves2@gmail.com">gabchaves2@gmail.com</a> ·{" "}
+          <a href="https://www.linkedin.com/in/gabriel-chaves2/?locale=en" target="_blank" rel="noreferrer noopener">
+            LinkedIn
+          </a>
         </p>
       </section>
     </div>
