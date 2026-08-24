@@ -142,8 +142,8 @@ hr,
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.03) 0,
-    rgba(255, 255, 255, 0.03) 1px,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -2171,36 +2171,4 @@ html {
 
 
 
-/* pxpush about-page lines. The reference draws crisp 2px white rules across
- * the page (.marqueeText:before/:after: width 94vw, scaleX(0->1) from the
- * left). The owner remembered these as "white stripes passing"; the earlier
- * soft glow band read as haze, so it is replaced by the real thing: two lines
- * that draw themselves across, staggered, then fade and start again. */
-/* The line FINISHES its pass: draws in from the left, then retracts toward
- * the right and leaves. The transform-origin swap happens at scaleX(1), where
- * origin has no visual effect, so the switch is invisible. */
-@keyframes line-draw {
-  0% { transform: scaleX(0); transform-origin: left center; }
-  46% { transform: scaleX(1); transform-origin: left center; }
-  54% { transform: scaleX(1); transform-origin: right center; }
-  100% { transform: scaleX(0); transform-origin: right center; }
-}
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  left: 3vw;
-  width: 94vw;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.5);
-  z-index: 49;
-  pointer-events: none;
-  transform: scaleX(0);
-  animation: line-draw 7.5s ease-in-out infinite;
-}
-body::before { top: 22vh; }
-body::after { top: 70vh; animation-delay: 3.75s; }
-@media (prefers-reduced-motion: reduce) {
-  body::before, body::after { content: none; animation: none; }
-}
 
