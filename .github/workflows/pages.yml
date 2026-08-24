@@ -2,7 +2,10 @@ name: Deploy Palco to Pages
 
 on:
   push:
-    branches: [delisting-event-study, main]
+    # main only: with two branches publishing, near-simultaneous pushes of the
+    # same commit kept cancelling each other via the concurrency group and the
+    # site was left serving a stale build.
+    branches: [main]
   workflow_dispatch:
 
 permissions:
