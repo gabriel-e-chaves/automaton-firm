@@ -60,7 +60,7 @@ function OpenPositionsPanel({ positions, stakeMc }: { positions: LeaderboardEntr
     <section className="positions-panel">
       <h2 className="section-title">Posições abertas</h2>
       {positions.length === 0 ? (
-        <p className="empty-state">ninguém posicionado — a firma espera sinal.</p>
+        <p className="empty-state">ninguém posicionado, a firma espera sinal.</p>
       ) : (
         <ul className="positions-list">
           {positions.map((trader) => (
@@ -202,8 +202,8 @@ export function PregaoTab({ snapshot }: PregaoTabProps) {
                     {p.label}
                     {!p.covered && <span className="period-partial"> · janela mais curta</span>}
                   </th>
-                  <td>{p.covered || p.pnlMc !== 0 ? usd(p.pnlMc) : "—"}</td>
-                  <td>{p.covered || p.pnlMc !== 0 ? `${p.pctFromStart >= 0 ? "+" : ""}${p.pctFromStart.toFixed(2)}%` : "—"}</td>
+                  <td>{p.covered || p.pnlMc !== 0 ? usd(p.pnlMc) : "-"}</td>
+                  <td>{p.covered || p.pnlMc !== 0 ? `${p.pctFromStart >= 0 ? "+" : ""}${p.pctFromStart.toFixed(2)}%` : "-"}</td>
                 </tr>
               ))}
             </tbody>

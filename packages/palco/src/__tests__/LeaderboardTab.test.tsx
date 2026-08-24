@@ -59,7 +59,7 @@ describe("LeaderboardTab", () => {
   });
 });
 
-describe("LeaderboardTab — gerações no ar", () => {
+describe("LeaderboardTab, gerações no ar", () => {
   it("renders one card per generation with cohort, number and peak", () => {
     const { container } = render(<LeaderboardTab snapshot={fixtureSnapshot} />);
     const cards = container.querySelectorAll(".gen-card");

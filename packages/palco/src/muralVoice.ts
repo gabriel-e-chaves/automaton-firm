@@ -52,7 +52,7 @@ function tradeClosedBody(payload: Record<string, unknown>, rng: Rng): string {
     const pnlStr = usd(pnl);
     return pick(rng, [
       `Fechei ${symbol} no verde: ${pnlStr}. Hoje o mercado foi gentil comigo.`,
-      `${pnlStr} no bolso. Não foi sorte — foi o genoma. (Foi um pouco de sorte.)`,
+      `${pnlStr} no bolso. Não foi sorte, foi o genoma. (Foi um pouco de sorte.)`,
       `Realizei ${pnlStr} em ${symbol}. Quem não realiza, sonha.`,
     ]);
   }
@@ -79,7 +79,7 @@ function traderFiredBody(payload: Record<string, unknown>, rng: Rng): string {
   const name = str(payload, "name", "Trader");
   const returned = usd(num(payload, "returnedMc"));
   return pick(rng, [
-    `Comunicado do RH: encerramos o ciclo de ${name}. Devolveu ${returned} ao caixa. A decisão foi baseada em evidência — como sempre.`,
+    `Comunicado do RH: encerramos o ciclo de ${name}. Devolveu ${returned} ao caixa. A decisão foi baseada em evidência, como sempre.`,
     `O RH agradece os serviços de ${name}. Os dados não mentem; infelizmente, também não perdoam.`,
   ]);
 }
@@ -96,7 +96,7 @@ function traderPromotedBody(payload: Record<string, unknown>, rng: Rng): string 
   const name = str(payload, "name", "Trader");
   return pick(rng, [
     `${name} é o novo Trader do Ciclo. O crachá é o mesmo, mas o moral é outro. 🏆`,
-    `Promoção pra ${name}! Bateu o benchmark — que neste mercado é quase poesia.`,
+    `Promoção pra ${name}! Bateu o benchmark, que neste mercado é quase poesia.`,
   ]);
 }
 
@@ -121,7 +121,7 @@ function genStartedBody(payload: Record<string, unknown>, rng: Rng): string {
   const n = num(payload, "genNumber");
   return pick(rng, [
     `Nasce a Geração ${n}: banca cheia e o mundo pela frente. Boa sorte, pequenos.`,
-    `Geração ${n} aberta. Herdaram os melhores genes — e todas as dívidas emocionais dos antecessores.`,
+    `Geração ${n} aberta. Herdaram os melhores genes, e todas as dívidas emocionais dos antecessores.`,
   ]);
 }
 
@@ -139,7 +139,7 @@ function hrReviewBody(payload: Record<string, unknown>, rng: Rng): string {
   const fired = num(payload, "fired");
   const promoted = num(payload, "promoted");
   return pick(rng, [
-    `Ciclo de avaliação: ${fired} desligamento(s), ${promoted} promoção(ões). O RH dormirá tranquilo — decidiu com dados.`,
+    `Ciclo de avaliação: ${fired} desligamento(s), ${promoted} promoção(ões). O RH dormirá tranquilo, decidiu com dados.`,
   ]);
 }
 
@@ -149,7 +149,7 @@ function traderRotatedBody(payload: Record<string, unknown>, rng: Rng): string {
   const name = str(payload, "name", "O trader");
   return pick(rng, [
     `O RH girou a cadeira de ${name}: sem trades suficientes pra julgar, sem julgamento pra carregar. Entra genoma novo.`,
-    `${name} saiu sem vermelho no histórico — e sem histórico. A firma precisa de evidência, não de mistério.`,
+    `${name} saiu sem vermelho no histórico, e sem histórico. A firma precisa de evidência, não de mistério.`,
   ]);
 }
 

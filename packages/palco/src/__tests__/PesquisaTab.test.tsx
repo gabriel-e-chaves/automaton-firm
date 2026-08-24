@@ -52,7 +52,7 @@ describe("PesquisaTab", () => {
   });
 });
 
-describe("PesquisaTab — a aula (90 dias, pré-registrado)", () => {
+describe("PesquisaTab, a aula (90 dias, pré-registrado)", () => {
   it("shows all four arms including the losing firm arm", () => {
     render(<PesquisaTab />);
     expect(screen.getByText("$1000.34")).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe("PesquisaTab — a aula (90 dias, pré-registrado)", () => {
   });
 });
 
-describe("PesquisaTab — elenco da firma", () => {
+describe("PesquisaTab, elenco da firma", () => {
   it("shows every agent by name with their trade count", () => {
     render(<PesquisaTab />);
     for (const n of ["João Esteves", "Diego Silveira", "Zeca Teixeira"]) {
@@ -106,7 +106,7 @@ describe("PesquisaTab — elenco da firma", () => {
   });
 });
 
-describe("PesquisaTab — 676 trades contra 3", () => {
+describe("PesquisaTab, 676 trades contra 3", () => {
   it("shows gross positive alongside the fee bill that ate it", () => {
     render(<PesquisaTab />);
     expect(screen.getByText("+$330.05")).toBeInTheDocument();
@@ -123,7 +123,7 @@ describe("PesquisaTab — 676 trades contra 3", () => {
   });
 });
 
-describe("PesquisaTab — o registro completo", () => {
+describe("PesquisaTab, o registro completo", () => {
   it("lists every attempt with its model and result", () => {
     const { container } = render(<PesquisaTab />);
     expect(container.querySelectorAll(".att-card")).toHaveLength(ATTEMPTS.length);

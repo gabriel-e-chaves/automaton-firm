@@ -59,21 +59,21 @@ const FORMATTERS: Record<string, (p: Payload) => string> = {
     `💀 <strong>${str(p, "name")}</strong> morreu · viveu ${(num(p, "ageMs") / 3_600_000).toFixed(1)}h · pico ${usd(p, "bookPeakMc")}`,
 
   trader_promoted: (p) =>
-    `🏆 <strong>${str(p, "name")}</strong> promovido(a) — ${str(p, "title")}`,
+    `🏆 <strong>${str(p, "name")}</strong> promovido(a), ${str(p, "title")}`,
 
-  achievement: (p) => `✨ <strong>${str(p, "name")}</strong> — "${str(p, "label")}"`,
+  achievement: (p) => `✨ <strong>${str(p, "name")}</strong>, "${str(p, "label")}"`,
 
   hr_review: (p) =>
     `🧾 RH: ${num(p, "reviewed")} avaliados · ${num(p, "fired")} demitidos · ${num(p, "promoted")} promovidos · ${num(p, "held")} mantidos · benchmark ${num(p, "benchmarkCents")}c`,
 
   gen_started: (p) =>
-    `🌱 Geração ${num(p, "genNumber")} (${str(p, "cohort")}) começou — ${str(p, "seedNote")}`,
+    `🌱 Geração ${num(p, "genNumber")} (${str(p, "cohort")}) começou, ${str(p, "seedNote")}`,
 
   gen_ended: (p) =>
     `⚰️ Geração ${num(p, "genNumber")} (${str(p, "cohort")}) acabou · pico ${usd(p, "peakEquityMc")} · ${num(p, "daysLived")} dias${p.isNewRecord ? " · 🔔 NOVO RECORDE" : ""}`,
 
   record_broken: (p) =>
-    `🔔 RECORDE: ${usd(p, "peakEquityMc")} (${str(p, "cohort")}, gen ${num(p, "genNumber")}) — anterior ${usd(p, "previousRecordMc")}`,
+    `🔔 RECORDE: ${usd(p, "peakEquityMc")} (${str(p, "cohort")}, gen ${num(p, "genNumber")}), anterior ${usd(p, "previousRecordMc")}`,
 
   catch_up: (p) => `⏪ catch-up de ${num(p, "bars")} barras`,
 };

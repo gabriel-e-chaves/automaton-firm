@@ -29,7 +29,7 @@ export interface MuralAuthor {
 export interface MuralPost {
   key: string;
   ts: number;
-  memberIds: number[]; // underlying feed item id(s) this post represents — for fade-highlight
+  memberIds: number[]; // underlying feed item id(s) this post represents, for fade-highlight
   author: MuralAuthor;
   headline: string;
   body: string;

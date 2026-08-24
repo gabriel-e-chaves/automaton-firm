@@ -40,7 +40,7 @@ export function EquityLines() {
           Três janelas do mesmo tamanho, mesmo capital de {usd(lines.startUsd)}, mesmo motor
           de carry, taxas cobradas barra a barra. A linha cheia é capital todo deployado; a
           pontilhada é o freio do CFO a 30%. O tracejado horizontal é os {usd(lines.startUsd)}{" "}
-          intactos — o piso honesto.
+          intactos, o piso honesto.
         </p>
       </header>
 
@@ -78,7 +78,7 @@ export function EquityLines() {
         <strong>A janela decide, não a máquina.</strong> Mesmo motor, mesmos parâmetros,
         mesmas taxas nas três: {usd(lines.windows[2].free.finalUsd)} em 2021,{" "}
         {usd(lines.windows[1].free.finalUsd)} em 2024, {usd(lines.windows[0].free.finalUsd)} nos
-        últimos 90 dias. O que mudou foi quanto o funding pagou no período — e é exatamente
+        últimos 90 dias. O que mudou foi quanto o funding pagou no período, e é exatamente
         por isso que o Experimento 3 concluiu que este carry é uma aposta em bull market
         vestida de market-neutral.
       </p>

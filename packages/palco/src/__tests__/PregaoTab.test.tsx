@@ -49,7 +49,7 @@ describe("PregaoTab", () => {
 
     render(<PregaoTab snapshot={noPositions} />);
 
-    expect(screen.getByText("ninguém posicionado — a firma espera sinal.")).toBeInTheDocument();
+    expect(screen.getByText("ninguém posicionado, a firma espera sinal.")).toBeInTheDocument();
   });
 
   it("still renders the últimos trades list", () => {
@@ -62,12 +62,12 @@ describe("PregaoTab", () => {
   it("renders empty states without crashing when there is no snapshot yet", () => {
     render(<PregaoTab snapshot={null} />);
 
-    expect(screen.getByText("ninguém posicionado — a firma espera sinal.")).toBeInTheDocument();
+    expect(screen.getByText("ninguém posicionado, a firma espera sinal.")).toBeInTheDocument();
     expect(screen.getByText("Sem trades ainda.")).toBeInTheDocument();
   });
 });
 
-describe("PregaoTab — lucro por período", () => {
+describe("PregaoTab, lucro por período", () => {
   it("uses the stake as the base when the window is shorter than the period", () => {
     // 10 days of series, stake 100_000_000: the "semestre" row must measure from
     // the stake, not from the first snapshot (which is already post-fee).

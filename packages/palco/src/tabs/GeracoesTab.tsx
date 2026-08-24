@@ -28,7 +28,7 @@ function daysLivedFrom(barsLived: number): string {
 }
 
 function barLabel(gen: Generation): string {
-  return `Geração ${gen.genNumber} — pico ${usd(gen.peakEquityMc)} — ${daysLivedFrom(gen.barsLived)} dias`;
+  return `Geração ${gen.genNumber}, pico ${usd(gen.peakEquityMc)}, ${daysLivedFrom(gen.barsLived)} dias`;
 }
 
 interface LifeBarProps {

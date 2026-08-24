@@ -31,10 +31,10 @@ interface CargoInput {
 }
 
 const RANDOM_PAPEL =
-  "Decide cara-ou-coroa a cada barra, com os mesmos limites da firma. Não tem estratégia — e é exatamente por isso que importa: é o espelho honesto contra o qual todo mundo é medido.";
+  "Decide cara-ou-coroa a cada barra, com os mesmos limites da firma. Não tem estratégia, e é exatamente por isso que importa: é o espelho honesto contra o qual todo mundo é medido.";
 
 const TRAINEE_PAPEL =
-  "Contratado(a) no meio do ciclo como mutação do melhor genoma vivo. Tem tudo a provar — o RH está de olho.";
+  "Contratado(a) no meio do ciclo como mutação do melhor genoma vivo. Tem tudo a provar, o RH está de olho.";
 
 const SENIOR_PAPEL = "Carrega, sem mutação, o melhor genoma da geração anterior. A régua da casa.";
 
@@ -43,7 +43,7 @@ const PLENO_PAPEL = "Evolução aplicada: genoma de elite com mutações novas. 
 const JUNIOR_PAPEL = "Genoma novo em folha, sem herança. Sangue fresco pra não deixar a firma endogâmica.";
 
 const GERACAO_PAPEL =
-  "Fundador(a) desta geração — o mix exato de herança e mutação está no seedNote da geração.";
+  "Fundador(a) desta geração, o mix exato de herança e mutação está no seedNote da geração.";
 
 /**
  * Picks the titulo + base (un-suffixed) papel for a non-random employee,
@@ -99,18 +99,18 @@ function specialtySuffix(families: string[]): string {
   let sentence = "";
   if (signalFamilies.length === 1) {
     if (signalFamilies[0] === "momentum") {
-      sentence = " Especialidade: momentum — surfa tendência.";
+      sentence = " Especialidade: momentum, surfa tendência.";
     } else if (signalFamilies[0] === "meanReversion") {
-      sentence = " Especialidade: reversão à média — compra o exagero.";
+      sentence = " Especialidade: reversão à média, compra o exagero.";
     } else if (signalFamilies[0] === "breakout") {
-      sentence = " Especialidade: rompimentos — caça a fuga do canal.";
+      sentence = " Especialidade: rompimentos, caça a fuga do canal.";
     }
   } else if (signalFamilies.length >= 2) {
     sentence = ` Multiestrategista: combina ${signalFamilies.join("/")}.`;
   }
 
   if (hasRegimeFilter) {
-    sentence += " Opera sob filtro de regime — só entra com o mar calmo.";
+    sentence += " Opera sob filtro de regime, só entra com o mar calmo.";
   }
   return sentence;
 }

@@ -26,7 +26,7 @@ const DAY = 86_400_000;
 const END = Date.parse("2026-08-23T00:00:00Z");
 const START = END - 90 * DAY;
 const SEATS = 5;
-const SEAT_CENTS = 20_000;              // $200 — motor's TRADER_START_MC
+const SEAT_CENTS = 20_000;              // $200, motor's TRADER_START_MC
 const toMc = (cents: number) => Math.round(cents * 1000);
 const SYMBOL = "BTCUSDT";
 
@@ -189,7 +189,7 @@ for (const c of cohorts) {
     if (s.trades === 0) {
       db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
         payloadJson: JSON.stringify({ key: "nunca-girou", name: s.name,
-          label: "atravessou 90 dias sem abrir uma única posição e terminou com o aporte intacto — zero taxa paga" }) });
+          label: "atravessou 90 dias sem abrir uma única posição e terminou com o aporte intacto, zero taxa paga" }) });
     }
     if (net > 0) {
       db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
@@ -199,7 +199,7 @@ for (const c of cohorts) {
     if (net < 0) {
       db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,
         payloadJson: JSON.stringify({ key: "pagou-pedagio", name: s.name,
-          label: `girou ${s.trades} vezes e terminou ${(net / 100).toFixed(2)} — a corretagem levou mais do que o funding trouxe` }) });
+          label: `girou ${s.trades} vezes e terminou ${(net / 100).toFixed(2)}, a corretagem levou mais do que o funding trouxe` }) });
     }
     if (s.bestHold >= 20) {
       db.insertEvent({ ts: lastBar.time, type: "achievement", traderId: s.id, generationId: c.genId,

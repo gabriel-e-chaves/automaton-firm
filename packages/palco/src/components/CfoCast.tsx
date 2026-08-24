@@ -35,7 +35,7 @@ export function CfoCast() {
         <p className="research-lead">
           Janela: <strong>{cast.window.label}</strong>. Três assentos, RH avaliando por
           evidência, CFO segurando {(100 - cast.deployFraction * 100).toFixed(0)}% do book em
-          caixa. Nomes, trades e ciclos saíram da rodada de verdade — os nomes vêm do{" "}
+          caixa. Nomes, trades e ciclos saíram da rodada de verdade, os nomes vêm do{" "}
           <code>traderName</code> do próprio motor, então a mesma semente devolve sempre a
           mesma pessoa.
         </p>
@@ -64,7 +64,7 @@ export function CfoCast() {
       <p className="research-caveat">
         <strong>Leia isto antes dos números abaixo.</strong> Esta é a{" "}
         <em>melhor</em> janela de 90 dias já medida, e ela foi escolhida depois de ver as
-        três. Isso é exatamente o erro da LUNA no Experimento 3 — e o Experimento 3 também
+        três. Isso é exatamente o erro da LUNA no Experimento 3, e o Experimento 3 também
         já concluiu que, tirando 2021, o carry desaba para ~0–1% ao ano. Então o que este
         elenco mostra é que a <em>mecânica</em> da firma funciona ponta a ponta quando o
         funding paga. Não mostra que ela tem vantagem.
@@ -85,7 +85,7 @@ export function CfoCast() {
             </dl>
             <p className="cast-note">
               {s.trades === 0
-                ? `entra só com funding ≥ ${s.enterFundingBps} bps e a janela nunca pagou isso no seu book de ${usd(s.deployedUsd)} — ficou parado os 90 dias, e isso foi a decisão certa`
+                ? `entra só com funding ≥ ${s.enterFundingBps} bps e a janela nunca pagou isso no seu book de ${usd(s.deployedUsd)}, ficou parado os 90 dias, e isso foi a decisão certa`
                 : `${s.trades} ciclos fechados, funding ${usd(s.fundingUsd)} contra ${usd(s.feesUsd)} de taxa`}
             </p>
           </article>
@@ -106,7 +106,7 @@ export function CfoCast() {
           <span className="mural-badge">RH</span>
           <span className="mural-body">
             {idle.length} de {cast.seats.length} assentos não abriram um único trade em 90 dias
-            — e o RH não demitiu nenhum, porque prudência que não custou nada nunca é punida
+           , e o RH não demitiu nenhum, porque prudência que não custou nada nunca é punida
             neste projeto. Verdicto de todos: <em>insufficient_evidence</em>.
           </span>
         </li>
@@ -114,7 +114,7 @@ export function CfoCast() {
           <span className="mural-badge">caixa</span>
           <span className="mural-body">
             {usd(h.idleUsd)} dos {usd(h.startUsd)} ficaram no caixa por decisão do CFO e
-            renderam exatamente nada — assumir juros aqui importaria a taxa livre de risco e
+            renderam exatamente nada, assumir juros aqui importaria a taxa livre de risco e
             fabricaria um ganho que a estratégia não produziu.
           </span>
         </li>

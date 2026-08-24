@@ -85,7 +85,7 @@ describe("useSnapshot", () => {
   });
 });
 
-describe("useSnapshot — fallback estático", () => {
+describe("useSnapshot, fallback estático", () => {
   beforeEach(() => {
     StubEventSource.instances = [];
     vi.stubGlobal("EventSource", StubEventSource as unknown as typeof EventSource);

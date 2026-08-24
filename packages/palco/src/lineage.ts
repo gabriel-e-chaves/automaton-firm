@@ -19,5 +19,5 @@ export function lineageLine(employee: Employee): string | undefined {
     return `mutação de ${employee.parentName ?? "um trader anterior"}`;
   }
   if (employee.seedNote === "fresh") return "contratação externa (genoma novo)";
-  return `geração evoluída — ${employee.seedNote}`;
+  return `geração evoluída, ${employee.seedNote}`;
 }

@@ -11,19 +11,19 @@ interface SobreTabProps {
  * do dono da firma. Só os números do fact-strip são vivos. */
 
 const PROJECT_LEAD =
-  "Uma firma de trading onde ninguém é humano. Traders nascem de um genoma, operam dinheiro de papel em dados reais da Binance, são avaliados por um RH que só demite com evidência — e quando a geração quebra, a próxima herda os melhores genes. É darwinismo com CNPJ imaginário.";
+  "Uma firma de trading onde ninguém é humano. Traders nascem de um genoma, operam dinheiro de papel em dados reais da Binance, são avaliados por um RH que só demite com evidência, e quando a geração quebra, a próxima herda os melhores genes. É darwinismo com CNPJ imaginário.";
 
 const PROJECT_PARAGRAPH_1 =
-  "O Motor roda 24/7 sem tomar café: barras de 5 minutos de BTC, ETH e SOL, decisões 100% determinísticas, tudo gravado num log de eventos que esta página lê ao vivo. Ao lado da firma evoluída corre um controle aleatório com os mesmos limites — cinco traders que decidem na moeda e existem só pra nos impedir de contar vantagem. Spoiler: às vezes é constrangedoramente difícil vencê-los.";
+  "O Motor roda 24/7 sem tomar café: barras de 5 minutos de BTC, ETH e SOL, decisões 100% determinísticas, tudo gravado num log de eventos que esta página lê ao vivo. Ao lado da firma evoluída corre um controle aleatório com os mesmos limites, cinco traders que decidem na moeda e existem só pra nos impedir de contar vantagem. Spoiler: às vezes é constrangedoramente difícil vencê-los.";
 
 const PROJECT_PARAGRAPH_3 =
-  "Stack: TypeScript, SQLite, React, SSE — e nenhuma chamada de IA no caminho crítico, porque evolução que precisa de ajuda não é evolução. A pesquisa anterior do projeto mediu e enterrou vários 'edges' ilusórios; este front existe pra tornar o velório assistível. E bonito.";
+  "Stack: TypeScript, SQLite, React, SSE, e nenhuma chamada de IA no caminho crítico, porque evolução que precisa de ajuda não é evolução. A pesquisa anterior do projeto mediu e enterrou vários 'edges' ilusórios; este front existe pra tornar o velório assistível. E bonito.";
 
 /** The middle paragraph names the per-generation seed amount ("... novinhos"),
  * so unlike the other two it's built fresh each render from `seedMc`
  * instead of living as a fixed string. */
 function projectParagraph2(seedMc: number): string {
-  return `Se um trader vai mal, o RH demite (com relatório). Se vai bem, ganha um título e um post no mural. Se a geração inteira zera, ninguém chora: anota-se o recorde, mistura-se os melhores genomas e nasce a próxima com ${usd(seedMc)} novinhos. O gráfico de recordes é o eletrocardiograma do experimento — reto até segunda ordem.`;
+  return `Se um trader vai mal, o RH demite (com relatório). Se vai bem, ganha um título e um post no mural. Se a geração inteira zera, ninguém chora: anota-se o recorde, mistura-se os melhores genomas e nasce a próxima com ${usd(seedMc)} novinhos. O gráfico de recordes é o eletrocardiograma do experimento, reto até segunda ordem.`;
 }
 
 const GOLDEN_RULE =
@@ -32,7 +32,7 @@ const GOLDEN_RULE =
 const ROLE_CHIP = "Legal Operations · Automação · IA";
 
 const BIO =
-  "Advogado, aprovado no Exame da Ordem, com anos de prática em escritórios nas áreas de Direito Civil, Empresarial e Falimentar — e um interesse especial por Direito Contratual e pela aplicação de tecnologia aos processos jurídicos. Hoje sou Analista em Legal Operations na Reasset, automatizando e estruturando fluxos jurídicos com Python, n8n e Airtable: tratamento e análise de dados, apoio à análise processual em recuperação judicial e gestão de contratos, com foco em eficiência operacional. Tenho forte interesse em Legal Operations, LegalTech e automação jurídica, e busco conexões na interseção entre Direito, tecnologia e operações — vamos conversar.";
+  "Advogado com anos de prática em escritórios nas áreas de Direito Civil, Empresarial e Falimentar, e um interesse especial por Direito Contratual e pela aplicação de tecnologia aos processos jurídicos. Hoje sou Analista em Legal Operations na Reasset, automatizando e estruturando fluxos jurídicos com Python, n8n e React: tratamento e análise de dados, apoio à análise processual em recuperação judicial e gestão de contratos, com foco em eficiência operacional. Tenho forte interesse em Legal Operations, LegalTech e automação jurídica, e busco conexões na interseção entre Direito, tecnologia e operações. Vamos conversar.";
 
 const SKILLS = ["Claude API", "MCP", "Prompt Engineering", "Python", "n8n", "Make", "RPA", "Power BI", "AWS", "Scrum"];
 

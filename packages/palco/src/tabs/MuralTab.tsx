@@ -10,7 +10,7 @@ interface MuralTabProps {
   snapshot: PalcoSnapshot | null;
 }
 
-const REACTIONS_DISCLAIMER = "reações são decorativas — ninguém está de fato aplaudindo (ainda)";
+const REACTIONS_DISCLAIMER = "reações são decorativas, ninguém está de fato aplaudindo (ainda)";
 
 // Fun-pass addendum: 3 decorative joke communities, verbatim from the v3
 // plan's addendum. Fixed strings, never derived from real data — fun here
@@ -80,7 +80,7 @@ export function MuralTab({ snapshot }: MuralTabProps) {
         <aside className="orkut-left">
         <p className="orkut-visitor-counter">você é o visitante nº {visitorNumber(snapshot?.lastEventId ?? 0)}</p>
 
-        {/* Orkut profile box — the sidebar was one short counter and a list,
+        {/* Orkut profile box, the sidebar was one short counter and a list,
             leaving a blank strip. The ratings are the real Orkut trio, adapted;
             "lucrativa" is derived from the snapshot, never hardcoded, because a
             fun meter that lies would still be a lie. */}
@@ -167,7 +167,7 @@ export function MuralTab({ snapshot }: MuralTabProps) {
                         formatEventPt, which escapes every payload value
                         through escapeHtml before interpolation. No
                         client-supplied or unescaped string ever reaches
-                        this prop — XSS posture unchanged from the v2 layout.
+                        this prop, XSS posture unchanged from the v2 layout.
                       */
                       <p className="orkut-post-text" dangerouslySetInnerHTML={{ __html: post.fallbackHtml }} />
                     ) : (

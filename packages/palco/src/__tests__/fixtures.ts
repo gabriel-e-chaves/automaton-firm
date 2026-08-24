@@ -149,7 +149,7 @@ export const fixtureSnapshot: PalcoSnapshot = {
       id: 47,
       ts: 1_700_000_250_000,
       type: "achievement",
-      html: '✨ <strong>Ada Faria</strong> — "Primeiro trade"',
+      html: '✨ <strong>Ada Faria</strong>, "Primeiro trade"',
       payload: { key: "first_trade", name: "Ada Faria", label: "Primeiro trade" },
     },
     {
@@ -163,14 +163,14 @@ export const fixtureSnapshot: PalcoSnapshot = {
       id: 45,
       ts: 1_700_000_150_000,
       type: "record_broken",
-      html: "🔔 RECORDE: $14.80 (evolved, gen 3) — anterior $14.00",
+      html: "🔔 RECORDE: $14.80 (evolved, gen 3), anterior $14.00",
       payload: { cohort: "evolved", genNumber: 3, peakEquityMc: 1_480_000, previousRecordMc: 1_400_000 },
     },
     {
       id: 44,
       ts: 1_700_000_100_000,
       type: "gen_started",
-      html: "🌱 Geração 3 (evolved) começou — 2 clones + 1 mutant",
+      html: "🌱 Geração 3 (evolved) começou, 2 clones + 1 mutant",
       payload: { cohort: "evolved", genNumber: 3, seedNote: "2 clones + 1 mutant" },
     },
     {
@@ -282,7 +282,7 @@ export const fixtureSnapshot: PalcoSnapshot = {
         id: 44,
         ts: 1_700_000_100_000,
         type: "gen_started",
-        html: "🌱 Geração 3 (evolved) começou — 2 clones + 1 mutant",
+        html: "🌱 Geração 3 (evolved) começou, 2 clones + 1 mutant",
         payload: { cohort: "evolved", genNumber: 3, seedNote: "2 clones + 1 mutant" },
       },
       {
@@ -303,7 +303,7 @@ export const fixtureSnapshot: PalcoSnapshot = {
         id: 51,
         ts: 1_700_000_600_000,
         type: "trader_promoted",
-        html: "🏆 <strong>Ada Faria</strong> promovido(a) — Trader do Ciclo",
+        html: "🏆 <strong>Ada Faria</strong> promovido(a), Trader do Ciclo",
         payload: { name: "Ada Faria", title: "Trader do Ciclo" },
       },
     ],

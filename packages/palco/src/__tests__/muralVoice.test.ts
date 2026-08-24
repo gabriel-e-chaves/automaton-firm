@@ -48,7 +48,7 @@ describe("pickBody", () => {
   it("fills name + returned for trader_fired", () => {
     const body = pickBody("trader_fired", { name: "Caue Reis", returnedMc: 80_000 }, mulberry32(7));
     expect(body).toBe(
-      "Comunicado do RH: encerramos o ciclo de Caue Reis. Devolveu $0.80 ao caixa. A decisão foi baseada em evidência — como sempre.",
+      "Comunicado do RH: encerramos o ciclo de Caue Reis. Devolveu $0.80 ao caixa. A decisão foi baseada em evidência, como sempre.",
     );
   });
 
@@ -59,7 +59,7 @@ describe("pickBody", () => {
 
   it("fills name for trader_promoted", () => {
     const body = pickBody("trader_promoted", { name: "Ada Faria" }, mulberry32(3));
-    expect(body).toBe("Promoção pra Ada Faria! Bateu o benchmark — que neste mercado é quase poesia.");
+    expect(body).toBe("Promoção pra Ada Faria! Bateu o benchmark, que neste mercado é quase poesia.");
   });
 
   it("fills name + label for achievement", () => {
@@ -74,7 +74,7 @@ describe("pickBody", () => {
 
   it("fills genNumber for gen_started", () => {
     const body = pickBody("gen_started", { genNumber: 3 }, mulberry32(44));
-    expect(body).toBe("Geração 3 aberta. Herdaram os melhores genes — e todas as dívidas emocionais dos antecessores.");
+    expect(body).toBe("Geração 3 aberta. Herdaram os melhores genes, e todas as dívidas emocionais dos antecessores.");
   });
 
   it("fills genNumber/peak for gen_ended", () => {
@@ -85,10 +85,10 @@ describe("pickBody", () => {
   it("only ever returns its single line for hr_review, regardless of seed", () => {
     const payload = { fired: 1, promoted: 2 };
     expect(pickBody("hr_review", payload, mulberry32(7))).toBe(
-      "Ciclo de avaliação: 1 desligamento(s), 2 promoção(ões). O RH dormirá tranquilo — decidiu com dados.",
+      "Ciclo de avaliação: 1 desligamento(s), 2 promoção(ões). O RH dormirá tranquilo, decidiu com dados.",
     );
     expect(pickBody("hr_review", payload, mulberry32(999_999))).toBe(
-      "Ciclo de avaliação: 1 desligamento(s), 2 promoção(ões). O RH dormirá tranquilo — decidiu com dados.",
+      "Ciclo de avaliação: 1 desligamento(s), 2 promoção(ões). O RH dormirá tranquilo, decidiu com dados.",
     );
   });
 

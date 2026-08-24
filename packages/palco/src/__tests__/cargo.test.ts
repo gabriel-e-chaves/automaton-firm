@@ -17,7 +17,7 @@ describe("cargoFor", () => {
 
       expect(cargo.titulo).toBe("Trader Aleatório · Grupo de Controle");
       expect(cargo.papel).toBe(
-        "Decide cara-ou-coroa a cada barra, com os mesmos limites da firma. Não tem estratégia — e é exatamente por isso que importa: é o espelho honesto contra o qual todo mundo é medido. Mesa BTCUSDT · 2x.",
+        "Decide cara-ou-coroa a cada barra, com os mesmos limites da firma. Não tem estratégia, e é exatamente por isso que importa: é o espelho honesto contra o qual todo mundo é medido. Mesa BTCUSDT · 2x.",
       );
     });
 
@@ -51,7 +51,7 @@ describe("cargoFor", () => {
 
       expect(cargo.titulo).toBe("Trader Trainee · aposta do RH");
       expect(cargo.papel).toBe(
-        "Contratado(a) no meio do ciclo como mutação do melhor genoma vivo. Tem tudo a provar — o RH está de olho. Mesa BTCUSDT · 2x.",
+        "Contratado(a) no meio do ciclo como mutação do melhor genoma vivo. Tem tudo a provar, o RH está de olho. Mesa BTCUSDT · 2x.",
       );
     });
   });
@@ -83,7 +83,7 @@ describe("cargoFor", () => {
 
       expect(cargo.titulo).toBe("Trader da Geração");
       expect(cargo.papel).toBe(
-        "Fundador(a) desta geração — o mix exato de herança e mutação está no seedNote da geração. Mesa BTCUSDT · 2x.",
+        "Fundador(a) desta geração, o mix exato de herança e mutação está no seedNote da geração. Mesa BTCUSDT · 2x.",
       );
     });
 
@@ -150,7 +150,7 @@ describe("cargoFor", () => {
         ...BASE,
       });
 
-      expect(cargo.papel).toContain(" Especialidade: momentum — surfa tendência.");
+      expect(cargo.papel).toContain(" Especialidade: momentum, surfa tendência.");
     });
 
     it("appends the meanReversion sentence for a meanReversion-only genome", () => {
@@ -162,7 +162,7 @@ describe("cargoFor", () => {
         ...BASE,
       });
 
-      expect(cargo.papel).toContain(" Especialidade: reversão à média — compra o exagero.");
+      expect(cargo.papel).toContain(" Especialidade: reversão à média, compra o exagero.");
     });
 
     it("appends the breakout sentence for a breakout-only genome", () => {
@@ -174,7 +174,7 @@ describe("cargoFor", () => {
         ...BASE,
       });
 
-      expect(cargo.papel).toContain(" Especialidade: rompimentos — caça a fuga do canal.");
+      expect(cargo.papel).toContain(" Especialidade: rompimentos, caça a fuga do canal.");
     });
 
     it("appends the multi-strategist sentence, joined with '/', for 2+ signal families", () => {
@@ -198,8 +198,8 @@ describe("cargoFor", () => {
         ...BASE,
       });
 
-      expect(cargo.papel).toContain(" Especialidade: momentum — surfa tendência.");
-      expect(cargo.papel).toContain(" Opera sob filtro de regime — só entra com o mar calmo.");
+      expect(cargo.papel).toContain(" Especialidade: momentum, surfa tendência.");
+      expect(cargo.papel).toContain(" Opera sob filtro de regime, só entra com o mar calmo.");
     });
 
     it("appends only the regime-filter sentence when regimeFilter is the only family (no signal family)", () => {
@@ -213,7 +213,7 @@ describe("cargoFor", () => {
 
       expect(cargo.papel).not.toContain("Especialidade");
       expect(cargo.papel).not.toContain("Multiestrategista");
-      expect(cargo.papel).toContain(" Opera sob filtro de regime — só entra com o mar calmo.");
+      expect(cargo.papel).toContain(" Opera sob filtro de regime, só entra com o mar calmo.");
     });
   });
 

@@ -21,14 +21,14 @@ describe("GeracoesTab", () => {
     render(<GeracoesTab snapshot={fixtureSnapshot} />);
 
     // Gen 2 evolved: peakEquityMc 1_480_000 -> $14.80, barsLived 900 -> 3.1 dias.
-    expect(screen.getByText("Geração 2 — pico $14.80 — 3.1 dias")).toBeInTheDocument();
+    expect(screen.getByText("Geração 2, pico $14.80, 3.1 dias")).toBeInTheDocument();
   });
 
   it("marks the record-holding generation with the bell badge", () => {
     render(<GeracoesTab snapshot={fixtureSnapshot} />);
 
     // Gen 2 evolved's peak (1_480_000) equals cards.recordEvolvedMc in the fixture.
-    const label = screen.getByText("Geração 2 — pico $14.80 — 3.1 dias");
+    const label = screen.getByText("Geração 2, pico $14.80, 3.1 dias");
     expect(label.closest(".life-bar-label")?.textContent).toContain("🔔");
   });
 
@@ -36,7 +36,7 @@ describe("GeracoesTab", () => {
     render(<GeracoesTab snapshot={fixtureSnapshot} />);
 
     // Gen 3 (both cohorts) is ended: false in the fixture.
-    const label = screen.getByText(/Geração 3 — pico \$13\.00 — 1\.4 dias/);
+    const label = screen.getByText(/Geração 3, pico \$13\.00, 1\.4 dias/);
     expect(label.closest(".life-bar-label")?.textContent).toContain("em curso");
   });
 

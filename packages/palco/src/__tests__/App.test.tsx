@@ -90,7 +90,7 @@ describe("App", () => {
   });
 });
 
-describe("App — os dois motores nao se misturam", () => {
+describe("App, os dois motores nao se misturam", () => {
   beforeEach(() => {
     vi.stubGlobal("EventSource", StubEventSource as unknown as typeof EventSource);
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: () => Promise.resolve(fixtureSnapshot) }));

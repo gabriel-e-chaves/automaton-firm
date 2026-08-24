@@ -118,7 +118,7 @@ export default function App() {
             carry measurements made two unrelated engines look like one number. */}
         {/* Only on Pregão: these cards are the live run's state, and they were
             being read as research numbers when they sat above other tabs. The
-            label is derived from the run's own seed note, never hardcoded — the
+            label is derived from the run's own seed note, never hardcoded, the
             server can be pointed at a different db (directional motor vs carry
             replay) and a fixed string would then describe the wrong engine. */}
         {route === "pregao" && (
@@ -180,7 +180,7 @@ export default function App() {
 
       <main className="page-content">
         {/*
-          Fade-in only (no AnimatePresence/`exit`) — deliberately: with an
+          Fade-in only (no AnimatePresence/`exit`), deliberately: with an
           exit-and-wait choreography the incoming tab's content only mounts
           once the outgoing tab's exit animation finishes, which would make
           every nav click asynchronous. React's normal synchronous

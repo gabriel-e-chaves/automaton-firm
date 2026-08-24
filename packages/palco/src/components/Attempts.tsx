@@ -25,7 +25,7 @@ export function Attempts() {
           Tudo que foi tentado, o modelo usado em cada uma, o número que saiu e se ele
           sobreviveu aos próprios critérios do projeto. Em ordem cronológica, porque o
           interessante é ver o <strong>mesmo confound ser encontrado {confounds} vezes</strong> por
-          caminhos independentes — até o projeto parar de tratá-lo como armadilha e testá-lo
+          caminhos independentes, até o projeto parar de tratá-lo como armadilha e testá-lo
           como hipótese.
         </p>
       </header>
@@ -52,7 +52,7 @@ export function Attempts() {
       <p className="research-caveat">{CLOSING}</p>
 
       <p className="research-repo">
-        Código, dados e todo o histórico —{" "}
+        Código, dados e todo o histórico,{" "}
         <a href={REPO_URL} target="_blank" rel="noreferrer noopener">
           {REPO_URL.replace("https://", "")}
         </a>

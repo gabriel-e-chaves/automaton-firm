@@ -48,8 +48,8 @@ export function EmpresaTab({ snapshot }: EmpresaTabProps) {
 
       <h2 className="section-title">Cargos</h2>
       <p className="org-explainer">
-        Quem faz o quê. O cargo é derivado do próprio registro do funcionário — coorte, genoma herdado, mesa e
-        alavancagem — não atribuído à mão.
+        Quem faz o quê. O cargo é derivado do próprio registro do funcionário, coorte, genoma herdado, mesa e
+        alavancagem, não atribuído à mão.
       </p>
       {employees.length === 0 ? (
         <p className="empty-state">Sem funcionários ainda.</p>

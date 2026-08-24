@@ -56,7 +56,7 @@ describe("MuralTab", () => {
     // threshold (1% of cards.genStartMc = 1_000_000) — mulberry32(50)
     // deterministically picks this exact pool line.
     expect(
-      screen.getByText("$1.50 no bolso. Não foi sorte — foi o genoma. (Foi um pouco de sorte.)"),
+      screen.getByText("$1.50 no bolso. Não foi sorte, foi o genoma. (Foi um pouco de sorte.)"),
     ).toBeInTheDocument();
   });
 
@@ -94,7 +94,7 @@ describe("MuralTab", () => {
     // mulberry32(49) deterministically picks this exact pool line.
     expect(
       screen.getByText(
-        "Comunicado do RH: encerramos o ciclo de Caue Reis. Devolveu $0.80 ao caixa. A decisão foi baseada em evidência — como sempre.",
+        "Comunicado do RH: encerramos o ciclo de Caue Reis. Devolveu $0.80 ao caixa. A decisão foi baseada em evidência, como sempre.",
       ),
     ).toBeInTheDocument();
     expect(screen.getByText("underperformance sustentada")).toBeInTheDocument();
@@ -117,7 +117,7 @@ describe("MuralTab", () => {
     expect(matching).toHaveLength(1);
   });
 
-  it("never renders a post for trade_opened — it's dropped entirely from the Mural", () => {
+  it("never renders a post for trade_opened, it's dropped entirely from the Mural", () => {
     render(<MuralTab snapshot={fixtureSnapshot} />);
     // id 41 is a trade_opened ETHUSDT event; its own wording ("abriu",
     // "notional") must not appear anywhere in the Mural (it still shows up
@@ -193,7 +193,7 @@ describe("MuralTab", () => {
 
     expect(firstRun).toBeTruthy();
     expect(firstRun).toBe(secondRun);
-    expect(firstRun).toContain("$1.50 no bolso. Não foi sorte — foi o genoma. (Foi um pouco de sorte.)");
+    expect(firstRun).toContain("$1.50 no bolso. Não foi sorte, foi o genoma. (Foi um pouco de sorte.)");
   });
 
   it("renders the reactions footer as decorative Orkut-style phrases, deterministically across two separate renders", () => {
@@ -221,7 +221,7 @@ describe("MuralTab", () => {
   });
 });
 
-describe("MuralTab — rotação de cadeira", () => {
+describe("MuralTab, rotação de cadeira", () => {
   it("renders an evidence-blind rotation post that never sounds like a verdict", () => {
     const snapshot = {
       ...fixtureSnapshot,
@@ -251,7 +251,7 @@ describe("MuralTab — rotação de cadeira", () => {
   });
 });
 
-describe("MuralTab — o mural é dos traders", () => {
+describe("MuralTab, o mural é dos traders", () => {
   it("never posts firm/directorate events", () => {
     render(<MuralTab snapshot={fixtureSnapshot} />);
     for (const t of ["Atualização", "Recorde da firma", "Comunicado da diretoria", "Ciclo de avaliação"]) {
@@ -265,7 +265,7 @@ describe("MuralTab — o mural é dos traders", () => {
   });
 });
 
-describe("MuralTab — perfil orkut", () => {
+describe("MuralTab, perfil orkut", () => {
   it("shows the profile box with the honest lucrativa meter", () => {
     const snap = {
       ...fixtureSnapshot,
