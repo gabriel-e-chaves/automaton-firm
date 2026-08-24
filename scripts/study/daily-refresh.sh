@@ -8,10 +8,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 export PATH="/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH"
-# Self-update when running from the dedicated refresh clone (always on main).
-# Dev worktrees sit on feature branches, so this never fires there.
-if [ "$(git branch --show-current)" = "main" ]; then
-  git pull --ff-only origin main >/dev/null 2>&1 || true
+# The dedicated refresh clone is disposable: it MIRRORS origin/main before
+# generating, discarding any leftover local commit (e.g. yesterday's data
+# commit that lost a push race). A plain ff-only pull would wedge a diverged
+# clone forever. Guarded by path so a dev checkout is never hard-reset.
+if [ "$PWD" = "$HOME/.afirma-refresh" ]; then
+  git fetch origin
+  git reset --hard origin/main
 fi
 node_modules/.bin/tsx scripts/study/build-carry-replay.ts
 node_modules/.bin/tsx scripts/study/export-snapshot.ts
